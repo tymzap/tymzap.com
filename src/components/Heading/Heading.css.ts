@@ -1,5 +1,6 @@
-import { vars } from "~/styles/theme.css";
 import { styleVariants, style } from "@vanilla-extract/css";
+
+import { vars } from "~/styles/theme.css";
 
 const base = style({
   fontFamily: vars.fonts.dmSans,

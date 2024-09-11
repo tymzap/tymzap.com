@@ -1,6 +1,11 @@
 module.exports = {
-  extends: ["next", "plugin:prettier/recommended"],
+  extends: [
+    "next",
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended",
+  ],
   plugins: ["import"],
+  ignorePatterns: ["!.storybook"],
   rules: {
     "no-nested-ternary": "error",
     "no-else-return": "error",

@@ -5,12 +5,12 @@ import { colors } from "~/styles/colors";
 import { sizes } from "~/styles/sizes";
 
 export const wrapper = style({
-  gap: 16,
   display: "flex",
   "@media": {
     [mediaQueries.tabletOrBigger]: {
       display: "flex",
       transform: "translateY(0%) !important",
+      gap: 16,
     },
     [mediaQueries.smallerThanTablet]: {
       padding: 12,
@@ -18,6 +18,7 @@ export const wrapper = style({
       position: "fixed",
       flexDirection: "column",
       top: sizes.navigationBarHeight,
+      gap: 8,
       left: 0,
       right: 0,
     },
