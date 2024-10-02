@@ -1,19 +1,9 @@
-import { PropsWithChildren, ReactNode } from "react";
-
-import { NavigationBar } from "~/components/NavigationBar";
+import { PropsWithChildren } from "react";
 
 import * as styles from "./Layout.css";
 
-type LayoutProps = PropsWithChildren<{
-  navigation: ReactNode;
-}>;
+type LayoutProps = PropsWithChildren;
 
-export function Layout({ children, navigation }: LayoutProps) {
-  return (
-    <>
-      <NavigationBar navigation={navigation} />
-      <div className={styles.adornment} />
-      <div className={styles.content}>{children}</div>
-    </>
-  );
+export function Layout({ children }: LayoutProps) {
+  return <div className={styles.wrapper}>{children}</div>;
 }

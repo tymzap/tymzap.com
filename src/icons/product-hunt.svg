@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.245 26.256">
+  <mask id="cutout">
+    <rect width="100%" height="100%" fill="white" />
+    <path d="M14.876 13.128h-3.72V9.2h3.72c1.083 0 1.97.886 1.97 1.97s-.886 1.97-1.97 1.97m0-6.564H8.53v13.128h2.626v-3.938h3.72c2.538 0 4.595-2.057 4.595-4.595s-2.057-4.595-4.595-4.595" fill="black" />
+  </mask>
+  <circle cx="13.128" cy="13.128" r="13.128" fill="currentColor" mask="url(#cutout)" />
+</svg>

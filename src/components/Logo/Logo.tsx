@@ -1,5 +1,9 @@
 import * as styles from "./Logo.css";
 
-export function Logo() {
-  return <span className={styles.logo}>Tymek Zapała</span>;
+type LogoProps = {
+  color?: "black" | "white";
+};
+
+export function Logo({ color = "black" }: LogoProps) {
+  return <span className={styles.logo({ color })}>Tymek Zapała</span>;
 }

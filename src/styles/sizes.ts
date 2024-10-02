@@ -1,4 +1,4 @@
 export const sizes = {
-  contentWidth: 850,
+  contentWidth: 950,
   navigationBarHeight: 80,
 } as const;

@@ -1,6 +1,7 @@
 import { Preview } from "@storybook/react";
 
 import { ThemeDecorator } from "./ThemeDecorator";
+import { viewports } from "./viewports";
 import "~/styles/global.css";
 
 const preview: Preview = {
@@ -11,6 +12,9 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+    viewport: {
+      viewports,
     },
   },
   decorators: [ThemeDecorator],

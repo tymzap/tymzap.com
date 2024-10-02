@@ -1,3 +1,5 @@
+"use client";
+
 import { useButton } from "react-aria";
 import { useRef } from "react";
 
@@ -7,9 +9,14 @@ import * as styles from "./HamburgerButton.css";
 type HamburgerButtonProps = {
   onPress: () => void;
   isPressed: boolean;
+  color?: "black" | "white";
 };
 
-export function HamburgerButton({ onPress, isPressed }: HamburgerButtonProps) {
+export function HamburgerButton({
+  onPress,
+  isPressed,
+  color = "black",
+}: HamburgerButtonProps) {
   const ref = useRef(null);
   const { buttonProps } = useButton(
     { onPress, "aria-pressed": isPressed },
@@ -17,7 +24,7 @@ export function HamburgerButton({ onPress, isPressed }: HamburgerButtonProps) {
   );
 
   return (
-    <button ref={ref} className={styles.button} {...buttonProps}>
+    <button ref={ref} className={styles.button({ color })} {...buttonProps}>
       <AnimatedSVG isPressed={isPressed} />
     </button>
   );

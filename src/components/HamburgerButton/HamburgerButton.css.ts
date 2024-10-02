@@ -1,13 +1,24 @@
-import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "~/styles/theme.css";
 
-export const button = style({
-  fontSize: 14,
-  border: 0,
-  color: vars.colors.black,
-  cursor: "pointer",
-  width: 45,
-  height: 45,
-  background: "transparent",
+export const button = recipe({
+  base: {
+    fontSize: 14,
+    border: 0,
+    cursor: "pointer",
+    width: 45,
+    height: 45,
+    background: "transparent",
+  },
+  variants: {
+    color: {
+      black: {
+        color: vars.colors.black,
+      },
+      white: {
+        color: vars.colors.white,
+      },
+    },
+  },
 });

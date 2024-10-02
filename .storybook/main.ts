@@ -1,4 +1,5 @@
 import { StorybookConfig } from "@storybook/nextjs";
+import { Configuration } from "webpack";
 import { VanillaExtractPlugin } from "@vanilla-extract/webpack-plugin";
 import { TransformOptions } from "@babel/core";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -45,6 +46,11 @@ const config: StorybookConfig = {
       },
     },
   ],
+  webpackFinal: (webpackConfig) => {
+    addSvgrLoader(webpackConfig);
+
+    return webpackConfig;
+  },
   babel: (babelConfig: TransformOptions) => {
     babelConfig?.plugins?.push([
       "module-resolver",
@@ -63,3 +69,25 @@ const config: StorybookConfig = {
 };
 
 export default config;
+
+function addSvgrLoader(webpackConfig: Configuration) {
+  const svgRule = webpackConfig.module?.rules?.find((rule) => {
+    if (
+      rule &&
+      typeof rule !== "string" &&
+      "test" in rule &&
+      rule.test instanceof RegExp
+    ) {
+      return rule.test.test(".svg");
+    }
+  });
+
+  if (svgRule && typeof svgRule !== "string") {
+    svgRule.exclude = /\.svg$/;
+  }
+
+  webpackConfig.module?.rules?.push({
+    test: /\.svg$/,
+    use: ["@svgr/webpack"],
+  });
+}

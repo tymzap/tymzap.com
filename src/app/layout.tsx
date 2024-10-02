@@ -2,12 +2,14 @@ import { Metadata } from "next";
 import cn from "classnames";
 import "sanitize.css";
 import { PropsWithChildren } from "react";
+import Head from "next/head";
 
 import "~/styles/global.css";
 import { dmSans } from "~/styles/fonts";
 import { theme } from "~/styles/theme.css";
-import { Navigation } from "~/components/Navigation";
 import { Layout } from "~/components/Layout";
+
+import { AppNavbar } from "./AppNavbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,20 +21,13 @@ type HomeLayoutProps = PropsWithChildren;
 export default function HomeLayout({ children }: HomeLayoutProps) {
   return (
     <html lang="en">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <body className={cn(theme, dmSans.variable)}>
-        <Layout navigation={<LayoutNavigation />}>{children}</Layout>
+        <AppNavbar />
+        <Layout>{children}</Layout>
       </body>
     </html>
-  );
-}
-
-function LayoutNavigation() {
-  return (
-    <Navigation>
-      <Navigation.Item href={"/about"} isCurrent={true}>
-        About
-      </Navigation.Item>
-      <Navigation.Item href={"/blog"}>Blog</Navigation.Item>
-    </Navigation>
   );
 }
