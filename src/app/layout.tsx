@@ -7,9 +7,11 @@ import Head from "next/head";
 import "~/styles/global.css";
 import { dmSans } from "~/styles/fonts";
 import { theme } from "~/styles/theme.css";
-import { Layout } from "~/components/Layout";
+import { MenuLink, Navbar } from "~/components/Navbar";
+import { Footer } from "~/components/Footer";
 
-import { AppNavbar } from "./AppNavbar";
+import { SocialMediaLinks } from "./SocialMediaLinks";
+import { ContentWrapper } from "./ContentWrapper";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,9 +27,24 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <body className={cn(theme, dmSans.variable)}>
-        <AppNavbar />
-        <Layout>{children}</Layout>
+        <Navbar
+          menuLinks={MENU_LINKS}
+          socialMediaLinks={<SocialMediaLinks />}
+        />
+        <ContentWrapper>{children}</ContentWrapper>
+        <Footer socialMediaLinks={<SocialMediaLinks />} />
       </body>
     </html>
   );
 }
+
+const MENU_LINKS: MenuLink[] = [
+  {
+    href: "/",
+    label: "Home",
+  },
+  {
+    href: "/blog",
+    label: "Blog",
+  },
+];

@@ -8,4 +8,6 @@ globalStyle("*", {
 
 globalStyle("body", {
   backgroundColor: vars.colors.alabaster,
+  position: "relative",
+  minHeight: "100vh",
 });

@@ -1,5 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
+import { mediaQueries } from "~/styles/mediaQueries";
+
 export const wrapper = style({
   display: "flex",
   flexDirection: "column",
@@ -9,10 +11,15 @@ export const wrapper = style({
 
 export const image = style({
   width: "100%",
-  height: 300,
+  height: 250,
   backgroundPosition: "center",
   borderRadius: 8,
   backgroundSize: "cover",
+  "@media": {
+    [mediaQueries.tabletOrBigger]: {
+      height: 300,
+    },
+  },
 });
 
 export const details = style({

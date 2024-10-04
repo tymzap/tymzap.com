@@ -1,30 +1,29 @@
-"use client";
-
-import { MenuLink, Navbar, SocialMediaLink } from "~/components/Navbar";
 import { SOCIAL_MEDIA_URLS } from "~/constants/socialMedia";
 import X from "~/icons/x.svg";
 import LinkedIn from "~/icons/linkedin.svg";
 import ProductHunt from "~/icons/product-hunt.svg";
 import GitHub from "~/icons/github.svg";
+import { IconLink } from "~/components/IconLink";
 
-export function AppNavbar() {
+import * as styles from "./SocialMediaLinks.css";
+
+export function SocialMediaLinks() {
   return (
-    <Navbar menuLinks={MENU_LINKS} socialMediaLinks={SOCIAL_MEDIA_LINKS} />
+    <div className={styles.wrapper}>
+      {LINKS.map(({ href, icon, label }) => (
+        <IconLink
+          color={"white"}
+          href={href}
+          icon={icon}
+          label={label}
+          key={href}
+        />
+      ))}
+    </div>
   );
 }
 
-const MENU_LINKS: MenuLink[] = [
-  {
-    href: "/",
-    label: "Home",
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-  },
-];
-
-const SOCIAL_MEDIA_LINKS: SocialMediaLink[] = [
+const LINKS = [
   {
     href: SOCIAL_MEDIA_URLS.X,
     label: "X",

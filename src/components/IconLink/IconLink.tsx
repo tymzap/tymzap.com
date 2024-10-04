@@ -23,7 +23,9 @@ export function IconLink({
       aria-label={label}
       title={label}
     >
-      <Icon width={32} height={32} />
+      <Icon width={ICON_SIZE} height={ICON_SIZE} />
     </Link>
   );
 }
+
+const ICON_SIZE = 32;

@@ -1,17 +1,17 @@
 "use client";
 
+import { ReactNode } from "react";
+
 import { FullscreenMenu } from "~/components/FullscreenMenu";
-import { IconLink } from "~/components/IconLink";
 
 import { MenuLink } from "./MenuLink";
-import { SocialMediaLink } from "./SocialMediaLink";
 import { useNavbar } from "./useNavbar";
 import * as styles from "./Navbar.css";
 import { NavbarContent } from "./NavbarContent";
 
 type NavbarProps = {
   menuLinks: MenuLink[];
-  socialMediaLinks: SocialMediaLink[];
+  socialMediaLinks: ReactNode;
 };
 
 export function Navbar({ menuLinks, socialMediaLinks }: NavbarProps) {
@@ -36,19 +36,7 @@ export function Navbar({ menuLinks, socialMediaLinks }: NavbarProps) {
             ))}
           </>
         }
-        socialMediaLinks={
-          <>
-            {socialMediaLinks.map(({ href, icon, label }) => (
-              <IconLink
-                color={"white"}
-                href={href}
-                icon={icon}
-                label={label}
-                key={href}
-              />
-            ))}
-          </>
-        }
+        socialMediaLinks={socialMediaLinks}
       />
     </div>
   );
