@@ -6,7 +6,6 @@ import { mediaQueries } from "~/styles/mediaQueries";
 export const logo = recipe({
   base: {
     fontFamily: vars.fonts.dmSans,
-    fontWeight: 600,
     fontSize: 18,
     whiteSpace: "nowrap",
     "@media": {

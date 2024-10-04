@@ -7,7 +7,7 @@ const base = style({
   fontWeight: 700,
 });
 
-export const container = styleVariants({
+export const heading = styleVariants({
   1: [
     base,
     {

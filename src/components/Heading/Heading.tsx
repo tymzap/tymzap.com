@@ -10,7 +10,7 @@ type HeadingProps = PropsWithChildren<{
 export function Heading({ level, children }: HeadingProps) {
   const Element = getElement(level);
 
-  return <Element className={cn(styles.container[level])}>{children}</Element>;
+  return <Element className={cn(styles.heading[level])}>{children}</Element>;
 }
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;

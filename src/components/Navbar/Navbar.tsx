@@ -19,40 +19,37 @@ export function Navbar({ menuLinks, socialMediaLinks }: NavbarProps) {
     useNavbar();
 
   return (
-    <>
-      <div className={styles.spacer} />
-      <div className={styles.wrapper}>
-        <NavbarContent
-          menuLinks={menuLinks}
-          isHamburgerButtonPressed={isFullscreenMenuVisible}
-          onPressHamburgerButton={toggleIsFullscreenMenuVisible}
-        />
-        <FullscreenMenu
-          isVisible={isFullscreenMenuVisible}
-          menuLinks={
-            <>
-              {menuLinks.map(({ label, href }) => (
-                <FullscreenMenu.Link href={href} key={href}>
-                  {label}
-                </FullscreenMenu.Link>
-              ))}
-            </>
-          }
-          socialMediaLinks={
-            <>
-              {socialMediaLinks.map(({ href, icon, label }) => (
-                <IconLink
-                  color={"white"}
-                  href={href}
-                  icon={icon}
-                  label={label}
-                  key={href}
-                />
-              ))}
-            </>
-          }
-        />
-      </div>
-    </>
+    <div className={styles.wrapper}>
+      <NavbarContent
+        menuLinks={menuLinks}
+        isHamburgerButtonPressed={isFullscreenMenuVisible}
+        onPressHamburgerButton={toggleIsFullscreenMenuVisible}
+      />
+      <FullscreenMenu
+        isVisible={isFullscreenMenuVisible}
+        menuLinks={
+          <>
+            {menuLinks.map(({ label, href }) => (
+              <FullscreenMenu.Link href={href} key={href}>
+                {label}
+              </FullscreenMenu.Link>
+            ))}
+          </>
+        }
+        socialMediaLinks={
+          <>
+            {socialMediaLinks.map(({ href, icon, label }) => (
+              <IconLink
+                color={"white"}
+                href={href}
+                icon={icon}
+                label={label}
+                key={href}
+              />
+            ))}
+          </>
+        }
+      />
+    </div>
   );
 }
