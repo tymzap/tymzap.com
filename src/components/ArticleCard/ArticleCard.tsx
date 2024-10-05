@@ -17,7 +17,7 @@ export function ArticleCard({
   publishedAt,
   readTime,
 }: ArticleCardProps) {
-  const formattedDate = formatDate(publishedAt, DATE_FORMAT);
+  const formattedPublishedAt = formatDate(publishedAt, DATE_FORMAT);
 
   return (
     <div className={styles.wrapper}>
@@ -27,7 +27,7 @@ export function ArticleCard({
       />
       <span className={styles.title}>{title}</span>
       <div className={styles.details}>
-        <span className={styles.detailsItem}>{formattedDate}</span>•
+        <span className={styles.detailsItem}>{formattedPublishedAt}</span>•
         <span className={styles.detailsItem}>{readTime} minutes read</span>
       </div>
     </div>

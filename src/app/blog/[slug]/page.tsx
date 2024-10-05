@@ -3,7 +3,7 @@ import fs from "node:fs";
 
 import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 
-import { BlogArticleHeading } from "./BlogArticleHeading";
+import { BlogArticleHeader } from "./BlogArticleHeader";
 import { BlogArticleImage } from "./BlogArticleImage";
 
 type BlogArticleProps = {
@@ -13,14 +13,18 @@ type BlogArticleProps = {
 };
 
 export default async function BlogArticle({ params }: BlogArticleProps) {
-  const { content, metadata } = await loadArticleFromSlug(params.slug);
+  const { content, metadata, readTime } = await loadArticleFromSlug(
+    params.slug,
+  );
 
   return (
-    <div>
-      <BlogArticleHeading>{metadata.title}</BlogArticleHeading>
+    <>
+      <BlogArticleHeader publishedAt={metadata.publishedAt} readTime={readTime}>
+        {metadata.title}
+      </BlogArticleHeader>
       <BlogArticleImage imageSrc={`/${metadata.image}`} />
       {content}
-    </div>
+    </>
   );
 }
 

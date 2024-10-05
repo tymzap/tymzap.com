@@ -6,12 +6,34 @@ import { mediaQueries } from "~/styles/mediaQueries";
 export const heading = style({
   fontFamily: vars.fonts.sourceSans3,
   fontWeight: 600,
-  fontSize: 30,
+  fontSize: 32,
+  margin: 0,
   "@media": {
     [mediaQueries.tabletOrBigger]: {
       fontSize: 40,
       textAlign: "center",
+    },
+  },
+});
+
+export const details = style({
+  display: "flex",
+  gap: 10,
+});
+
+export const detailsItem = style({
+  fontSize: 18,
+});
+
+export const wrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  marginBottom: 20,
+  gap: 20,
+  "@media": {
+    [mediaQueries.tabletOrBigger]: {
       margin: "60px 0",
+      alignItems: "center",
     },
   },
 });

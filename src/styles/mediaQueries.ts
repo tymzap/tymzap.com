@@ -3,6 +3,8 @@ import { breakpoints } from "./breakpoints";
 export const mediaQueries = {
   smallerThanTablet: getMaxWidthMediaQuery(breakpoints.tablet),
   tabletOrBigger: getMinWidthMediaQuery(breakpoints.tablet),
+  smallerThanLaptop: getMaxWidthMediaQuery(breakpoints.laptop),
+  laptopOrBigger: getMinWidthMediaQuery(breakpoints.laptop),
 };
 
 function getMinWidthMediaQuery(value: number) {

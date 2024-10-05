@@ -20,7 +20,7 @@ export const wrapper = style({
 export const hamburgerButtonWrapper = style({
   marginTop: 2,
   "@media": {
-    [mediaQueries.tabletOrBigger]: {
+    [mediaQueries.laptopOrBigger]: {
       display: "none",
     },
   },
@@ -30,7 +30,7 @@ export const linksWrapper = style({
   display: "flex",
   gap: 40,
   "@media": {
-    [mediaQueries.smallerThanTablet]: {
+    [mediaQueries.smallerThanLaptop]: {
       display: "none",
     },
   },
