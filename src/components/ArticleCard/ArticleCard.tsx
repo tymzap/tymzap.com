@@ -2,6 +2,7 @@ import { format as formatDate } from "date-fns";
 
 import * as styles from "./ArticleCard.css";
 import { ArticleCardGrid } from "./ArticleCardGrid";
+import { ArticleCardLink } from "./ArticleCardLink";
 
 type ArticleCardProps = {
   imageSrc: string;
@@ -36,3 +37,4 @@ export function ArticleCard({
 const DATE_FORMAT = "MMMM dd, yyyy";
 
 ArticleCard.Grid = ArticleCardGrid;
+ArticleCard.Link = ArticleCardLink;

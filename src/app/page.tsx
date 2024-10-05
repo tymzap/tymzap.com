@@ -17,12 +17,20 @@ export default function Home() {
       </Text>
       <Heading level={2}>Latest blog posts</Heading>
       <ArticleCard.Grid>
-        <ArticleCard
-          imageSrc={"/stacked-pebbles.webp"}
-          createdAt={new Date(2024, 7, 21)}
-          readTime={5}
-          title={"Designing flexible React components with composition pattern"}
-        />
+        <ArticleCard.Link
+          href={
+            "/blog/designing-flexible-react-components-with-composition-pattern"
+          }
+        >
+          <ArticleCard
+            imageSrc={"/stacked-pebbles.webp"}
+            createdAt={new Date(2024, 7, 21)}
+            readTime={5}
+            title={
+              "Designing flexible React components with composition pattern"
+            }
+          />
+        </ArticleCard.Link>
         <ArticleCard
           imageSrc={"/milky-way-and-tree.webp"}
           createdAt={new Date(2024, 7, 21)}

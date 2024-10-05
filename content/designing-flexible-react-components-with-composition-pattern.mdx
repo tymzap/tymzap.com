@@ -1,0 +1,127 @@
+---
+title: Designing flexible React components with composition pattern
+---
+
+You’ve probably come across a situation where a React component has a fixed structure, making it hard to customize without diving into its internal code. For instance, imagine working with a Button component that displays text with an optional icon on the left:
+
+```jsx
+function Button({ text, icon }) {
+  return (
+    <button>
+      {icon && <span>{icon}</span>}
+      {text}
+    </button>
+  );
+}
+```
+
+If you want to place the icon on the right or display icons on both left and right side, you’d need to add more props and change the component's implementation:
+
+```jsx
+function Button({ text, leftIcon, rightIcon }) {
+  return (
+    <button>
+      {iconLeft && <span>{iconLeft}</span>}
+      {text}
+      {rightIcon && <span>{rightIcon}</span>}
+    </button>
+  );
+}
+```
+
+Now, think about having to make even more changes over time, like adding separator line between text and icon. The button would need more and more props to handle all these changes, making it hard to manage and easy to break existing usages of the component.
+
+This is where the composition pattern comes to the rescue.
+## Composed Button
+
+The composition pattern allows you to build more adaptable components by giving control over their structure to the consumer, rather than embedding it within the component’s implementation. Instead of overloading a single component with numerous props, you split it into smaller, simpler pieces. These pieces can then be mixed together in different ways, depending on what you need.
+
+Let's rethink our Button example. We will divide it to three smaller components:
+
+1. `Button` - the main wrapper
+2. `ButtonIcon` - handles the icon
+3. `ButtonText` - displays the text
+
+Each of these components would be used as children of the main `Button` component. Here's how it works:
+
+```jsx
+<Button>
+  <ButtonIcon icon="🚀" />
+  <ButtonText>Launch</ButtonText>
+</Button>
+```
+
+Want the icon on the right instead? Move `ButtonIcon` after `ButtonText`:
+
+```jsx
+<Button>
+  <ButtonText>Launch</ButtonText>
+  <ButtonIcon icon="🚀" />
+</Button>
+```
+
+Two icons, one on each side:
+
+```jsx
+<Button>
+  <ButtonIcon icon="👈" />
+  <ButtonText>Go back</ButtonText>
+  <ButtonIcon icon="👉" />
+</Button>
+```
+
+Note that we achieved full control over final UI while consuming the component, without changing its internal implementation.
+## Extending composed components
+
+My favorite part of this pattern is that you can extend the behavior of the component without modifying any of its existing parts. For example, if you want to add a separator between the icon and text, you could create a `ButtonSeparator` component:
+
+```jsx
+function ButtonSeparator() {
+  return <span>|</span>;
+};
+```
+
+And use it like this:
+
+```jsx
+<Button>
+  <ButtonIcon icon="🏠" />
+  <ButtonSeparator />
+  <ButtonText>Home</ButtonText>
+</Button>
+```
+## Dot notation
+
+A common way to structure composed components is through dot notation. This technique simplifies your consumer code by grouping related components under one namespace.
+
+To use it, instead of exporting `ButtonIcon`, `ButtonText`, and any other related pieces separately, we can attach them to the `Button` component itself.
+
+```jsx
+function Button({ children }) {
+  return <button>{children}</button>;
+}
+
+function ButtonIcon({ icon }) {
+  return <span>{icon}</span>;
+}
+
+function ButtonText({ children }) {
+  return <span>{children}</span>;
+}
+
+// Attaching subcomponents using dot notation
+Button.Icon = ButtonIcon;
+Button.Text = ButtonText;
+```
+
+Usage:
+
+```jsx
+<Button>
+  <Button.Icon icon="🚀" />
+  <Button.Text>Launch</Button.Text>
+</Button>
+```
+## Summary
+
+The composition pattern lets you break down a complex component into smaller, independent parts that can be arranged in any order. This allows consumers of the component to easily include, remove, or modify its parts as needed. The main advantage of this pattern is that it gives you more control over the UI structure without requiring changes to the component's internal implementation. Try it out!
