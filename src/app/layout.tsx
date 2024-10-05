@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 import Head from "next/head";
 
 import "~/styles/global.css";
-import { sourceSans3 } from "~/styles/fonts";
+import { sourceSans3, firaMono } from "~/styles/fonts";
 import { theme } from "~/styles/theme.css";
 import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
@@ -26,7 +26,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <body className={cn(theme, sourceSans3.variable)}>
+      <body className={cn(theme, sourceSans3.variable, firaMono.variable)}>
         <Navbar
           menuLinks={MENU_LINKS}
           socialMediaLinks={<SocialMediaLinks />}

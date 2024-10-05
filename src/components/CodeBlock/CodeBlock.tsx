@@ -14,8 +14,11 @@ export function CodeBlock({ children, language }: CodeBlockProps) {
     <div className={styles.wrapper}>
       <SyntaxHighlighter
         language={language}
+        codeTagProps={{
+          style: styles.codeTag,
+        }}
         style={gruvboxLight}
-        customStyle={{ borderRadius: 8, fontSize: 16 }}
+        customStyle={styles.syntaxHighlighter}
       >
         {children}
       </SyntaxHighlighter>

@@ -1,7 +1,8 @@
 import { MDXComponents } from "mdx/types.js";
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
 import { CodeBlock } from "~/components/CodeBlock";
+import { Code } from "~/components/Code";
 
 export const MDX_COMPONENTS: MDXComponents = {
   pre: (props) => {
@@ -10,6 +11,7 @@ export const MDX_COMPONENTS: MDXComponents = {
 
     return <CodeBlock language={language}>{content}</CodeBlock>;
   },
+  code: Code,
 };
 
 function getCodeBlockContentFromProps(props: PropsWithChildren) {

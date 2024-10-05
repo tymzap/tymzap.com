@@ -36,7 +36,7 @@ Now, think about having to make even more changes over time, like adding separat
 This is where the composition pattern comes to the rescue.
 ## Composed Button
 
-The composition pattern allows you to build more adaptable components by giving control over their structure to the consumer, rather than embedding it within the component’s implementation. Instead of overloading a single component with numerous props, you split it into smaller, simpler pieces. These pieces can then be mixed together in different ways, depending on what you need.
+The composition pattern allows you to build more adaptable components by giving control over their structure to the consumer, rather than embedding it within the component’s implementation. Instead of overloading a single component with lots of props, you split it into many simpler pieces. These pieces can then be mixed together in different ways, depending on what you need.
 
 Let's rethink our Button example. We will divide it to three smaller components:
 
@@ -44,7 +44,7 @@ Let's rethink our Button example. We will divide it to three smaller components:
 2. `ButtonIcon` - handles the icon
 3. `ButtonText` - displays the text
 
-Each of these components would be used as children of the main `Button` component. Here's how it works:
+Then, icon and text components would be used as children of the main `Button` component. Here's how it works:
 
 ```jsx
 <Button>
@@ -126,4 +126,6 @@ Usage:
 ```
 ## Summary
 
-The composition pattern lets you break down a complex component into smaller, independent parts that can be arranged in any order. This allows consumers of the component to easily include, remove, or modify its parts as needed. The main advantage of this pattern is that it gives you more control over the UI structure without requiring changes to the component's internal implementation. Try it out!
+The composition pattern lets you break down a complex component into smaller, independent parts that can be arranged in any order. This allows consumers of the component to easily include, remove, or modify its parts as needed.
+
+The main advantage of this pattern is that it gives you more control over the UI structure without requiring changes to the component's internal implementation. Try it out!
