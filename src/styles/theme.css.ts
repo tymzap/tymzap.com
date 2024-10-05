@@ -7,5 +7,6 @@ export const [theme, vars] = createTheme({
   fonts: {
     sourceSans3: "var(--source-sans-3)",
     firaMono: "var(--fira-mono)",
+    openSans: "var(--open-sans)",
   },
 });

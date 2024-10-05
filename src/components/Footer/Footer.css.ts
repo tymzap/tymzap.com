@@ -43,3 +43,9 @@ export const text = style({
     },
   },
 });
+
+export const name = style({
+  fontFamily: vars.fonts.openSans,
+  fontWeight: 700,
+  fontSize: 17,
+});

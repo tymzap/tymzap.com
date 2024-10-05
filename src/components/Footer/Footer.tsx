@@ -11,7 +11,8 @@ export function Footer({ socialMediaLinks }: FooterProps) {
     <div className={styles.wrapper}>
       <div className={styles.contentWrapper}>
         <span className={styles.text}>
-          © Tymek Zapała — 2024. All rights reserved.
+          © <span className={styles.name}>Tymek Zapała</span> — 2024. All
+          rights reserved.
         </span>
         <div className={styles.socialMediaLinksWrapper}>{socialMediaLinks}</div>
       </div>

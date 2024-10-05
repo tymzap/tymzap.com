@@ -5,8 +5,9 @@ import { mediaQueries } from "~/styles/mediaQueries";
 
 export const logo = recipe({
   base: {
-    fontFamily: vars.fonts.sourceSans3,
+    fontFamily: vars.fonts.openSans,
     fontSize: 20,
+    fontWeight: 700,
     whiteSpace: "nowrap",
     "@media": {
       [mediaQueries.tabletOrBigger]: {
