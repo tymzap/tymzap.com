@@ -1,8 +1,11 @@
 import path from "node:path";
 import fs from "node:fs";
+import Image from "next/image";
 
 import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 import { Heading } from "~/components/Heading";
+
+import { ArticleImage } from "./ArticleImage";
 
 type BlogArticleProps = {
   params: {
@@ -16,6 +19,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
   return (
     <div>
       <Heading level={1}>{metadata.title}</Heading>
+      <ArticleImage imageSrc={`/${metadata.image}`} />
       {content}
     </div>
   );
