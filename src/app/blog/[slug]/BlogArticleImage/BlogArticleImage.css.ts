@@ -7,7 +7,7 @@ export const image = style({
   margin: "15px 0",
   "@media": {
     [mediaQueries.tabletOrBigger]: {
-      margin: "30px 0",
+      margin: "30px 0 60px 0",
     },
   },
 });
