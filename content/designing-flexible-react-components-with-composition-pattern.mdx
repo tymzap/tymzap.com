@@ -23,7 +23,7 @@ If you want to place the icon on the right or display icons on both left and rig
 function Button({ text, leftIcon, rightIcon }) {
   return (
     <button>
-      {iconLeft && <span>{iconLeft}</span>}
+      {leftIcon && <span>{leftIcon}</span>}
       {text}
       {rightIcon && <span>{rightIcon}</span>}
     </button>
