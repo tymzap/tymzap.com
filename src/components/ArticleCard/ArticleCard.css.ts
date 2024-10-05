@@ -28,12 +28,12 @@ export const details = style({
 });
 
 export const detailsItem = style({
-  fontSize: 16,
+  fontSize: 18,
 });
 
 export const title = style({
   fontWeight: 600,
-  fontSize: 20,
+  fontSize: 22,
   selectors: {
     [`${wrapper}:hover &`]: {
       opacity: 0.65,

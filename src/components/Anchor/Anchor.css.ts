@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "~/styles/theme.css";
 
 export const anchor = style({
-  fontFamily: vars.fonts.dmSans,
+  fontFamily: vars.fonts.sourceSans3,
   cursor: "pointer",
   color: vars.colors.black,
   textDecoration: "none",

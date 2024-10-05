@@ -15,7 +15,7 @@ export function CodeBlock({ children, language }: CodeBlockProps) {
       <SyntaxHighlighter
         language={language}
         style={gruvboxLight}
-        customStyle={{ borderRadius: 8 }}
+        customStyle={{ borderRadius: 8, fontSize: 16 }}
       >
         {children}
       </SyntaxHighlighter>

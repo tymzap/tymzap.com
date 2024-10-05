@@ -5,8 +5,8 @@ import { vars } from "~/styles/theme.css";
 export const link = style({
   color: vars.colors.black,
   textDecoration: "none",
-  fontWeight: 600,
-  fontSize: 16,
+  fontWeight: 500,
+  fontSize: 18,
   selectors: {
     "&:hover": {
       opacity: 0.65,

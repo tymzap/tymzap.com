@@ -3,8 +3,8 @@ import { PartialStoryFn } from "@storybook/csf";
 import cn from "classnames";
 
 import { theme } from "~/styles/theme.css";
-import { dmSans } from "~/styles/fonts";
+import { sourceSans3 } from "~/styles/fonts";
 
 export function ThemeDecorator(renderStory: PartialStoryFn<ReactRenderer>) {
-  return <div className={cn(theme, dmSans.variable)}>{renderStory()}</div>;
+  return <div className={cn(theme, sourceSans3.variable)}>{renderStory()}</div>;
 }

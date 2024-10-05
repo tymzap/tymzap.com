@@ -6,5 +6,6 @@ globalStyle("body", {
   backgroundColor: vars.colors.alabaster,
   position: "relative",
   minHeight: "100vh",
-  fontFamily: vars.fonts.dmSans,
+  fontFamily: vars.fonts.sourceSans3,
+  fontSize: 18,
 });

@@ -3,7 +3,7 @@ import { styleVariants, style } from "@vanilla-extract/css";
 import { vars } from "~/styles/theme.css";
 
 const base = style({
-  fontFamily: vars.fonts.dmSans,
+  fontFamily: vars.fonts.sourceSans3,
   fontWeight: 700,
 });
 

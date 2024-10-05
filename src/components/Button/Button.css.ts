@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "~/styles/theme.css";
 
 export const button = style({
-  fontFamily: vars.fonts.dmSans,
+  fontFamily: vars.fonts.sourceSans3,
   fontSize: 15,
   background: vars.colors.black,
   border: 0,
