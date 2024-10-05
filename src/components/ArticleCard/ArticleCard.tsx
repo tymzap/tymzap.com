@@ -7,17 +7,17 @@ import { ArticleCardLink } from "./ArticleCardLink";
 type ArticleCardProps = {
   imageSrc: string;
   title: string;
-  createdAt: Date;
+  publishedAt: Date;
   readTime: number;
 };
 
 export function ArticleCard({
   imageSrc,
   title,
-  createdAt,
+  publishedAt,
   readTime,
 }: ArticleCardProps) {
-  const formattedDate = formatDate(createdAt, DATE_FORMAT);
+  const formattedDate = formatDate(publishedAt, DATE_FORMAT);
 
   return (
     <div className={styles.wrapper}>

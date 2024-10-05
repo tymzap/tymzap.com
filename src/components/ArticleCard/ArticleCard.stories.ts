@@ -9,7 +9,7 @@ const meta: Meta<typeof ArticleCard> = {
   args: {
     imageSrc: sandstone.src,
     title: faker.lorem.words(6),
-    createdAt: new Date(2024, 7, 21),
+    publishedAt: new Date(2024, 7, 21),
     readTime: 5,
   },
 };

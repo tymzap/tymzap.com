@@ -1,18 +1,19 @@
 import { compileMDX as nextMdxRemoteCompileMdx } from "next-mdx-remote/rsc";
+import readingTime from "reading-time";
+
+import { normalizeArticleMetadata } from "~/lib/normalizeArticleMetadata";
 
 export async function compileMdx(source: string) {
-  const { frontmatter, content } =
-    await nextMdxRemoteCompileMdx<ArticleMetadata>({
-      source,
-      options: { parseFrontmatter: true },
-    });
+  const { frontmatter, content } = await nextMdxRemoteCompileMdx({
+    source,
+    options: { parseFrontmatter: true },
+  });
+
+  const readTime = Math.ceil(readingTime(source).minutes);
 
   return {
     content,
-    metadata: frontmatter,
+    metadata: normalizeArticleMetadata(frontmatter),
+    readTime,
   };
 }
-
-type ArticleMetadata = {
-  title: string;
-};

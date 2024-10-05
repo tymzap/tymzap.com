@@ -2,12 +2,12 @@ import { loadArticles } from "~/lib/loadArticles";
 import { ArticleCard } from "~/components/ArticleCard";
 import { Heading } from "~/components/Heading";
 
-export default async function Blog() {
-  const articles = sortArticlesByPublishedAtDate(await loadArticles());
+export async function LatestArticles() {
+  const articles = getLatestArticles(await loadArticles());
 
   return (
     <>
-      <Heading level={1}>Blog</Heading>
+      <Heading level={2}>Latest blog posts</Heading>
       <ArticleCard.Grid>
         {articles.map(({ slug, metadata, readTime }) => {
           const href = `/blog/${slug}`;
@@ -29,12 +29,14 @@ export default async function Blog() {
   );
 }
 
-function sortArticlesByPublishedAtDate(
-  articles: Awaited<ReturnType<typeof loadArticles>>,
-) {
-  return articles.sort(
+function getLatestArticles(articles: Awaited<ReturnType<typeof loadArticles>>) {
+  const articlesSortedByPublishedAtDate = articles.sort(
     (previousArticle, nextArticle) =>
       previousArticle.metadata.publishedAt.getTime() -
       nextArticle.metadata.publishedAt.getTime(),
   );
+
+  return articlesSortedByPublishedAtDate.slice(0, LATEST_ARTICLES_COUNT);
 }
+
+const LATEST_ARTICLES_COUNT = 2;

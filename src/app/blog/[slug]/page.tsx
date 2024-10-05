@@ -2,7 +2,6 @@ import path from "node:path";
 import fs from "node:fs";
 
 import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
-import { compileMdx } from "~/lib/compileMdx";
 import { Heading } from "~/components/Heading";
 
 type BlogArticleProps = {
@@ -12,9 +11,7 @@ type BlogArticleProps = {
 };
 
 export default async function BlogArticle({ params }: BlogArticleProps) {
-  const article = loadArticleFromSlug(params.slug);
-
-  const { metadata, content } = await compileMdx(article);
+  const { content, metadata } = await loadArticleFromSlug(params.slug);
 
   return (
     <div>
