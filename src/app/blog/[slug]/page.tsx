@@ -1,6 +1,5 @@
 import path from "node:path";
 import fs from "node:fs";
-import Image from "next/image";
 
 import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 import { Heading } from "~/components/Heading";
