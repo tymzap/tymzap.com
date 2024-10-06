@@ -5,7 +5,7 @@ import { mediaQueries } from "~/styles/mediaQueries";
 
 export const heading = style({
   fontFamily: vars.fonts.sourceSans3,
-  fontWeight: 600,
+  fontWeight: 700,
   fontSize: 32,
   margin: 0,
   "@media": {
@@ -28,7 +28,7 @@ export const detailsItem = style({
 export const wrapper = style({
   display: "flex",
   flexDirection: "column",
-  marginBottom: 20,
+  margin: "30px 0 20px",
   gap: 20,
   "@media": {
     [mediaQueries.tabletOrBigger]: {
