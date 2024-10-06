@@ -2,18 +2,26 @@ import { style } from "@vanilla-extract/css";
 
 import { vars } from "~/styles/theme.css";
 
-export const anchor = style({
+export const link = style({
   fontFamily: vars.fonts.sourceSans3,
   cursor: "pointer",
-  color: vars.colors.black,
   textDecoration: "none",
+  color: vars.colors.black,
+  display: "inline-flex",
+  selectors: {
+    "&:hover": {
+      opacity: 0.65,
+    },
+  },
 });
 
-export const adornment = style({
-  display: "inline-block",
+export const icon = style({
+  margin: "4px 0 0 8px",
+  width: 20,
+  height: 20,
   transition: "transform .3s",
   selectors: {
-    [`${anchor}:hover &`]: {
+    [`${link}:hover &`]: {
       transform: "translateX(6px)",
     },
   },
