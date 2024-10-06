@@ -2,6 +2,7 @@ import path from "node:path";
 import fs from "node:fs";
 
 import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
+import { LongContentWrapper } from "~/components/LongContentWrapper";
 
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { BlogArticleImage } from "./BlogArticleImage";
@@ -18,13 +19,13 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
   );
 
   return (
-    <>
+    <LongContentWrapper>
       <BlogArticleHeader publishedAt={metadata.publishedAt} readTime={readTime}>
         {metadata.title}
       </BlogArticleHeader>
       <BlogArticleImage imageSrc={`/${metadata.image}`} />
       {content}
-    </>
+    </LongContentWrapper>
   );
 }
 
