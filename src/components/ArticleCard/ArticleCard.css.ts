@@ -1,8 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
 import { mediaQueries } from "~/styles/mediaQueries";
+import { vars } from "~/styles/theme.css";
 
 export const wrapper = style({
+  fontFamily: vars.fonts.sourceSans3,
   display: "flex",
   flexDirection: "column",
   gap: 18,
@@ -32,7 +34,7 @@ export const detailsItem = style({
 });
 
 export const title = style({
-  fontWeight: 600,
+  fontWeight: 700,
   fontSize: 22,
   selectors: {
     [`${wrapper}:hover &`]: {

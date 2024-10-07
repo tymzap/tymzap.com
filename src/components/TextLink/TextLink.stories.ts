@@ -15,10 +15,18 @@ const meta: Meta<typeof TextLink> = {
 
 export default meta;
 
+type TextLinkStoryObj = StoryObj<typeof TextLink>;
+
 export const Default = {};
 
-export const WithLink: StoryObj<typeof ArrowRight> = {
+export const WithIcon: TextLinkStoryObj = {
   args: {
     icon: ArrowRight,
+  },
+};
+
+export const WithoutUnderline: TextLinkStoryObj = {
+  args: {
+    hasUnderline: false,
   },
 };

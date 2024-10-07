@@ -6,4 +6,5 @@ export const colors = {
   gallery: "#eaeaea",
   wildSand: "#f4f4f4",
   mineShaft: "#333333",
+  lightGray: "#d3d3d3",
 } as const;

@@ -8,7 +8,7 @@ export function LatestArticlesHeader() {
   return (
     <div className={styles.wrapper}>
       <Heading level={2}>Latest blog posts</Heading>
-      <TextLink href={"/blog"} icon={ArrowRight}>
+      <TextLink href={"/blog"} icon={ArrowRight} hasUnderline={false}>
         See all posts
       </TextLink>
     </div>

@@ -3,8 +3,16 @@ import { PropsWithChildren } from "react";
 
 import { CodeBlock } from "~/components/CodeBlock";
 import { Code } from "~/components/Code";
+import { List } from "~/components/List";
+import { TextLink } from "~/components/TextLink";
+import { Blockquote } from "~/components/Blockquote";
 
 export const MDX_COMPONENTS: MDXComponents = {
+  a: ({ children, href }) => (
+    <TextLink href={href ?? ""} hasUnderline={true}>
+      {children}
+    </TextLink>
+  ),
   pre: (props) => {
     const content = getCodeBlockContentFromProps(props);
     const language = getCodeBlockLanguageFromProps(props);
@@ -12,6 +20,10 @@ export const MDX_COMPONENTS: MDXComponents = {
     return <CodeBlock language={language}>{content}</CodeBlock>;
   },
   code: Code,
+  blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
+  ul: ({ children }) => <List isOrdered={false}>{children}</List>,
+  ol: ({ children }) => <List isOrdered={true}>{children}</List>,
+  li: ({ children }) => <List.Item>{children}</List.Item>,
 };
 
 function getCodeBlockContentFromProps(props: PropsWithChildren) {
