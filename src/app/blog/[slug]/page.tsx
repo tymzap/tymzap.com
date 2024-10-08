@@ -6,6 +6,7 @@ import { LongContentWrapper } from "~/components/LongContentWrapper";
 
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { BlogArticleImage } from "./BlogArticleImage";
+import { AuthorBio } from "./AuthorBio";
 
 type BlogArticleProps = {
   params: {
@@ -25,6 +26,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
       </BlogArticleHeader>
       <BlogArticleImage imageSrc={`/${metadata.image}`} />
       {content}
+      <AuthorBio />
     </LongContentWrapper>
   );
 }
