@@ -1,13 +1,14 @@
 import { loadArticles } from "~/lib/loadArticles";
 import { ArticleCard } from "~/components/ArticleCard";
-import { Heading } from "~/components/Heading";
+
+import { BlogHeader } from "./BlogHeader";
 
 export default async function Blog() {
   const articles = sortArticlesByPublishedAtDate(await loadArticles());
 
   return (
     <>
-      <Heading level={1}>Blog</Heading>
+      <BlogHeader />
       <ArticleCard.Grid>
         {articles.map(({ slug, metadata, readTime }) => {
           const href = `/blog/${slug}`;

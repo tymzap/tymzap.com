@@ -1,10 +1,13 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { Text } from "~/components/Text";
 
 import * as styles from "./AuthorBio.css";
 
 export function AuthorBio() {
+  const t = useTranslations();
+
   return (
     <div className={styles.wrapper}>
       <Image
@@ -16,10 +19,7 @@ export function AuthorBio() {
       <div className={styles.contentWrapper}>
         <span className={styles.heading}>About the author</span>
         <Text as={"p"}>
-          Tymek Zapała is a software engineer and startup founder based in
-          Cracow, Poland. With extensive experience of building products from
-          start to launch, he’s passionate about writing quality code and
-          sharing his knowledge.
+          {t("tymekZapalaIsASoftwareEngineerAndStartupFounder")}
         </Text>
       </div>
     </div>

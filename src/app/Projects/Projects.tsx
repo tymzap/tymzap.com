@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import { Text } from "~/components/Text";
 import { List } from "~/components/List";
 import { Heading } from "~/components/Heading";
@@ -6,24 +8,24 @@ import { TextLink } from "~/components/TextLink";
 import * as styles from "./Projects.css";
 
 export function Projects() {
+  const t = useTranslations();
+
   return (
     <div className={styles.wrapper}>
-      <Heading level={2}>Projects</Heading>
+      <Heading level={2}>{t("projects")}</Heading>
       <Text>
-        {`I enjoy turning ideas into useful things. Here are the key projects I've
-        built and launched:`}
+        {t("iEnjoyTurningIdeasIntoUsefulThingsHereAreTheKeyProjects")}
       </Text>
       <List>
         <List.Item>
-          <TextLink href={COLORFUL_BUDGET_URL}>Colorful Budget</TextLink> –
-          complete budgeting solution for businesses using Trello ecosystem
+          <TextLink href={COLORFUL_BUDGET_URL}>Colorful Budget</TextLink> –{" "}
+          {t("completeBudgetingSolutionForBusinessesUsingTrelloEcosystem")}
         </List.Item>
         <List.Item>
           <TextLink href={HEROES_III_POLISH_CHAMPIONSHIP_URL}>
             Heroes III Polish Championship
           </TextLink>{" "}
-          – community-driven platform used for hosting national gaming
-          tournament
+          – {t("communityDrivenPlatformUsedForHostingNationalGamingTournament")}
         </List.Item>
       </List>
     </div>

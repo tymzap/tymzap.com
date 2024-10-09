@@ -1,4 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
+import { style } from "@vanilla-extract/css";
 
 import { vars } from "~/styles/theme.css";
 import { mediaQueries } from "~/styles/mediaQueries";
@@ -25,4 +26,8 @@ export const logo = recipe({
       },
     },
   },
+});
+
+export const link = style({
+  textDecoration: "none",
 });

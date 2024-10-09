@@ -5,7 +5,7 @@ import * as styles from "./BlogArticleHeader.css";
 
 type BlogArticleHeaderProps = PropsWithChildren<{
   publishedAt: Date;
-  readTime: number;
+  readTime: string;
 }>;
 
 export function BlogArticleHeader({
@@ -20,7 +20,7 @@ export function BlogArticleHeader({
       <h1 className={styles.heading}>{children}</h1>
       <div className={styles.details}>
         <span className={styles.detailsItem}>{formattedPublishedAt}</span>•
-        <span className={styles.detailsItem}>{readTime} minutes read</span>
+        <span className={styles.detailsItem}>{readTime}</span>
       </div>
     </div>
   );

@@ -11,11 +11,9 @@ export async function compileMdx(source: string) {
     options: { parseFrontmatter: true },
   });
 
-  const readTime = Math.ceil(readingTime(source).minutes);
-
   return {
     content,
     metadata: normalizeArticleMetadata(frontmatter),
-    readTime,
+    readTime: readingTime(source).text,
   };
 }

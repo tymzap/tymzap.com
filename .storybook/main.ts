@@ -45,6 +45,7 @@ const config: StorybookConfig = {
         ],
       },
     },
+    "storybook-next-intl",
   ],
   webpackFinal: (webpackConfig) => {
     addSvgrLoader(webpackConfig);
