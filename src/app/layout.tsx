@@ -18,6 +18,9 @@ type HomeLayoutProps = PropsWithChildren;
 export default async function HomeLayout({ children }: HomeLayoutProps) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body
         className={cn(
           theme,
