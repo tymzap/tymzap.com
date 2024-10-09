@@ -24,7 +24,7 @@ export const name: CSSProperties = {
 };
 
 export const address: CSSProperties = {
+  fontSize: 30,
+  fontWeight: 700,
   fontFamily: '"Open Sans"',
-  fontSize: 35,
-  fontWeight: 400,
 };
