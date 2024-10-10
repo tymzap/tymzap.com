@@ -33,8 +33,8 @@ export async function LatestArticles() {
 function getLatestArticles(articles: Awaited<ReturnType<typeof loadArticles>>) {
   const articlesSortedByPublishedAtDate = articles.sort(
     (previousArticle, nextArticle) =>
-      previousArticle.metadata.publishedAt.getTime() -
-      nextArticle.metadata.publishedAt.getTime(),
+      nextArticle.metadata.publishedAt.getTime() -
+      previousArticle.metadata.publishedAt.getTime(),
   );
 
   return articlesSortedByPublishedAtDate.slice(0, LATEST_ARTICLES_COUNT);

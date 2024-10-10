@@ -35,7 +35,7 @@ function sortArticlesByPublishedAtDate(
 ) {
   return articles.sort(
     (previousArticle, nextArticle) =>
-      previousArticle.metadata.publishedAt.getTime() -
-      nextArticle.metadata.publishedAt.getTime(),
+      nextArticle.metadata.publishedAt.getTime() -
+      previousArticle.metadata.publishedAt.getTime(),
   );
 }

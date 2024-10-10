@@ -1,0 +1,129 @@
+---
+title: Why you may not need Sass anymore
+publishedAt: 2024-10-10
+image: aerial-view-of-winding-road.webp
+---
+I’ve used Sass for years. And for a long time, I didn’t even think about writing CSS any other way. Eventually, CSS-in-JS caught my eye - it was what the cool kids used for styling, so eventually I gave it a try - but for projects where it didn’t fit, Sass remained as my default choice.
+
+However, at some point I realized that I was really only using Sass for three main features: variables, nesting, and imports. And guess what? All of these are features are now supported by native CSS.
+
+Sure, Sass offers plenty more features beyond these three. But do you really need them to successfully build a large project? Let’s break it down from the start.
+## CSS variables
+
+One of Sass’ defining features are variables, allowing you to reuse values like colors, fonts, and spacing. But now, CSS variables (also known as custom properties) are a thing, and they're more powerful:
+
+- **CSS variables are dynamic**. You can change them at runtime with JavaScript or media queries, something Sass can't do.
+- **You can scope them to specific selectors**, which allows you to easily implement cool stuff like dark mode.
+- **They support fallback values**. Useful for advanced use cases like coding design systems.
+
+```css
+/* Default light theme */
+:root {
+  --background-color: white;
+  --text-color: black;
+}
+
+/* Dark mode theme */
+/* Just apply this class to root element in order to switch to dark mode */
+.dark-mode {
+  --background-color: black;
+  --text-color: white;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+```
+
+These advantages come from the fact that CSS custom properties work directly in the browser - no need for a compilation step like with Sass variables.
+## CSS nesting
+
+Around December 2023, the impossible became possible, and nesting received official support in CSS. Despite some similarities with Sass' nesting (it also uses `&` symbol to reference a parent element), the syntax is different.
+
+Here's example of nesting in Sass:
+
+```scss
+.card {
+  color: black;
+
+  h2 {
+    font-size: 2rem;
+  }
+}
+```
+
+And equivalent in native CSS:
+
+```css
+.card {
+  color: black;
+
+  & h2 {
+    font-size: 2rem;
+  }
+}
+```
+
+As you can see, in CSS the ampersand (`&`) symbol is required to indicate the parent element. Also, there are other differences like specificity or creation of compound selectors. If you want to dive deeper, I recommend reading a [well-written article on makeuseof.com](https://www.makeuseof.com/css-sass-nesting-differences/).
+
+Unfortunately because of nesting, in most cases you cannot swap Sass code for CSS code and expect it to work as a drop-in replacement. Of course, if you're starting a new project with pure CSS, this doesn't matter.
+
+## CSS imports
+
+Sass imports compile all styles into one file before sending them to the browser, improving performance but requiring a compilation step. In contrast, CSS imports happen at runtime, meaning each file is fetched individually, which can impact performance if not used with caution.
+
+However, importing styles at runtime is not necessarily a bad thing. For instance, we can dynamically fetch only the needed styles based on media queries:
+
+```css
+@import url("desktop.css") screen and (min-width: 1024px);
+```
+
+Or even feature support:
+
+```css
+@import url("gridy.css") supports(display: grid) screen and (max-width: 400px);
+@import url("flexy.css") supports((not (display: grid)) and (display: flex))
+  screen and (max-width: 400px);
+```
+
+As you can see, it can get pretty sophisticated! This approach just completely changes the way we think about loading CSS into the page, giving us much more control.
+
+## Extra (unnecessary) Sass features
+
+Alright, let's talk about those other Sass features that CSS doesn’t support natively, like functions and mixins. While these tools can seem useful, do we really need them?
+
+I’d argue that CSS works best when it sticks to what it was originally designed for, that is - *rather simple* styling of HTML elements. By simple I mean low abstraction level. Every time I’ve tried to overengineer my styles by heavily relying on mixins and functions, the result has been harder to read and maintain. Actually, we can even see this as a trend with CSS-in-JS gaining popularity. The focus is shifting away from embedding logic in stylesheets and moving that logic directly into the component's JavaScript code.
+
+If you really need mixin-like functionality, the replacement may be to use good old utility classes. They work differently but at the end of the day achieve the same goal - provide reusable styles. And they have big advantage of making styles debugging in browser much easier, as you can always see where the declarations are coming from.
+
+```css
+.unstyled-link {
+  text-decoration: none;
+  color: inherit;
+  font: inherit;
+  background: none;
+  border: none;
+}
+```
+
+The hardest part may be replacing Sass util functions if you’ve been relying on them heavily. CSS has its own growing set of native utilities, but it's still lacking quite a lot. For example, some color manipulation functions like `darken()` or `lighten()`. To adapt, you might need to rethink how you structure your styles to avoid relying on these kinds of utilities altogether.
+
+## Poor browser support?
+
+One of the most common arguments against ditching Sass for native CSS is browser support. For example, CSS nesting support came in browser versions released around the end of 2023.
+
+I don't think this is a big obstacle to adopt vanilla CSS in your next project either.
+
+First of all, you may already be targeting modern browsers that support all these features out of the box. It all depends on preferences of user base of your project. And remember that as the time will pass, the bigger the changes that your audience use browsers with modern CSS support.
+
+![CSS nesting support in major browsers as of October 2024](css-nesting-support-in-major-browsers.webp "CSS nesting support in major browsers as of October 2024")
+
+If you can't do this and just have to support older browsers, you can integrate PostCSS into your build step. Basically you write modern CSS, and PostCSS processes it and output code that works in older browsers.
+
+Now, some may ask, "If you still need to process your CSS with PostCSS, why not just stick with Sass?", and it's a valid point. I think it comes down to a personal preference.
+
+The beauty of using native CSS instead of Sass is that, over time, as more users migrate to modern browsers, you can simply remove PostCSS from your build step without needing to rewrite your styles. You will end up with a codebase that relies entirely on native features, without the need for extra build steps. **These native features will get improved, optimized and adapted to modern web standards**, as opposed to stale Sass paradigms - which are around from 2007, when web was a completely different place.
+## Summary
+
+With the evolution of native CSS, many of the core features that once made Sass indispensable are now built directly into CSS. Variables, nesting, and imports no longer require an external preprocessor - while often providing more functionality - and browser support for these features is improving rapidly. While Sass still offers unique tools, your project can benefit from **simpler setup and future-proof codebase** by relying on vanilla CSS. So, before reaching for Sass on your next project, consider whether native CSS is just enough!

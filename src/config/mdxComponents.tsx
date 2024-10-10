@@ -6,8 +6,16 @@ import { Code } from "~/components/Code";
 import { List } from "~/components/List";
 import { TextLink } from "~/components/TextLink";
 import { Blockquote } from "~/components/Blockquote";
+import { ImageWithCaption } from "~/components/ImageWithCaption";
 
 export const MDX_COMPONENTS: MDXComponents = {
+  img: ({ src, alt, title }) => (
+    <ImageWithCaption
+      src={getBlogImageSrc(src)}
+      alt={alt ?? ""}
+      caption={title}
+    />
+  ),
   a: ({ children, href }) => (
     <TextLink href={href ?? ""} hasUnderline={true}>
       {children}
@@ -25,6 +33,14 @@ export const MDX_COMPONENTS: MDXComponents = {
   ol: ({ children }) => <List isOrdered={true}>{children}</List>,
   li: ({ children }) => <List.Item>{children}</List.Item>,
 };
+
+function getBlogImageSrc(initialSrc?: string) {
+  if (!initialSrc) {
+    return "";
+  }
+
+  return `/blog/${initialSrc}`;
+}
 
 function getCodeBlockContentFromProps(props: PropsWithChildren) {
   const { children } = props;
