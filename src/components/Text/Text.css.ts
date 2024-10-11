@@ -13,3 +13,7 @@ export const withMargin = style({
   marginBlockStart: "1em",
   marginBlockEnd: "1em",
 });
+
+export const withBoldStyle = style({
+  fontWeight: 700,
+});

@@ -10,10 +10,11 @@ export function Hero() {
 
   return (
     <div className={styles.wrapper}>
-      <Heading level={2}>{t("writingQualityCodeThatMakesARealImpact")}</Heading>
+      <Heading level={2}>{t("softwareEngineer&Maker")}</Heading>
       <Text as={"p"}>
-        {t.rich("hiImTymekImASoftwareEngineerAndStartupFounder", {
+        {t.rich("helloImTymekImASoftwareEngineerAndStartupFounder", {
           br: () => <br />,
+          strong: (children) => <Text isBold={true}>{children}</Text>,
         })}
       </Text>
     </div>
