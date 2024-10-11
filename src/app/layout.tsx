@@ -13,6 +13,13 @@ import { Footer } from "~/components/Footer";
 import { SocialMediaLinks } from "./SocialMediaLinks";
 import { ContentWrapper } from "./ContentWrapper";
 
+export { generateMetadata } from "./generateMetadata";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 type HomeLayoutProps = PropsWithChildren;
 
 export default async function HomeLayout({ children }: HomeLayoutProps) {
@@ -56,10 +63,3 @@ const MENU_LINKS: MenuLink[] = [
     label: "Blog",
   },
 ];
-
-export { generateMetadata } from "./generateMetadata";
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-};
