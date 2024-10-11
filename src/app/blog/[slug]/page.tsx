@@ -5,6 +5,10 @@ import { BlogArticleHeader } from "./BlogArticleHeader";
 import { BlogArticleImage } from "./BlogArticleImage";
 import { AuthorBio } from "./AuthorBio";
 
+export { generateStaticParams } from "./generateStaticParams";
+
+export const dynamicParams = false;
+
 type BlogArticleProps = {
   params: {
     slug: string;
@@ -27,7 +31,3 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
     </LongContentWrapper>
   );
 }
-
-export { generateStaticParams } from "./generateStaticParams";
-
-export const dynamicParams = false;
