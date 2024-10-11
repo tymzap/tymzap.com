@@ -12,7 +12,7 @@ export async function LatestArticles() {
       <ArticleCard.Grid>
         {articles.map(({ slug, metadata, readTime }) => {
           const href = `/blog/${slug}`;
-          const imageSrc = `/${metadata.image}`;
+          const imageSrc = `/blog/${metadata.image}`;
 
           return (
             <ArticleCard.Link href={href} key={slug}>

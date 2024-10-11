@@ -25,7 +25,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
       <BlogArticleHeader publishedAt={metadata.publishedAt} readTime={readTime}>
         {metadata.title}
       </BlogArticleHeader>
-      <BlogArticleImage imageSrc={`/${metadata.image}`} />
+      <BlogArticleImage imageSrc={`/blog/${metadata.image}`} />
       {content}
       <AuthorBio />
     </LongContentWrapper>
