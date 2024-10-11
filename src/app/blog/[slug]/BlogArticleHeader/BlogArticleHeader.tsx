@@ -17,7 +17,7 @@ export function BlogArticleHeader({
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.heading}>{children}</h1>
+      <h2 className={styles.heading}>{children}</h2>
       <div className={styles.details}>
         <span className={styles.detailsItem}>{formattedPublishedAt}</span>•
         <span className={styles.detailsItem}>{readTime}</span>

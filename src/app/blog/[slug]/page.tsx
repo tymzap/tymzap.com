@@ -4,7 +4,6 @@ import { LongContentWrapper } from "~/components/LongContentWrapper";
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { BlogArticleImage } from "./BlogArticleImage";
 import { AuthorBio } from "./AuthorBio";
-import { generateStaticParams } from "./generateStaticParams";
 
 type BlogArticleProps = {
   params: {
@@ -28,5 +27,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
     </LongContentWrapper>
   );
 }
+
+export { generateStaticParams } from "./generateStaticParams";
 
 export const dynamicParams = false;

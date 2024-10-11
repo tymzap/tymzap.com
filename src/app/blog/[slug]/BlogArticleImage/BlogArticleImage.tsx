@@ -12,6 +12,7 @@ export function BlogArticleImage({ imageSrc }: BlogArticleImageProps) {
       src={imageSrc}
       alt=""
       layout="responsive"
+      priority={true}
       width={100}
       height={50}
       objectFit="cover"

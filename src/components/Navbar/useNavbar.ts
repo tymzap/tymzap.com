@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
+import { breakpoints } from "~/styles/breakpoints";
+
 export function useNavbar() {
   const pathname = usePathname();
 
@@ -13,6 +15,20 @@ export function useNavbar() {
   useEffect(() => {
     setIsFullscreenMenuVisible(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > breakpoints.laptop) {
+        setIsFullscreenMenuVisible(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return {
     isFullscreenMenuVisible,

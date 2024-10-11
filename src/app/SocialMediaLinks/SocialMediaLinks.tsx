@@ -7,12 +7,17 @@ import { IconLink } from "~/components/IconLink";
 
 import * as styles from "./SocialMediaLinks.css";
 
-export function SocialMediaLinks() {
+type SocialMediaLinksProps = {
+  iconSize?: number;
+};
+
+export function SocialMediaLinks({ iconSize }: SocialMediaLinksProps) {
   return (
     <div className={styles.wrapper}>
       {LINKS.map(({ href, icon, label }) => (
         <IconLink
           color={"white"}
+          size={iconSize}
           href={href}
           icon={icon}
           label={label}

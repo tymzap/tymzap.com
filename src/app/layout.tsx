@@ -32,7 +32,9 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
         <NextIntlClientProvider>
           <Navbar
             menuLinks={MENU_LINKS}
-            socialMediaLinks={<SocialMediaLinks />}
+            socialMediaLinks={
+              <SocialMediaLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
+            }
           />
           <ContentWrapper>{children}</ContentWrapper>
           <Footer socialMediaLinks={<SocialMediaLinks />} />
@@ -41,6 +43,8 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
     </html>
   );
 }
+
+const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
 
 const MENU_LINKS: MenuLink[] = [
   {

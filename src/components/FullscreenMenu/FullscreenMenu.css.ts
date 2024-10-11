@@ -1,11 +1,13 @@
 import { style } from "@vanilla-extract/css";
 
 import { vars } from "~/styles/theme.css";
+import { zIndex } from "~/styles/zIndex";
 
 export const wrapper = style({
   background: vars.colors.black,
   position: "fixed",
   inset: 0,
+  zIndex: zIndex.fullscreenMenu,
 });
 
 export const linksWrapper = style({
@@ -24,7 +26,12 @@ export const menuLinksWrapper = style({
   gap: 20,
   justifyContent: "center",
   alignItems: "center",
-  marginTop: "20%",
+  marginTop: 100,
+  "@media": {
+    "(orientation: landscape)": {
+      marginTop: 0,
+    },
+  },
 });
 
 export const socialMediaLinksWrapper = style({

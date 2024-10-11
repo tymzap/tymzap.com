@@ -5,5 +5,5 @@ import { vars } from "~/styles/theme.css";
 export const link = style({
   color: vars.colors.white,
   textDecoration: "none",
-  fontSize: 26,
+  fontSize: 36,
 });

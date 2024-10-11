@@ -35,7 +35,7 @@ export const detailsItem = style({
 
 export const title = style({
   fontWeight: 700,
-  fontSize: 22,
+  fontSize: 24,
   selectors: {
     [`${wrapper}:hover &`]: {
       opacity: 0.65,

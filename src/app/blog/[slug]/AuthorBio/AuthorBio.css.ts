@@ -4,15 +4,15 @@ import { mediaQueries } from "~/styles/mediaQueries";
 
 export const wrapper = style({
   display: "flex",
-  marginTop: 100,
+  marginTop: 140,
   marginBottom: 40,
   flexDirection: "column",
   gap: 25,
   "@media": {
     [mediaQueries.tabletOrBigger]: {
       flexDirection: "row",
-      marginTop: 140,
-      marginBottom: 40,
+      marginTop: 180,
+      marginBottom: 60,
       gap: 40,
     },
   },

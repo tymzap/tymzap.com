@@ -10,8 +10,8 @@ export function Hero() {
 
   return (
     <div className={styles.wrapper}>
-      <Heading level={1}>{t("writingQualityCodeThatMakesARealImpact")}</Heading>
-      <Text>
+      <Heading level={2}>{t("writingQualityCodeThatMakesARealImpact")}</Heading>
+      <Text as={"p"}>
         {t.rich("hiImTymekImASoftwareEngineerAndStartupFounder", {
           br: () => <br />,
         })}

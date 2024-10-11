@@ -11,13 +11,6 @@ export default meta;
 
 type HeadingStoryObj = StoryObj<typeof Heading>;
 
-export const Level1: HeadingStoryObj = {
-  args: {
-    level: 1,
-    children: faker.lorem.words(5),
-  },
-};
-
 export const Level2: HeadingStoryObj = {
   args: {
     level: 2,
@@ -42,13 +35,6 @@ export const Level4: HeadingStoryObj = {
 export const Level5: HeadingStoryObj = {
   args: {
     level: 5,
-    children: faker.lorem.words(5),
-  },
-};
-
-export const Level6: HeadingStoryObj = {
-  args: {
-    level: 6,
     children: faker.lorem.words(5),
   },
 };

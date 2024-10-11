@@ -6,12 +6,14 @@ import * as styles from "./IconLink.css";
 type IconLinkProps = {
   href: string;
   icon: ComponentType<SVGProps<SVGElement>>;
+  size?: number;
   color?: "black" | "white";
   label: string;
 };
 
 export function IconLink({
   href,
+  size = DEFAULT_SIZE,
   icon: Icon,
   color = "black",
   label,
@@ -23,9 +25,9 @@ export function IconLink({
       aria-label={label}
       title={label}
     >
-      <Icon width={ICON_SIZE} height={ICON_SIZE} />
+      <Icon width={size} height={size} />
     </Link>
   );
 }
 
-const ICON_SIZE = 32;
+const DEFAULT_SIZE = 32;

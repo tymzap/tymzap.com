@@ -25,7 +25,8 @@
     "react-dom": "18.3.1",
     "react-spring": "9.7.3",
     "react-syntax-highlighter": "^15.5.0",
-    "reading-time": "1.5.0"
+    "reading-time": "1.5.0",
+    "rehype-slug": "6.0.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "1.6.1",

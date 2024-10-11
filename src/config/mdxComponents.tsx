@@ -7,6 +7,7 @@ import { List } from "~/components/List";
 import { TextLink } from "~/components/TextLink";
 import { Blockquote } from "~/components/Blockquote";
 import { ImageWithCaption } from "~/components/ImageWithCaption";
+import { Heading } from "~/components/Heading";
 
 export const MDX_COMPONENTS: MDXComponents = {
   img: ({ src, alt, title }) => (
@@ -32,6 +33,24 @@ export const MDX_COMPONENTS: MDXComponents = {
   ul: ({ children }) => <List isOrdered={false}>{children}</List>,
   ol: ({ children }) => <List isOrdered={true}>{children}</List>,
   li: ({ children }) => <List.Item>{children}</List.Item>,
+  h2: ({ children, id }) => (
+    <Heading level={2} as={"h3"} id={id} hasExtendedTopMargin={true}>
+      {children}
+    </Heading>
+  ),
+  h3: ({ children, id }) => (
+    <Heading level={3} as={"h4"} id={id} hasExtendedTopMargin={true}>
+      {children}
+    </Heading>
+  ),
+  h4: ({ children, id }) => (
+    <Heading level={4} as={"h5"} id={id} hasExtendedTopMargin={true}>
+      {children}
+    </Heading>
+  ),
+  section: ({ children }) => {
+    return <section style={{ marginTop: 70 }}>{children}</section>;
+  },
 };
 
 function getBlogImageSrc(initialSrc?: string) {
