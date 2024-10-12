@@ -34,17 +34,17 @@ export const MDX_COMPONENTS: MDXComponents = {
   ol: ({ children }) => <List isOrdered={true}>{children}</List>,
   li: ({ children }) => <List.Item>{children}</List.Item>,
   h2: ({ children, id }) => (
-    <Heading level={2} as={"h3"} id={id} hasExtendedTopMargin={true}>
+    <Heading level={3} id={id} hasExtendedTopMargin={true}>
       {children}
     </Heading>
   ),
   h3: ({ children, id }) => (
-    <Heading level={3} as={"h4"} id={id} hasExtendedTopMargin={true}>
+    <Heading level={4} id={id} hasExtendedTopMargin={true}>
       {children}
     </Heading>
   ),
   h4: ({ children, id }) => (
-    <Heading level={4} as={"h5"} id={id} hasExtendedTopMargin={true}>
+    <Heading level={5} id={id} hasExtendedTopMargin={true}>
       {children}
     </Heading>
   ),

@@ -52,7 +52,7 @@ export const heading = styleVariants({
 
 export const withExtendedTopMargin = styleVariants({
   2: {
-    marginTop: 60,
+    marginTop: 65,
     "@media": {
       [mediaQueries.tabletOrBigger]: {
         marginTop: 75,
@@ -60,7 +60,7 @@ export const withExtendedTopMargin = styleVariants({
     },
   },
   3: {
-    marginTop: 55,
+    marginTop: 60,
     "@media": {
       [mediaQueries.tabletOrBigger]: {
         marginTop: 70,
@@ -68,7 +68,7 @@ export const withExtendedTopMargin = styleVariants({
     },
   },
   4: {
-    marginTop: 50,
+    marginTop: 55,
     "@media": {
       [mediaQueries.tabletOrBigger]: {
         marginTop: 60,
