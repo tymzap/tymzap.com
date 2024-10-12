@@ -9,6 +9,7 @@ import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
 import { theme } from "~/styles/theme.css";
 import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
+import { TopLoader } from "~/components/TopLoader";
 
 import { SocialMediaLinks } from "./SocialMediaLinks";
 import { ContentWrapper } from "./ContentWrapper";
@@ -36,6 +37,7 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
           openSans.variable,
         )}
       >
+        <TopLoader />
         <NextIntlClientProvider>
           <Navbar
             menuLinks={MENU_LINKS}
