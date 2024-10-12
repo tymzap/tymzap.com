@@ -4,7 +4,7 @@ import fs from "node:fs";
 import { compileMdx } from "~/lib/compileMdx";
 
 export async function loadArticles() {
-  const articlesDirectory = path.resolve("./content");
+  const articlesDirectory = path.resolve("./content/articles");
   const articleFilenames = fs.readdirSync(articlesDirectory);
 
   return Promise.all(
