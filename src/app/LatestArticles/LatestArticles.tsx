@@ -3,8 +3,8 @@ import { ArticleCard } from "~/components/ArticleCard";
 
 import { LatestArticlesHeader } from "./LatestArticlesHeader";
 
-export async function LatestArticles() {
-  const articles = getLatestArticles(await loadArticles());
+export function LatestArticles() {
+  const articles = getLatestArticles(loadArticles());
 
   return (
     <>
@@ -30,7 +30,7 @@ export async function LatestArticles() {
   );
 }
 
-function getLatestArticles(articles: Awaited<ReturnType<typeof loadArticles>>) {
+function getLatestArticles(articles: ReturnType<typeof loadArticles>) {
   const articlesSortedByPublishedAtDate = articles.sort(
     (previousArticle, nextArticle) =>
       nextArticle.metadata.publishedAt.getTime() -

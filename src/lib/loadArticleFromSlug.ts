@@ -1,12 +1,20 @@
 import fs from "node:fs";
 import path from "node:path";
+import grayMatter from "gray-matter";
+import readingTime from "reading-time";
 
-import { compileMdx } from "~/lib/compileMdx";
-
-export async function loadArticleFromSlug(slug: string) {
+export function loadArticleFromSlug(slug: string) {
   const articleFile = fs.readFileSync(
     path.resolve("./content/articles", `${slug}.mdx`),
   );
+  const fileContent = articleFile.toString();
 
-  return await compileMdx(articleFile.toString());
+  const { data: metadata } = grayMatter(fileContent);
+  const readTime = readingTime(fileContent).text;
+
+  return {
+    metadata,
+    readTime,
+    fileContent,
+  };
 }

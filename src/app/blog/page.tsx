@@ -4,7 +4,7 @@ import { ArticleCard } from "~/components/ArticleCard";
 import { BlogHeader } from "./BlogHeader";
 
 export default async function Blog() {
-  const articles = sortArticlesByPublishedAtDate(await loadArticles());
+  const articles = sortArticlesByPublishedAtDate(loadArticles());
 
   return (
     <>

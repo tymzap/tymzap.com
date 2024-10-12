@@ -1,5 +1,6 @@
-import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 import { LongContentWrapper } from "~/components/LongContentWrapper";
+import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
+import { renderArticle } from "~/lib/renderArticle";
 
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { CoverImage } from "./CoverImage";
@@ -16,9 +17,8 @@ type BlogArticleProps = {
 };
 
 export default async function BlogArticle({ params }: BlogArticleProps) {
-  const { content, metadata, readTime } = await loadArticleFromSlug(
-    params.slug,
-  );
+  const { fileContent, metadata, readTime } = loadArticleFromSlug(params.slug);
+  const content = await renderArticle(fileContent);
 
   const coverImageSrc = `/blog/${metadata.coverImage}`;
 

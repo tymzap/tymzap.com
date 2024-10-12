@@ -1,23 +1,22 @@
 import path from "node:path";
 import fs from "node:fs";
 
-import { compileMdx } from "~/lib/compileMdx";
+import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 
-export async function loadArticles() {
+export function loadArticles() {
   const articlesDirectory = path.resolve("./content/articles");
   const articleFilenames = fs.readdirSync(articlesDirectory);
 
-  return Promise.all(
-    articleFilenames.map(async (filename) => {
-      const slug = filename.replace(".mdx", "");
-      const file = fs.readFileSync(path.resolve(articlesDirectory, filename));
+  return articleFilenames.map((filename) => {
+    const slug = filename.replace(".mdx", "");
 
-      const compiledMdx = await compileMdx(file.toString());
+    const { fileContent, readTime, metadata } = loadArticleFromSlug(slug);
 
-      return {
-        slug,
-        ...compiledMdx,
-      };
-    }),
-  );
+    return {
+      slug,
+      fileContent,
+      readTime,
+      metadata,
+    };
+  });
 }
