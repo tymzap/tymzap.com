@@ -2,7 +2,7 @@ import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 import { LongContentWrapper } from "~/components/LongContentWrapper";
 
 import { BlogArticleHeader } from "./BlogArticleHeader";
-import { BlogArticleImage } from "./BlogArticleImage";
+import { CoverImage } from "./CoverImage";
 import { AuthorBio } from "./AuthorBio";
 
 export { generateStaticParams } from "./generateStaticParams";
@@ -20,12 +20,14 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
     params.slug,
   );
 
+  const coverImageSrc = `/blog/${metadata.coverImage}`;
+
   return (
     <LongContentWrapper>
       <BlogArticleHeader publishedAt={metadata.publishedAt} readTime={readTime}>
         {metadata.title}
       </BlogArticleHeader>
-      <BlogArticleImage imageSrc={`/blog/${metadata.image}`} />
+      <CoverImage imageSrc={coverImageSrc} />
       {content}
       <AuthorBio />
     </LongContentWrapper>

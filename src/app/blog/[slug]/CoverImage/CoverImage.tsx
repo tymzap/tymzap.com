@@ -1,12 +1,12 @@
 import Image from "next/image";
 
-import * as styles from "./BlogArticleImage.css";
+import * as styles from "./CoverImage.css";
 
-type BlogArticleImageProps = {
+type CoverImageProps = {
   imageSrc: string;
 };
 
-export function BlogArticleImage({ imageSrc }: BlogArticleImageProps) {
+export function CoverImage({ imageSrc }: CoverImageProps) {
   return (
     <Image
       src={imageSrc}

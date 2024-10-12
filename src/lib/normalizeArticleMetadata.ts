@@ -1,5 +1,5 @@
 export function normalizeArticleMetadata(source: any) {
-  const { title, publishedAt, image } = source;
+  const { title, publishedAt, coverImage } = source;
 
   if (typeof title !== "string") {
     throw new Error("Invalid or missing title");
@@ -9,13 +9,13 @@ export function normalizeArticleMetadata(source: any) {
     throw new Error("Invalid or missing publishedAt date");
   }
 
-  if (typeof image !== "string") {
+  if (typeof coverImage !== "string") {
     throw new Error("Invalid or missing image");
   }
 
   return {
     title,
     publishedAt: new Date(publishedAt),
-    image,
+    coverImage,
   };
 }
