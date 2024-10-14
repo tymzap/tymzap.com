@@ -1,12 +1,10 @@
 import { getRequestConfig } from "next-intl/server";
 
-import { loadTranslationsFile } from "~/lib/loadTranslationsFile";
-
 export default getRequestConfig(async () => {
   const LOCALE = "en";
 
   return {
     locale: LOCALE,
-    messages: await loadTranslationsFile(LOCALE),
+    messages: (await import(`../translations/${LOCALE}.json`)).default,
   };
 });

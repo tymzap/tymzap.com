@@ -3,6 +3,7 @@ import "sanitize.css";
 import { PropsWithChildren } from "react";
 import { Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 import "~/styles/global.css";
 import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
@@ -10,7 +11,6 @@ import { theme } from "~/styles/theme.css";
 import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
-import { loadTranslationsFile } from "~/lib/loadTranslationsFile";
 
 import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
@@ -25,10 +25,11 @@ export const viewport: Viewport = {
 type LayoutProps = PropsWithChildren;
 
 export default async function Layout({ children }: LayoutProps) {
-  const translations = await loadTranslationsFile(LOCALE);
+  const locale = await getLocale();
+  const translations = await getMessages();
 
   return (
-    <html lang={LOCALE}>
+    <html lang={locale}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
@@ -41,7 +42,7 @@ export default async function Layout({ children }: LayoutProps) {
         )}
       >
         <TopLoader />
-        <NextIntlClientProvider locale={LOCALE} messages={translations}>
+        <NextIntlClientProvider locale={locale} messages={translations}>
           <Navbar
             menuLinks={MENU_LINKS}
             contactLinks={
@@ -55,8 +56,6 @@ export default async function Layout({ children }: LayoutProps) {
     </html>
   );
 }
-
-const LOCALE = "en";
 
 const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
 
