@@ -11,7 +11,7 @@ import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
 
-import { SocialMediaLinks } from "./SocialMediaLinks";
+import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
 
 export { generateMetadata } from "./generateMetadata";
@@ -41,12 +41,12 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
         <NextIntlClientProvider>
           <Navbar
             menuLinks={MENU_LINKS}
-            socialMediaLinks={
-              <SocialMediaLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
+            contactLinks={
+              <ContactLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
             }
           />
           <ContentWrapper>{children}</ContentWrapper>
-          <Footer socialMediaLinks={<SocialMediaLinks />} />
+          <Footer contactLinks={<ContactLinks />} />
         </NextIntlClientProvider>
       </body>
     </html>

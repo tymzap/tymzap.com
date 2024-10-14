@@ -25,7 +25,7 @@ export const contentWrapper = style({
   justifyContent: "center",
 });
 
-export const socialMediaLinksWrapper = style({
+export const contactLinksWrapper = style({
   marginTop: 32,
   "@media": {
     [mediaQueries.smallerThanTablet]: {

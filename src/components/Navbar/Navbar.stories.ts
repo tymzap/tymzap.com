@@ -21,7 +21,7 @@ const menuLinks: MenuLink[] = [
 const meta: Meta<typeof Navbar> = {
   component: Navbar,
   args: {
-    socialMediaLinks: null,
+    contactLinks: null,
     menuLinks,
   },
   parameters: {

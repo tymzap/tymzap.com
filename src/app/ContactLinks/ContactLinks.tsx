@@ -1,17 +1,17 @@
-import { SOCIAL_MEDIA_URLS } from "~/constants/socialMedia";
 import X from "~/icons/x.svg";
 import LinkedIn from "~/icons/linkedin.svg";
-import ProductHunt from "~/icons/product-hunt.svg";
+import Gmail from "~/icons/gmail.svg";
 import GitHub from "~/icons/github.svg";
 import { IconLink } from "~/components/IconLink";
+import { CONTACT_URLS } from "~/constants/contact";
 
-import * as styles from "./SocialMediaLinks.css";
+import * as styles from "./ContactLinks.css";
 
-type SocialMediaLinksProps = {
+type ContactLinksProps = {
   iconSize?: number;
 };
 
-export function SocialMediaLinks({ iconSize }: SocialMediaLinksProps) {
+export function ContactLinks({ iconSize }: ContactLinksProps) {
   return (
     <div className={styles.wrapper}>
       {LINKS.map(({ href, icon, label }) => (
@@ -30,23 +30,23 @@ export function SocialMediaLinks({ iconSize }: SocialMediaLinksProps) {
 
 const LINKS = [
   {
-    href: SOCIAL_MEDIA_URLS.X,
+    href: CONTACT_URLS.X,
     label: "X",
     icon: X,
   },
   {
-    href: SOCIAL_MEDIA_URLS.LINKED_IN,
+    href: CONTACT_URLS.LINKED_IN,
     label: "LinkedIn",
     icon: LinkedIn,
   },
   {
-    href: SOCIAL_MEDIA_URLS.PRODUCT_HUNT,
-    label: "Product Hunt",
-    icon: ProductHunt,
-  },
-  {
-    href: SOCIAL_MEDIA_URLS.GITHUB,
+    href: CONTACT_URLS.GITHUB,
     label: "GitHub",
     icon: GitHub,
+  },
+  {
+    href: CONTACT_URLS.EMAIL,
+    label: "Email",
+    icon: Gmail,
   },
 ];

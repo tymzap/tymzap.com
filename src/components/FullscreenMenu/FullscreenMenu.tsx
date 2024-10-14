@@ -10,12 +10,12 @@ import { FullscreenMenuLink } from "./FullscreenMenuLink";
 type FullscreenMenuProps = {
   isVisible: boolean;
   menuLinks: ReactNode;
-  socialMediaLinks: ReactNode;
+  contactLinks: ReactNode;
 };
 
 export function FullscreenMenu({
   menuLinks,
-  socialMediaLinks,
+  contactLinks,
   isVisible,
 }: FullscreenMenuProps) {
   const { isAnimatingOut, setIsAnimatingOut } = useFullscreenMenu(isVisible);
@@ -37,7 +37,7 @@ export function FullscreenMenu({
     <animated.div className={styles.wrapper} style={spring}>
       <div className={styles.linksWrapper}>
         <div className={styles.menuLinksWrapper}>{menuLinks}</div>
-        <div className={styles.socialMediaLinksWrapper}>{socialMediaLinks}</div>
+        <div className={styles.contactLinksWrapper}>{contactLinks}</div>
       </div>
     </animated.div>
   );

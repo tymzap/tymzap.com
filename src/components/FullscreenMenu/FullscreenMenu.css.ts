@@ -34,7 +34,7 @@ export const menuLinksWrapper = style({
   },
 });
 
-export const socialMediaLinksWrapper = style({
+export const contactLinksWrapper = style({
   display: "flex",
   flexDirection: "row",
   gap: 20,

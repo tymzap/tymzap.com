@@ -11,10 +11,10 @@ import { NavbarContent } from "./NavbarContent";
 
 type NavbarProps = {
   menuLinks: MenuLink[];
-  socialMediaLinks: ReactNode;
+  contactLinks: ReactNode;
 };
 
-export function Navbar({ menuLinks, socialMediaLinks }: NavbarProps) {
+export function Navbar({ menuLinks, contactLinks }: NavbarProps) {
   const { isFullscreenMenuVisible, toggleIsFullscreenMenuVisible } =
     useNavbar();
 
@@ -36,7 +36,7 @@ export function Navbar({ menuLinks, socialMediaLinks }: NavbarProps) {
             ))}
           </>
         }
-        socialMediaLinks={socialMediaLinks}
+        contactLinks={contactLinks}
       />
     </div>
   );

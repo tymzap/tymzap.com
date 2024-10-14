@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl";
 import * as styles from "./Footer.css";
 
 type FooterProps = {
-  socialMediaLinks: ReactNode;
+  contactLinks: ReactNode;
 };
 
-export function Footer({ socialMediaLinks }: FooterProps) {
+export function Footer({ contactLinks }: FooterProps) {
   const t = useTranslations();
 
   return (
@@ -17,7 +17,7 @@ export function Footer({ socialMediaLinks }: FooterProps) {
           © <span className={styles.name}>Tymek Zapała</span> — 2024.{" "}
           {t("allRightsReserved")}
         </span>
-        <div className={styles.socialMediaLinksWrapper}>{socialMediaLinks}</div>
+        <div className={styles.contactLinksWrapper}>{contactLinks}</div>
       </div>
     </div>
   );
