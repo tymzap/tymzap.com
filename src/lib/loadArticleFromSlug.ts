@@ -3,6 +3,8 @@ import path from "node:path";
 import grayMatter from "gray-matter";
 import readingTime from "reading-time";
 
+import { normalizeArticleMetadata } from "~/lib/normalizeArticleMetadata";
+
 export function loadArticleFromSlug(slug: string) {
   const articleFile = fs.readFileSync(
     path.resolve("./content/articles", `${slug}.mdx`),
@@ -13,7 +15,7 @@ export function loadArticleFromSlug(slug: string) {
   const readTime = readingTime(fileContent).text;
 
   return {
-    metadata,
+    metadata: normalizeArticleMetadata(metadata),
     readTime,
     fileContent,
   };
