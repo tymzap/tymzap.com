@@ -22,9 +22,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-type HomeLayoutProps = PropsWithChildren;
+type LayoutProps = PropsWithChildren;
 
-export default async function HomeLayout({ children }: HomeLayoutProps) {
+export default async function Layout({ children }: LayoutProps) {
   const translations = await loadTranslationsFile(LOCALE);
 
   return (
