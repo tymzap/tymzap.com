@@ -3,11 +3,11 @@ export async function loadProfileImage() {
 
   const data = await fetch(imageUrl).then((response) => response.arrayBuffer());
 
-  const base64String = transformArrayBufferToBase64(data);
+  const base64String = arrayBufferToBase64(data);
 
   return `data:image/png;base64,${base64String}`;
 }
 
-function transformArrayBufferToBase64(arrayBuffer: ArrayBuffer) {
+function arrayBufferToBase64(arrayBuffer: ArrayBuffer) {
   return btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
 }

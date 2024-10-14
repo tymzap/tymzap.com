@@ -9,6 +9,8 @@ import { MoreArticles } from "./MoreArticles";
 
 export { generateStaticParams } from "./generateStaticParams";
 
+export { generateMetadata } from "./generateMetadata";
+
 export const dynamicParams = false;
 
 type BlogArticleProps = {
