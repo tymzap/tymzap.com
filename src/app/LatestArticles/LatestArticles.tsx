@@ -1,10 +1,10 @@
-import { loadArticles } from "~/lib/loadArticles";
 import { ArticleCard } from "~/components/ArticleCard";
 
 import { LatestArticlesHeader } from "./LatestArticlesHeader";
+import { getLatestArticles } from "./getLatestArticles";
 
 export function LatestArticles() {
-  const articles = getLatestArticles(loadArticles());
+  const articles = getLatestArticles();
 
   return (
     <>
@@ -29,15 +29,3 @@ export function LatestArticles() {
     </>
   );
 }
-
-function getLatestArticles(articles: ReturnType<typeof loadArticles>) {
-  const articlesSortedByPublishedAtDate = articles.sort(
-    (previousArticle, nextArticle) =>
-      nextArticle.metadata.publishedAt.getTime() -
-      previousArticle.metadata.publishedAt.getTime(),
-  );
-
-  return articlesSortedByPublishedAtDate.slice(0, LATEST_ARTICLES_COUNT);
-}
-
-const LATEST_ARTICLES_COUNT = 2;

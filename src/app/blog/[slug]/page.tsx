@@ -5,6 +5,7 @@ import { renderArticle } from "~/lib/renderArticle";
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { CoverImage } from "./CoverImage";
 import { AuthorBio } from "./AuthorBio";
+import { MoreArticles } from "./MoreArticles";
 
 export { generateStaticParams } from "./generateStaticParams";
 
@@ -23,13 +24,19 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
   const coverImageSrc = `/blog/${metadata.coverImage}`;
 
   return (
-    <LongContentWrapper>
-      <BlogArticleHeader publishedAt={metadata.publishedAt} readTime={readTime}>
-        {metadata.title}
-      </BlogArticleHeader>
-      <CoverImage imageSrc={coverImageSrc} />
-      {content}
-      <AuthorBio />
-    </LongContentWrapper>
+    <>
+      <LongContentWrapper>
+        <BlogArticleHeader
+          publishedAt={metadata.publishedAt}
+          readTime={readTime}
+        >
+          {metadata.title}
+        </BlogArticleHeader>
+        <CoverImage imageSrc={coverImageSrc} />
+        {content}
+        <AuthorBio />
+      </LongContentWrapper>
+      <MoreArticles currentArticleSlug={params.slug} />
+    </>
   );
 }

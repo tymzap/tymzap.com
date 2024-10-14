@@ -11,7 +11,7 @@ export const wrapper = style({
   "@media": {
     [mediaQueries.tabletOrBigger]: {
       flexDirection: "row",
-      marginTop: 180,
+      marginTop: 190,
       marginBottom: 60,
       gap: 40,
     },

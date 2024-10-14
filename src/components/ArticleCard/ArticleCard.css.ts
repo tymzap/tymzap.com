@@ -35,10 +35,15 @@ export const detailsItem = style({
 
 export const title = style({
   fontWeight: 700,
-  fontSize: 24,
+  fontSize: 22,
   selectors: {
     [`${wrapper}:hover &`]: {
       opacity: 0.65,
+    },
+  },
+  "@media": {
+    [mediaQueries.tabletOrBigger]: {
+      fontSize: 24,
     },
   },
 });

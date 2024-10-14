@@ -1,5 +1,4 @@
 {
-  "writingQualityCodeThatMakesARealImpact": "Writing quality code that makes a real impact",
   "tymekZapalaIsASoftwareEngineerAndStartupFounder": "Tymek Zapała is a software engineer and startup founder based in Cracow, Poland. With extensive experience of building products from start to launch, he’s passionate about writing quality code and sharing his knowledge.",
   "recentBlogPosts": "Recent blog posts",
   "seeAllPosts": "See all posts",
@@ -10,5 +9,6 @@
   "allRightsReserved": "All rights reserved.",
   "blog": "Blog",
   "helloImTymekImASoftwareEngineerAndStartupFounder": "<strong>Hello, I'm Tymek.</strong> \uD83D\uDC4B<br></br>I'm a JavaScript software engineer and startup founder based in Cracow, Poland.<br></br>I like building things and sharing my knowledge.<br></br>I currently work for volt.io, where I develop UI for our financial platform.",
-  "softwareEngineer&Maker": "Software engineer & maker"
+  "softwareEngineer&Maker": "Software engineer & maker",
+  "readNext": "Read next"
 }

@@ -1,14 +1,19 @@
 import { ArticleCard } from "~/components/ArticleCard";
 
-import { BlogHeader } from "./BlogHeader";
-import { getArticles } from "./getArticles";
+import { getMoreArticles } from "./getMoreArticles";
+import { MoreArticlesHeader } from "./MoreArticlesHeader";
+import * as styles from "./MoreArticles.css";
 
-export default async function Blog() {
-  const articles = getArticles();
+type MoreArticlesProps = {
+  currentArticleSlug: string;
+};
+
+export async function MoreArticles({ currentArticleSlug }: MoreArticlesProps) {
+  const articles = getMoreArticles(currentArticleSlug);
 
   return (
-    <>
-      <BlogHeader />
+    <div className={styles.wrapper}>
+      <MoreArticlesHeader />
       <ArticleCard.Grid>
         {articles.map(({ slug, metadata, readTime }) => {
           const href = `/blog/${slug}`;
@@ -26,6 +31,6 @@ export default async function Blog() {
           );
         })}
       </ArticleCard.Grid>
-    </>
+    </div>
   );
 }
