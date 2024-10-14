@@ -8,9 +8,14 @@ export const button = style({
   background: vars.colors.black,
   border: 0,
   color: vars.colors.white,
+  justifyContent: "center",
+  alignItems: "center",
   cursor: "pointer",
-  padding: "16px 40px",
+  fontWeight: 600,
+  padding: "18px 40px",
   borderRadius: 26,
+  display: "flex",
+  gap: 16,
   transition: "opacity .2s, box-shadow .3s, transform .2s",
   selectors: {
     "&:hover": {

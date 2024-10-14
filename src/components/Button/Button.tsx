@@ -2,6 +2,7 @@ import { useButton } from "react-aria";
 import { PropsWithChildren, useRef } from "react";
 
 import * as styles from "./Button.css";
+import { ButtonIcon } from "./ButtonIcon";
 
 type ButtonProps = PropsWithChildren<{
   onPress?: () => void;
@@ -17,3 +18,5 @@ export function Button({ children, onPress }: ButtonProps) {
     </button>
   );
 }
+
+Button.Icon = ButtonIcon;

@@ -10,6 +10,7 @@ import { theme } from "~/styles/theme.css";
 import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
+import { loadTranslationsFile } from "~/lib/loadTranslationsFile";
 
 import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
@@ -24,8 +25,10 @@ export const viewport: Viewport = {
 type HomeLayoutProps = PropsWithChildren;
 
 export default async function HomeLayout({ children }: HomeLayoutProps) {
+  const translations = await loadTranslationsFile(LOCALE);
+
   return (
-    <html lang="en">
+    <html lang={LOCALE}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
@@ -38,7 +41,7 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
         )}
       >
         <TopLoader />
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={LOCALE} messages={translations}>
           <Navbar
             menuLinks={MENU_LINKS}
             contactLinks={
@@ -52,6 +55,8 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
     </html>
   );
 }
+
+const LOCALE = "en";
 
 const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
 

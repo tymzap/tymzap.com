@@ -8,8 +8,10 @@ import { TextLink } from "~/components/TextLink";
 import { Blockquote } from "~/components/Blockquote";
 import { ImageWithCaption } from "~/components/ImageWithCaption";
 import { Heading } from "~/components/Heading";
+import { ViewSourceButton } from "~/components/ViewSourceButton";
 
 export const MDX_COMPONENTS: MDXComponents = {
+  ViewSourceButton,
   img: ({ src, alt, title }) => (
     <ImageWithCaption
       src={getBlogImageSrc(src)}
