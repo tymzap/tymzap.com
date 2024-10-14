@@ -1,5 +1,7 @@
 # tymzap.com
 
+This is source code of my personal website written in Next.js.
+
 ## Getting started
 
 ```bash
