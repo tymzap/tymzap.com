@@ -1,0 +1,53 @@
+---
+title: Do not test implementation details of React components
+publishedAt: 2024-10-15
+coverImage: sandstone.webp
+---
+
+Let me tell you a story about a component I once had in one of my projects. It was a critical piece of functionality, so we made sure to test every aspect—every method, state change, and piece of internal logic.
+
+Over time, maintaining that test became a nightmare. Whenever we had to refactor or change the component behavior, the test would break, and we’d have to spend time fixing it. Despite all that test coverage and the constant loop of "change the code, break the test, fix the test", I realized something: this test never actually caught a bug. To make matters worse, one day I found a bug manually - clicking a button was supposed to trigger a toast, but nothing happened.
+
+Had we missed it in our tests? Not exactly. We made sure the right function with the perfect set of parameters was called to trigger the toast. Somehow, the toast itself didn’t show. The test only checked that the function ran, not that the toast actually appeared. **We tested the implementation, but missed the real behavior**. We got what we wanted.
+
+This test made the process painful without giving us any confidence in the component’s functionality.
+
+Don’t test implementation details of your React components - focus on what really matters.
+## Focus on user interactions
+
+Front-end tests should mirror how a user interacts with your app. Essentially, they should be an automated version of how you would manually test the component by clicking through it and using it to ensure everything works properly. We want to check that the component does *what* it's supposed to do, without getting bogged down by *how* it’s doing it.
+
+What we want to verify is that the success message appears on the screen after clicking the button, not whether the function `showSuccessToast` was called with the right parameters. As the story of meticulously tested component taught me - if we focus on testing the implementation, we could end up with a false positive. The function might run, even with perfect set of params, but for some reason, the required text still isn’t displayed.
+
+By testing the behavior instead, we ensure that we're **verifying the outcome the user actually experiences**, not just whether some function was triggered.
+## Select elements like a user would
+
+A great strategy for writing user-centric tests is to use "real-world selectors", like visible text and ARIA attributes, instead of relying on test IDs or querying through divs to find specific element. By selecting elements the way a user would - through labels, button text, or accessibility features - you make your tests more aligned with actual user interactions. This approach makes tests more resilient to UI changes because users don’t interact with elements reading their `data-testid`s or DOM structure - they interact with what they see and click.
+```jsx
+it('displays success message after clicking the submit button', () => {
+  render(<Form />);
+
+  // Find the button by its visible text
+  const submitButton = screen.getByRole('button', { name: 'Submit' });
+
+  // Click the button
+  userEvent.click(submitButton);
+
+  // Check if the success message is visible
+  const successMessage = screen.getByText('Success! Your form was submitted');
+  expect(successMessage).toBeVisible();
+});
+```
+
+Of course, test IDs are not inherently bad. In fact, they can be quite useful in specific scenarios where other selectors fall short. For instance, if you have two similar buttons on the page - one at the top and the other at the bottom - relying on visible text alone might not be sufficient to distinguish them. In these cases, `data-testid`s provide a confident way to target a specific element without ambiguity. Just remember to use them strategically, so they improve your tests, rather than detract from user-centric approach.
+## Users don't care about hooks
+
+Some developers believe they need to test hooks directly, especially if there’s business logic inside them. While it may seem logical to focus on the hook itself to ensure the logic works as expected, let's remember that users don’t interact with hooks. They don’t care whether your app is built with hooks, class components, web components or jQuery - they just care that it works as it supposed to do.
+
+By isolating and testing hooks directly, you might lose sight of how that logic impacts the overall user interaction. **If you need to test a hook, just test the component that uses it**. This way, you ensure that the business logic works in the context that matters: the user interaction. An added benefit is that if you ever decide to refactor the component to not use hooks (or even React), you will still have a perfectly functional test.
+
+## Conclusion
+
+By focusing on testing user interactions instead of digging into implementation details, you'll create tests that are **easier to maintain and more reliable in catching real issues**. After all, users don’t care about your hooks or methods - they just want your app to work. So, write your tests with that in mind. As Kent C. Dodds perfectly put it:
+
+> The more your tests resemble the way your software is used, the more confidence they can give you.
