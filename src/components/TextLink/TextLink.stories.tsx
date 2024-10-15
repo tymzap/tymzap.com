@@ -20,9 +20,21 @@ type TextLinkStoryObj = StoryObj<typeof TextLink>;
 export const Default = {};
 
 export const WithIcon: TextLinkStoryObj = {
-  args: {
-    icon: ArrowRight,
-  },
+  render: ({ children, ...restProps }) => (
+    <TextLink {...restProps}>
+      {children}
+      <TextLink.Icon icon={ArrowRight} />
+    </TextLink>
+  ),
+};
+
+export const WithAnimatedIcon: TextLinkStoryObj = {
+  render: ({ children, ...restProps }) => (
+    <TextLink {...restProps}>
+      {children}
+      <TextLink.Icon icon={ArrowRight} hoverAnimation={"slide-right"} />
+    </TextLink>
+  ),
 };
 
 export const WithoutUnderline: TextLinkStoryObj = {

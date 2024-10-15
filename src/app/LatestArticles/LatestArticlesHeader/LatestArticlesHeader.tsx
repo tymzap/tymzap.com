@@ -12,8 +12,9 @@ export function LatestArticlesHeader() {
   return (
     <div className={styles.wrapper}>
       <Heading level={2}>{t("recentBlogPosts")}</Heading>
-      <TextLink href={"/blog"} icon={ArrowRight} hasUnderline={false}>
+      <TextLink href={"/blog"} hasUnderline={false}>
         {t("seeAllPosts")}
+        <TextLink.Icon icon={ArrowRight} hoverAnimation={"slide-right"} />
       </TextLink>
     </div>
   );

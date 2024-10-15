@@ -18,15 +18,3 @@ export const link = style({
 export const withUnderline = style({
   textDecoration: "underline",
 });
-
-export const icon = style({
-  margin: "4px 0 0 8px",
-  width: 20,
-  height: 20,
-  transition: "transform .3s",
-  selectors: {
-    [`${link}:hover &`]: {
-      transform: "translateX(6px)",
-    },
-  },
-});

@@ -1,19 +1,18 @@
 import NextLink from "next/link";
-import { ComponentType, PropsWithChildren, SVGProps } from "react";
+import { PropsWithChildren } from "react";
 import cn from "classnames";
 
 import * as styles from "./TextLink.css";
+import { TextLinkIcon } from "./TextLinkIcon";
 
 type TextLinkProps = PropsWithChildren<{
   href: string;
-  icon?: ComponentType<SVGProps<SVGElement>>;
   hasUnderline?: boolean;
 }>;
 
 export function TextLink({
   children,
   href,
-  icon: Icon,
   hasUnderline = true,
 }: TextLinkProps) {
   return (
@@ -22,7 +21,8 @@ export function TextLink({
       className={cn(styles.link, { [styles.withUnderline]: hasUnderline })}
     >
       {children}
-      {Icon ? <Icon className={styles.icon} /> : null}
     </NextLink>
   );
 }
+
+TextLink.Icon = TextLinkIcon;
