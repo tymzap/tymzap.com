@@ -8,10 +8,26 @@ import { TextLink } from "~/components/TextLink";
 import { Blockquote } from "~/components/Blockquote";
 import { ImageWithCaption } from "~/components/ImageWithCaption";
 import { Heading } from "~/components/Heading";
-import { ViewSourceButton } from "~/components/ViewSourceButton";
+import {
+  ViewRepositoryButton,
+  ViewRepositoryButtonProps,
+} from "~/components/ViewRepositoryButton";
+import {
+  ViewCommitLink,
+  ViewCommitLinkProps,
+} from "~/components/ViewCommitLink";
 
 export const MDX_COMPONENTS: MDXComponents = {
-  ViewSourceButton,
+  ViewRepositoryButton: (props: ViewRepositoryButtonProps) => (
+    <span style={{ margin: "50px 0", display: "block" }}>
+      <ViewRepositoryButton {...props} />
+    </span>
+  ),
+  ViewCommitLink: (props: ViewCommitLinkProps) => (
+    <span style={{ margin: "50px 0", display: "block" }}>
+      <ViewCommitLink {...props} />
+    </span>
+  ),
   img: ({ src, alt, title }) => (
     <ImageWithCaption
       src={getBlogImageSrc(src)}

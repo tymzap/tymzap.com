@@ -25,3 +25,12 @@ export const withSlideRightAnimation = style({
     },
   },
 });
+
+export const withRotateAnimation = style({
+  transition: "rotate .5s",
+  selectors: {
+    [`${link}:hover &`]: {
+      rotate: "360deg",
+    },
+  },
+});

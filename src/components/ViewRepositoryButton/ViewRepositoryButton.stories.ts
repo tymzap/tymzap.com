@@ -1,9 +1,9 @@
 import { Meta } from "@storybook/react";
 
-import { ViewSourceButton } from "./ViewSourceButton";
+import { ViewRepositoryButton } from "./ViewRepositoryButton";
 
-const meta: Meta<typeof ViewSourceButton> = {
-  component: ViewSourceButton,
+const meta: Meta<typeof ViewRepositoryButton> = {
+  component: ViewRepositoryButton,
   args: {
     repository: "tymzap/typescript-declaration-files-example",
   },

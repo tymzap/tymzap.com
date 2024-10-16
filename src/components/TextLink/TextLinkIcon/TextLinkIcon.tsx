@@ -5,7 +5,7 @@ import * as styles from "./TextLinkIcon.css";
 
 type TextLinkIconProps = {
   icon: ComponentType<SVGProps<SVGElement>>;
-  hoverAnimation?: "slide-right" | "slide-left";
+  hoverAnimation?: "slide-right" | "slide-left" | "rotate";
 };
 
 export function TextLinkIcon({
@@ -17,6 +17,7 @@ export function TextLinkIcon({
       className={cn(styles.icon, {
         [styles.withSlideLeftAnimation]: hoverAnimation === "slide-left",
         [styles.withSlideRightAnimation]: hoverAnimation === "slide-right",
+        [styles.withRotateAnimation]: hoverAnimation === "rotate",
       })}
     />
   );

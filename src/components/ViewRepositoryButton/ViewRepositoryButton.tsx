@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl";
 import Github from "~/icons/github.svg";
 import { Button } from "~/components/Button";
 
-import * as styles from "./ViewSourceButton.css";
-
-type ViewSourceButtonProps = {
+export type ViewRepositoryButtonProps = {
   repository: string;
 };
 
-export function ViewSourceButton({ repository }: ViewSourceButtonProps) {
+export function ViewRepositoryButton({
+  repository,
+}: ViewRepositoryButtonProps) {
   const t = useTranslations();
 
   const repositoryUrl = `https://github.com/${repository}`;
@@ -21,11 +21,9 @@ export function ViewSourceButton({ repository }: ViewSourceButtonProps) {
   };
 
   return (
-    <span className={styles.wrapper}>
-      <Button onPress={handlePress}>
-        {t("seeFullCodeOnGitHub")}
-        <Button.Icon icon={Github} />
-      </Button>
-    </span>
+    <Button onPress={handlePress}>
+      {t("seeFullCodeOnGitHub")}
+      <Button.Icon icon={Github} />
+    </Button>
   );
 }

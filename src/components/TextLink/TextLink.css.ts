@@ -8,6 +8,7 @@ export const link = style({
   textDecoration: "none",
   color: vars.colors.black,
   display: "inline-flex",
+  gap: 6,
   selectors: {
     "&:hover": {
       opacity: 0.65,
