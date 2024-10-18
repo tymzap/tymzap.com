@@ -3,6 +3,8 @@ import { loadArticles } from "~/lib/loadArticles";
 import { BlogHeader } from "./BlogHeader";
 import { ArticlesList } from "./ArticlesList";
 
+export { generateMetadata } from "./generateMetadata";
+
 export default async function Blog() {
   const articles = getArticles();
 

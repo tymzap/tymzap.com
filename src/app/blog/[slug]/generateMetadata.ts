@@ -21,6 +21,7 @@ export async function generateMetadata({
   const imageSrc = `/api/og?title=${encodeURIComponent(title)}&token=${token}`;
 
   return {
+    title,
     twitter: {
       images: [imageSrc],
     },

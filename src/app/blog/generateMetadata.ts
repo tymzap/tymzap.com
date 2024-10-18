@@ -5,10 +5,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
 
   return {
-    title: {
-      template: "%s • Tymek Zapała",
-      default: "Tymek Zapała",
-    },
-    description: t("imASoftwareEngineerAndStartupFounder"),
+    title: t("blog"),
   };
 }
