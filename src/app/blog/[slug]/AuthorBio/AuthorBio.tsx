@@ -17,10 +17,8 @@ export function AuthorBio() {
         alt={"Tymek Zapała"}
       />
       <div className={styles.contentWrapper}>
-        <span className={styles.heading}>About the author</span>
-        <Text as={"p"}>
-          {t("tymekZapalaIsASoftwareEngineerAndStartupFounder")}
-        </Text>
+        <span className={styles.heading}>{t("writtenByTymek")}</span>
+        <Text as={"p"}>{t("imASoftwareEngineerAndStartupFounder")}</Text>
       </div>
     </div>
   );

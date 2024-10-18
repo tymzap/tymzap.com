@@ -6,6 +6,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: "Tymek Zapała",
-    description: t("tymekZapalaIsASoftwareEngineerAndStartupFounder"),
+    description: t("imASoftwareEngineerAndStartupFounder"),
   };
 }

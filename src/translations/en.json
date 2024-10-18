@@ -1,5 +1,4 @@
 {
-  "tymekZapalaIsASoftwareEngineerAndStartupFounder": "Tymek Zapała is a software engineer and startup founder based in Cracow, Poland. With extensive experience of building products from start to launch, he’s passionate about writing quality code and sharing his knowledge.",
   "recentBlogPosts": "Recent blog posts",
   "seeAllPosts": "See all posts",
   "projects": "Projects",
@@ -13,5 +12,7 @@
   "readNext": "Read next",
   "seeFullCodeOnGitHub": "See full code on GitHub",
   "moreBlogPosts": "More blog posts",
-  "followAlongWithTheCommit": "Follow along with the commit"
+  "followAlongWithTheCommit": "Follow along with the commit",
+  "writtenByTymek": "Written by Tymek Zapała",
+  "imASoftwareEngineerAndStartupFounder": "I’m a software engineer and startup founder based in Krakow, Poland. My mission is to create useful products by writing high-quality code and sharing my knowledge throughout the journey."
 }
