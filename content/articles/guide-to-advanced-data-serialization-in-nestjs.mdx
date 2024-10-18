@@ -1,0 +1,536 @@
+---
+title: Guide to advanced data serialization in NestJS
+publishedAt: 2024-10-18
+coverImage: abstract-light-trails.webp
+---
+
+In a typical NestJS API, data flows between different layers - controllers, services, and repositories - before reaching the client. However, the way this data is structured internally isn't always how it should be returned in JSON for the client. Serialization is a process which transforms this internal data into a format that's suitable for public consumption. This includes:
+
+- **Hiding sensitive information** such as passwords or personal data before responding.
+- **Ensuring proper data shape for client consumption**, like formatting dates.
+- **Performing access control** by exposing or hiding fields depending on the user’s permissions.
+
+This guide doesn't cover every possible scenario, but we'll focus on the industry's most common serialization use cases. For each, we’ll implement advanced examples that you can apply in your code base. We'll also discuss how to combine serialization with pagination responses. And last but not least, we'll write test for our serialization solution to ensure it works as expected.
+
+<ViewRepositoryButton repository="tymzap/nestjs-serialization-example"  />
+
+## Project setup
+
+For starters, let's create a fresh NestJS project. Open your terminal and type:
+
+```bash
+$ nest new nestjs-serialization-example
+```
+
+Reminder, you must have `@nestjs/cli` package installed on your machine for this command to work.
+
+Once installation is finished, we’ll add some mock data to use for our serialization examples. A short list of users would be good enough. Create new module named `user`:
+
+```bash
+$ nest generate module user
+```
+
+And then service for this module:
+
+```bash
+$ nest generate service user
+```
+
+The `user` module will handle all user-related logic, keeping it separate from the shared application logic that we’ll store in a `shared` directory. This approach ensures a clear distinction between domain and application concerns.
+
+`UserService` will be our provider of exemplary data. Add a private field in the class containing the user list:
+
+```ts
+private readonly users = [
+  {
+    id: '1',
+    name: 'Alice Johnson',
+    age: 29,
+    email: 'alice.johnson@example.com',
+    isActive: true,
+    createdAt: new Date('2024-05-15T14:48:00.000Z'),
+  },
+  {
+    id: '2',
+    name: 'Bob Smith',
+    age: 34,
+    email: 'bob.smith@example.com',
+    isActive: false,
+    createdAt: new Date('2024-06-20T08:30:00.000Z'),
+  },
+  {
+    id: '3',
+    name: 'Charlie Davis',
+    age: 22,
+    email: 'charlie.davis@example.com',
+    isActive: true,
+    createdAt: new Date('2024-07-05T12:15:00.000Z'),
+  },
+];
+```
+
+And then `getUser` method to retrieve one item from the list:
+
+```ts
+getUser(id: string) {
+  return this.users.find((user) => user.id === id);
+}
+```
+
+Now that we have the data and service logic, let’s expose this data through an API endpoint. Generate the `user` controller:
+
+```bash
+$ nest generate controller user
+```
+
+Within the controller, Inject the `UserService` and create a method to fetch a user by ID. Do not forget to annotate it with `@Get()` to define the HTTP method:
+
+```ts
+import { Controller, Get, Param } from '@nestjs/common';
+import { UserService } from './user.service';
+
+@Controller('users')
+export class UserController {
+  constructor(private userService: UserService) {}
+
+  @Get(':id')
+  getUser(@Param('id') id: string) {
+    return this.userService.getUser(id);
+  }
+}
+```
+
+Notice that I adjusted the prefix in the `@Controller()` decorator to be plural, according to REST naming conventions. Now when you run `nest start --watch` command and open `http://localhost:3000/users/1` in browser, you should see this JSON response:
+
+```ts
+{
+  "id": "1",
+  "name": "Alice Johnson",
+  "age": 29,
+  "email": "alice.johnson@example.com",
+  "isActive": true,
+  "createdAt": "2024-05-15T14:48:00.000Z"
+}
+```
+
+<ViewCommitLink commit="tymzap/nestjs-serialization-example/commit/4316e71e431cfc4826694688c3db6bb01c41f783"  />
+## Using DTOs to handle serialization
+
+Data Transfer Objects (DTOs) are designed to structure and transfer data between layers of an application. This makes them perfect for our purpose as they will clearly define the shape of data sent to consumers of the API. Also, they will keep serialization concerns separate from business logic.
+
+Let's create a DTO for `user` module. Create file `user.dto.ts` with this content:
+
+```ts
+export class UserDto {
+  id: string;
+  name: string;
+  isActive: boolean;
+  createdAt: string;
+  age: number;
+  email: string;
+}
+```
+
+For now, this class mirrors the structure of the mocked users from our service, except for the `createdAt` field, which is of type `string` instead of a `Date` (this is because JavaScript `Date` objects are serializable as string). However, as we progress, you’ll see how DTOs offer much more than simple type definitions.
+
+Often, in some projects, you may see ORM entities being used for serialization. This approach can work perfectly fine, especially in smaller projects. However, it comes with a trade-off: it couples your data models with the client responses. By using DTOs, we **decouple serialization concerns from the business logic**, which leads to a more scalable and maintainable codebase as the project grows.
+
+### Integrating the DTO with the app
+
+With the `UserDto` defined, let’s wire it up it with the rest of the application. To enable various transformation operations of classes, we need to install two libraries:
+
+```bash
+$ npm install class-transformer class-validator
+```
+
+Next, we’ll implement a custom interceptor to actually transform outgoing responses into the desired shape. Create a new file called `serialization.interceptor.ts` in the `src/shared` directory:
+
+```ts
+import {
+  NestInterceptor,
+  Injectable,
+  ExecutionContext,
+  CallHandler,
+} from '@nestjs/common';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import {
+  ClassConstructor,
+  plainToInstance,
+} from 'class-transformer';
+
+@Injectable()
+export class SerializationInterceptor implements NestInterceptor {
+  constructor(private classConstructor: ClassConstructor<unknown>) {}
+
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler<unknown>,
+  ): Observable<unknown> {
+    return next.handle().pipe(map((data) => this.serialize(data)));
+  }
+
+  private serialize(value: unknown) {
+    return plainToInstance(this.classConstructor, value);
+  }
+}
+```
+
+Breakdown of what's going on:
+- Constructor of the interceptor takes one argument: `classConstructor` which will basically be our DTO that we defined earlier.
+- The `intercept` method captures the outgoing response body and applies the `serialize` method to transform it.
+- `serialize` is where the magic happens. We use `plainToInstance` function which will transform our request body according to what we defined in our DTO.
+
+I've used `unknown` for some extra type safety but you can also use `any` if you want to.
+
+### Applying the interceptor to the route
+
+To apply this interceptor to the `GET /users/{id}` route, we’ll create a simple convenience decorator:
+
+```ts
+import { UseInterceptors } from '@nestjs/common';
+import { ClassConstructor } from 'class-transformer';
+import { SerializationInterceptor } from './serialization.interceptor';
+
+export function Serialize(classConstructor: ClassConstructor<unknown>) {
+  return UseInterceptors(new SerializationInterceptor(classConstructor));
+}
+```
+
+And use it like this in `user.controller.ts`:
+
+```ts
+@Serialize(UserDto) // apply serialization based on UserDto schema to this route
+@Get(':id')
+getUser(@Param('id') id: string) {
+  return this.userService.getUser(id);
+}
+```
+
+You can notice that nothing was changed when you open `http://localhost:3000/users/1` again. It's because DTO currently reflects the existing structure of the user entity. Let's modify the DTO to introduce additional transformations.
+
+<ViewCommitLink commit="tymzap/nestjs-serialization-example/commit/a8f7fbcab5586e0afee9f881c7844b7edafa22a2"  />
+## Excluding fields
+
+A common use case for serialization is to hide fields that shouldn't be exposed publicly - things like hashed password and sensitive personal data. It is very quick to do in our setup. Just import `Exclude` function from `class-transformer` and apply it as a decorator to the fields you want to hide:
+
+```ts
+import { Exclude } from 'class-transformer';
+
+export class UserDto {
+  id: string;
+  name: string;
+  isActive: boolean;
+  createdAt: string;
+
+  @Exclude()
+  age: number;
+
+  @Exclude()
+  email: string;
+}
+```
+
+Open `http://localhost:3000/users/1` in your browser and notice that `age` and `email` are not present in the response anymore.
+## Transforming fields
+
+Another powerful aspect of serialization is transforming fields to ensure consistent formatting or apply other modifications before sending data to the client. A common example is formatting all dates in a uniform manner. Using the `@Transform` decorator from `class-transformer`, you can do this pretty conveniently.
+
+Create `format-date.ts` util for date format in `shared` folder:
+
+```ts
+export function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US');
+}
+```
+
+And add it to our DTO:
+
+```ts
+import { Exclude, Transform } from 'class-transformer';
+import { formatDate } from '../shared/format-date';
+
+export class UserDto {
+  id: string;
+  name: string;
+  isActive: boolean;
+
+  @Exclude()
+  age: number;
+
+  @Exclude()
+  email: string;
+
+  @Transform(({ value }) => formatDate(value)) // apply date formatting
+  createdAt: string;
+}
+```
+
+Result:
+
+```json
+{
+  "id": "1",
+  "name": "Alice Johnson",
+  "isActive": true,
+  "createdAt": "5/15/2024" // instead of "2024-05-15T14:48:00.000Z"
+}
+```
+## Exposing fields based on user roles
+
+It's possible to return specific fields only if the user has the appropriate permissions. In our example, we'll handle it based on the user roles.
+
+Let's go back to our `SerializationInterceptor`. Modify `serialize` method so it takes the `groups` option now:
+
+```ts
+private serialize(value: unknown, groups: string[]) {
+  return plainToInstance(this.classConstructor, value, {
+    groups,
+  });
+}
+```
+
+Now, change `intercept` method to pick up roles from request's `user` object, and pass them as groups to `serialize`:
+
+```ts
+intercept(
+  context: ExecutionContext,
+  next: CallHandler<unknown>,
+): Observable<unknown> {
+  const request = context.switchToHttp().getRequest();
+  const user = request.user;
+  const groups = user?.roles ?? [];
+
+  return next.handle().pipe(map((data) => this.serialize(data, groups)));
+}
+```
+
+New, let's tell `UserDto` that we want `isActive` field to be seen only by admins:
+
+```ts
+export class UserDto {
+  id: string;
+  name: string;
+
+  @Expose({ groups: ['admin'] }) // isActive is only returned if user have `admin` role
+  isActive: boolean;
+
+  @Exclude()
+  age: number;
+
+  @Exclude()
+  email: string;
+
+  @Transform(({ value }) => formatDate(value))
+  createdAt: string;
+}
+```
+
+Of course, specific implementation of serialization groups will depend on what access control method you use in your application. For our case, we will just create mock decorator which will attach hard-coded user object to the request.
+
+Head to `shared` directory and create `mock-user.decorator.ts` file:
+
+```ts
+import {
+  CallHandler,
+  ExecutionContext,
+  NestInterceptor,
+  UseInterceptors,
+} from '@nestjs/common';
+import { Observable } from 'rxjs';
+
+export function MockUser(roles: string[]) {
+  return UseInterceptors(new MockUserInterceptor(roles));
+}
+
+class MockUserInterceptor implements NestInterceptor {
+  constructor(private roles: string[]) {}
+
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const request = context.switchToHttp().getRequest();
+
+    request.user = {
+      roles: this.roles,
+    };
+
+    return next.handle();
+  }
+}
+```
+
+For simpilicity, we have exported the decorator and defined the interceptor in one file. `request.user` object from this file is exactly the same object which will be used by the `SerializationInterceptor` class to pick up serialization groups.
+
+Attach the `MockUser` decorator to the route and test our API:
+
+```ts
+@Serialize(UserDto)
+@Get(':id')
+@MockUser(['admin'])
+getUser(@Param('id') id: string) {
+  return this.userService.getUser(id);
+}
+```
+
+<ViewCommitLink commit="tymzap/nestjs-serialization-example/commit/30a2161d818f3b4c021e6700e316abdec189a5d8"  />
+## Combining serialization with pagination response
+
+Many REST APIs return paginated responses, where the actual data is nested within a specific property. In such cases serialization of plain `UserDto` object will no longer work. To overcome this we can write special, "generic" pagination DTO.
+
+Let's create a `shared/pagination.dto.ts` file:
+
+```ts
+import { ClassConstructor, Type } from 'class-transformer';
+
+export function PaginationDto<Data>(dataDto: ClassConstructor<Data>) {
+  class DecoratedPaginationDto {
+    page: number;
+    totalPages: number;
+
+    @Type(() => dataDto)
+    data: Array<typeof dataDto>;
+  }
+
+  return DecoratedPaginationDto;
+}
+```
+
+This approach might seem a bit tricky at first, but it's actually quite straightforward. We define a top-level function called `PaginationDto` that accepts a `dataDto` parameter, which represents our regular DTO object (for example, `UserDto`). Next, we leverage JavaScript’s flexibility to define classes in any scope, and within this function, we create the `DecoratedPaginationDto` class.
+
+An important part of this class is the following property:
+
+```ts
+@Type(() => dataDto)
+data: Array<typeof dataDto>;
+```
+
+This property tells the class-validator, "treat the data field as an array of the DTO type that we passed in this function".
+
+Finally, we return this dynamically generated class from the function. In essence, what we've done is created a class inside a function, allowing us to pass the DTO schema at runtime, instead of creating a static version of `UserPaginationDto` in the code.
+
+To test it, create a new method in `UserService` returning pagination object:
+
+```ts
+getUsers() {
+  return {
+    page: 1,
+    totalPages: 1,
+    data: this.users,
+  };
+}
+```
+
+And create new route in `UserController`:
+
+```ts
+@Serialize(PaginationDto(UserDto)) // apply serialization of pagination response
+@Get()
+getPaginatedUsers() {
+  return this.userService.getUsers();
+}
+```
+
+Open `localhost:3000/users`, and you should see a paginated list of users, where each user is properly serialized using `UserDto`.
+## Testing
+
+How you test serialization depends on your overall testing strategy. Do you prefer to unit test the interceptor, or would you rather focus on integration tests for the controllers? For this guide, we'll take the unit test approach, as it's easier to demonstrate in a narrow context.
+
+Create a `serialization.interceptor.spec.ts` file next to our interceptor file, and add a test boilerplate:
+
+```ts
+import { SerializationInterceptor } from './serialization.interceptor';
+
+describe('SerializationInterceptor', () => {
+  it('serializes a response', (done) => {
+    const userMock = {
+      id: '1',
+      name: 'Alice Johnson',
+      age: 20,
+      createdAt: new Date('2024-06-20T08:30:00.000Z'),
+    };
+
+    class UserDtoMock {
+      id: string;
+      name: string;
+
+      @Exclude()
+      age: number;
+
+      @Transform(({ value }) => value.toLocaleDateString('en-US'))
+      createdAt: string;
+    }
+
+    const interceptor = new SerializationInterceptor(UserDtoMock);
+
+    interceptor.intercept().subscribe((result) => {
+      expect(result).toEqual({
+        id: '1',
+        name: 'Alice Johnson',
+        createdAt: '6/20/2024',
+      });
+      done();
+    });
+  });
+});
+```
+
+Our unit test will be very simple, we just want to check if the response (`userMock`) is transformed to outcome specified in DTO (`UserDtoMock`). You can add more test cases if you want.
+
+You'll notice that `interceptor.intercept()` is missing it's required arguments: `context` and `next` function. First one is NestJS' abstraction over different types of request-response cycles (like HTTP, GraphQL, and WebSockets). Second is a function representing the next step in the pipeline, allowing the interceptor to pass control to the next handler. We need to mock them.
+
+Define function which will return the execution context mock:
+
+```ts
+function mockExecutionContext() {
+  return {
+    switchToHttp: jest.fn().mockReturnThis(),
+    getRequest: jest.fn().mockReturnValue({}),
+  } as unknown as ExecutionContext;
+}
+```
+
+And use it at the top of the test:
+
+```ts
+let context: ExecutionContext;
+
+beforeEach(() => {
+  context = mockExecutionContext();
+});
+```
+
+Recreating mocks in `beforeEach` hook is general practice in order to avoid re-defining mocks by subsequent tests. Also, we extracted creation of the mock to separate function to keep the test readable and high-level.
+
+As for `next`, let's create similar function which will mimic the implementation from the Core NestJS code:
+
+```ts
+function mockCallHandler(returnedData: any) {
+  return {
+    handle: jest.fn().mockReturnValue(of(returnedData)),
+  };
+}
+```
+
+Now use both in test assertion phase:
+
+```ts
+const interceptor = new SerializationInterceptor(UserDtoMock);
+const next = mockCallHandler(userMock);
+
+interceptor.intercept(context, next).subscribe((result) => {
+  expect(result).toEqual({
+    id: '1',
+    name: 'Alice Johnson',
+    createdAt: '6/20/2024',
+  });
+  done();
+});
+```
+
+<ViewCommitLink commit="tymzap/nestjs-serialization-example/commit/565c6dd0fa3f924ae0eaa5378bf00fcb674b73d8"  />
+
+Run `jest` command to verify that the test works.
+## Summary
+
+In this guide, we've walked through the process of implementing advanced data serialization in NestJS. We covered essential techniques like **hiding sensitive fields**, **transforming data**, and **customizing responses based on user roles**. We talked about **decoupling serialization logic from business concerns** by leveraging DTOs, making codebase more maintainable and scalable. We've also explored combining serialization with pagination responses, and testing our serialization solution to ensure it works as expected.
+
+By applying these concepts, your NestJS applications will be more robust and better structured for handling complex data flows.
