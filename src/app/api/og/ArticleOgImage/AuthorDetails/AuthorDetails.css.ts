@@ -6,8 +6,8 @@ export const wrapper: CSSProperties = {
 };
 
 export const image: CSSProperties = {
-  width: 200,
-  height: 200,
+  width: 250,
+  height: 250,
 };
 
 export const textWrapper: CSSProperties = {
