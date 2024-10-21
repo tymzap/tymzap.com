@@ -1,0 +1,71 @@
+---
+title: Decoupled data layer with repository pattern in NestJS
+publishedAt: 2024-10-12
+coverImage: different-books-arrangement.webp
+---
+
+Separating data access from application logic can make your code easier to work with and scale. The repository pattern helps by creating a clear boundary between the two.
+
+In this article, we’ll explore how to apply this pattern in NestJS framework, with a focus on key concepts and a few simple code examples to illustrate the approach.
+## What is the repository pattern?
+
+The repository pattern acts as a middle layer between your application’s business logic and the database. Instead of having your services handle data queries directly, **classes called repositories are responsible for querying, saving, and updating data**.
+
+Here’s a basic example of a repository class in NestJS:
+
+```ts
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { UserEntity } from './user.entity';
+
+@Injectable()
+export class UserRepository {
+  constructor(
+    @InjectRepository(UserEntity)
+    private baseRepository: Repository<ReportEntity>,
+  ) {}
+
+  async findByEmail(email: string): Promise<UserEntity | undefined> {
+    return this.baseRepository.findOne({ where: { email } });
+  }
+}
+```
+
+The `UserRepository` is responsible for managing all data operations related to `UserEntity`. By injecting the base TypeORM repository - which comes with built-in methods like `findOne` - we can easily manage database interactions within the repository's methods.
+
+By abstracting the data access details (such as ORM queries or raw SQL) behind higher-level methods like `findByEmail`, we’ve made it simpler for the service layer to interact with the data. This separation allows the service layer to focus on its responsibilities without being tightly coupled to the underlying database logic.
+
+There’s an alternative approach to this pattern where you extend the base repository and add some custom methods on top of the default ones. However, I recommend using dependency injection over extending repositories. Our approach ensures that **every SQL query used in the application is encapsulated**, providing greater transparency and control over data access. I really don’t like having dozens of random repository methods that are tempting to use throughout the entire code base.
+
+I feel like this famous quote by Uncle Bob fits very well here:
+
+> Abstraction is the elimination of the irrelevant and the amplification of the essential.
+## Decoupling business logic from data access
+
+Repository pattern is a perfect example of separation of concerns. Take look at `UserService` making use of our `UserRepository`:
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { UserRepository } from './user.repository';
+
+@Injectable()
+export class UserService {
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async resetPassword(email: string): Promise<void> {
+    const user = await this.userRepository.findByEmail(email);
+    // logic continues...
+  }
+}
+```
+
+With our repository class in place, the password reset logic stays clean and free from scattered SQL queries. This makes our service layer cleaner and more maintainable as they evolve over time. We can focus solely on meeting our business logic requirements. Some additional benefits:
+
+- It's much easier to test your services if you can mock your whole data access layer.
+- If you ever need to switch databases or drop the ORM, the changes are isolated within the repository.
+- You can easily implement centralized logging for all data operations, making it simpler to track and debug database interactions.
+## Conclusion
+
+The repository pattern provides a straightforward way to **decouple your data access from business logic** in NestJS. If your project is growing or you anticipate scaling, applying this pattern can help you with keeping your codebase organized and easy to work with.
+
+Note that this pattern can be implemented also in other backend frameworks like Express or Koa, and even full-stack frameworks like Next.js. You don’t even have to rely on classes and dependency injection; simple functions can effectively handle data access as well.
