@@ -1,0 +1,115 @@
+---
+title: 5 differences between React server components and server-side rendering
+publishedAt: 2024-10-22
+coverImage: autumn-leaves-on-a-tree.webp
+---
+
+Both approaches aim to render React components on the server, but how do they actually differ? Let’s break it down.
+# 1. Bundle size
+
+One of the key benefits of server components is the ability to reduce the amount of JavaScript sent to the client. **Server components are rendered on the server and don’t need any client-side JavaScript**. They just send the rendered result to the client.
+
+With server-side rendering, the **entire application bundle is sent to the client**, even though the HTML is pre-rendered. This means the client still receives all the JavaScript needed for the app, and this can lead to a larger bundle size compared to server components.
+
+Take a look on this example of simple component displaying formatted dates:
+
+```jsx
+import { formatDistanceToNow, formatRelative } from 'date-fns';
+
+export function ProductPriceInfo({ product }) {
+  const priceUpdatedAt = new Date(product.priceUpdatedAt);
+
+  const timeSinceLastUpdate = formatDistanceToNow(priceUpdatedAt, { addSuffix: true });
+  const relativeDate = formatRelative(priceUpdatedAt, new Date());
+
+  return (
+    <div>
+      <header>
+        <strong>{product.name}</strong>
+        <small>Last price update: {relativeDate} ({timeSinceLastUpdate})</small>
+      </header>
+      <p>Current price: {product.price}</p>
+    </div>
+  );
+}
+```
+
+When using server components, the date formatting (via `date-fns`) happens entirely on the server. The server sends HTML with already formatted date string to the client, so there’s no need to include the `date-fns` library in the client bundle. Notice that server components have an added benefit of not sending their source code to the client.
+
+In contrast, for SSR, while the initial page render is generated on the server, the client still needs to rehydrate the app - to make it interactive on the client. As a result `date-fns` functions must still be included in the client bundle.
+## 2. Hydration process
+
+After SSR renders the HTML on the server, the client needs to *hydrate* the page. This means React **re-runs the JavaScript on the client side to make the page interactive**, which can introduce a delay, especially for larger apps.
+
+If the client-side HTML doesn’t match the server-rendered HTML, React will throw a dreaded *Hydration failed* error and attempt to re-render the mismatched components, which can cause layout shifts or performance issues. This often happens when the server and client render different data, for example if you rely on browser-specific APIs (like `localStorage` or `window`). It's a tricky problem that almost every server-side rendered app runs into sooner or later.
+
+![But at least we have useful error message now!](hydration-failed-error.webp "But at least we have useful error message now!")
+
+Server components dropped the hydration process altogether. This is because only interactive part of your app needs hydration in order to let user mutate the app state. Server Components don't run any JavaScript on the client side and thus they don't have any state in that sense.
+
+In essence, server components allow you to **skip hydration for non-interactive parts of the page**, removing a pain points from your dev work and improving efficiency of rendering. The tradeoff is that you have to consider which parts of the page are static and won't require any user interaction.
+
+## 3. How component tree is rendered
+
+In server-side rendering, the **entire component tree is rendered on the server**, and then the HTML is sent to the client. Here React rehydrates the components by executing client-side JavaScript, comparing the server-rendered virtual DOM with the client-side version, and enabling interactivity.
+
+With server components, **only selected parts of the component tree is rendered on the server**. The idea is to split your components into server and client components, allowing server components to handle data-fetching, computation, and heavy lifting without sending JavaScript for these components to the client. Components that require user interactions (for example, forms) will remain the classic client components.
+
+The difference was explained really well in a [video by Kodaps Academy](https://www.youtube.com/watch?v=jEJEFAc8tSI), using the term *islands of interactivity* as an example. In essence, most of a typical webpage remains static, while only certain elements (like buttons or form fields) require user interaction. Server components architecture excel by isolating these interactive "islands" from the server-rendering process, eliminating the need for hydration in those areas - and gaining fine-grained control over UI updates. As the video states:
+
+> The interesting word in "server components" is "components", not "server".
+## 4. Component lifecycle
+
+Server-side rendered components function **mostly like any other React component**. You still have access to the component lifecycle, including hooks like `useEffect` or `useState`. After the initial render sent by the server, once the components are executed on the browser, they function just like regular client-side components. However, there are some caveats: you need to be cautious about hydration errors, as mentioned earlier in section two, and remember that `useEffect` doesn't run on the server. It only runs when the component is re-rendered in the browser.
+
+On the contrary, server components are something fundamentally different. They don’t have a lifecycle on the client because they don’t run in the browser. Hooks like `useEffect` or `useState` can’t be used inside them. Server components are mostly focused on fetching and rendering data, **they do not care about user interactions and side effects**.
+Example of a simple server component rendering blog posts:
+
+```jsx
+export default async function BlogPosts() {
+  const posts = await fetchPosts(); // in server components we can use await directly in the function body
+
+  return (
+    <div>
+      <h1>Latest Blog Posts</h1>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+Notice that when using server-side rendering, you typically don't need to worry much about which components are interactive. In contrast, server components are much stricter about this. If you later decide to add interactivity to a server component, you'll likely **face a challenging restructuring process of your application**.
+
+## 5. Data fetching
+
+Server-side rendering usually requires two strategies to fetch data. Let's say you need to render the list of user, but still allow the pagination from the browser. First wee need to provide initial batch of data, usually passed in props via functions like Next's `getStaticProps` or `getServerSideProps` (this will be the data passed from the server to the browser). Second is to fetch data requested by user on the client side (fetching subsequent pages of user list).
+
+Simple example of this approach from [TanStack Query's documentation](https://tanstack.com/query/v4/docs/framework/react/guides/ssr):
+
+```ts
+export async function getStaticProps() {
+  const users = await fetchUsers();
+  return { props: { users } };
+}
+
+function UserList(props) {
+  const { data: users } = useQuery({ // `users` variable will contain current data reacting to User actions
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+    initialData: props.users, // pass static prop as an initial data to the cache
+  })
+}
+```
+
+With Server Components, there's no need for this extra complexity because the **output is static and won’t be mutated by the user on the client side**. This simplifies the process by reducing the number of edge cases you need to handle. If needed, you can still optimize data fetching using utilities like React's [`cache`](https://react.dev/reference/react/cache) function to ensure that the same data is reused across multiple components.
+
+## Final thoughts
+
+Server-side rendering and server components are two powerful techniques for building React applications. While server components are a newer addition to the front-end development toolkit, they aren't a replacement for server-side rendering. In fact, they can complement each other, with each serving different needs. Understanding the key differences between these approaches will help you decide when and how to use them, allowing you to maximize performance and maintainability of your React projects.
