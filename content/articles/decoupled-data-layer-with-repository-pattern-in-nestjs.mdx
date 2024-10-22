@@ -22,7 +22,7 @@ import { UserEntity } from './user.entity';
 export class UserRepository {
   constructor(
     @InjectRepository(UserEntity)
-    private baseRepository: Repository<ReportEntity>,
+    private baseRepository: Repository<UserEntity>,
   ) {}
 
   async findByEmail(email: string): Promise<UserEntity | undefined> {
