@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 import { Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import PlausibleProvider from "next-plausible";
 
 import "~/styles/global.css";
 import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
@@ -41,21 +42,25 @@ export default async function Layout({ children }: LayoutProps) {
           openSans.variable,
         )}
       >
-        <TopLoader />
-        <NextIntlClientProvider locale={locale} messages={translations}>
-          <Navbar
-            menuLinks={MENU_LINKS}
-            contactLinks={
-              <ContactLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
-            }
-          />
-          <ContentWrapper>{children}</ContentWrapper>
-          <Footer contactLinks={<ContactLinks />} />
-        </NextIntlClientProvider>
+        <PlausibleProvider domain={DOMAIN}>
+          <TopLoader />
+          <NextIntlClientProvider locale={locale} messages={translations}>
+            <Navbar
+              menuLinks={MENU_LINKS}
+              contactLinks={
+                <ContactLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
+              }
+            />
+            <ContentWrapper>{children}</ContentWrapper>
+            <Footer contactLinks={<ContactLinks />} />
+          </NextIntlClientProvider>
+        </PlausibleProvider>
       </body>
     </html>
   );
 }
+
+const DOMAIN = "tymzap.com";
 
 const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
 
