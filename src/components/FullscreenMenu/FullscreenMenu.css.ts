@@ -4,7 +4,7 @@ import { vars } from "~/styles/theme.css";
 import { zIndex } from "~/styles/zIndex";
 
 export const wrapper = style({
-  background: vars.colors.black,
+  background: vars.colors.eerieBlack,
   position: "fixed",
   inset: 0,
   zIndex: zIndex.fullscreenMenu,

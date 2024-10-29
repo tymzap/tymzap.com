@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 import { vars } from "~/styles/theme.css";
 
 export const link = style({
-  color: vars.colors.black,
+  color: vars.colors.eerieBlack,
   textDecoration: "none",
   fontWeight: 500,
   fontSize: 18,

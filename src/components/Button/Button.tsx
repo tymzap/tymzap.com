@@ -6,14 +6,15 @@ import { ButtonIcon } from "./ButtonIcon";
 
 type ButtonProps = PropsWithChildren<{
   onPress?: () => void;
+  size?: "medium" | "big";
 }>;
 
-export function Button({ children, onPress }: ButtonProps) {
+export function Button({ children, size = "medium", onPress }: ButtonProps) {
   const ref = useRef(null);
   const { buttonProps } = useButton({ onPress }, ref);
 
   return (
-    <button {...buttonProps} className={styles.button}>
+    <button {...buttonProps} className={styles.button({ size })}>
       {children}
     </button>
   );

@@ -1,10 +1,9 @@
 export const colors = {
-  alabaster: "#f7f7f7",
-  black: "#1a1a25",
-  concrete: "#f3f3f3",
+  eerieBlack: "#1b1b1b",
+  gray: "#808080",
   white: "#ffffff",
+  cultured: "#f5f5f5",
   gallery: "#eaeaea",
-  wildSand: "#f4f4f4",
-  mineShaft: "#333333",
   lightGray: "#d3d3d3",
+  rustyRed: "#da2c43",
 } as const;

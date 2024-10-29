@@ -8,8 +8,8 @@ export const wrapper: CSSProperties = {
   height: 630,
   boxSizing: "border-box",
   padding: 65,
-  color: colors.black,
-  background: colors.alabaster,
+  color: colors.eerieBlack,
+  background: colors.cultured,
 };
 
 export const contentWrapper: CSSProperties = {

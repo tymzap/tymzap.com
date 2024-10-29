@@ -14,7 +14,7 @@ export const button = recipe({
   variants: {
     color: {
       black: {
-        color: vars.colors.black,
+        color: vars.colors.eerieBlack,
       },
       white: {
         color: vars.colors.white,

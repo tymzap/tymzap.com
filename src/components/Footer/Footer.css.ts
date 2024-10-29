@@ -5,7 +5,7 @@ import { sizes } from "~/styles/sizes";
 import { mediaQueries } from "~/styles/mediaQueries";
 
 export const wrapper = style({
-  background: vars.colors.black,
+  background: vars.colors.eerieBlack,
   color: vars.colors.white,
   marginTop: 50,
   height: sizes.footerHeight,

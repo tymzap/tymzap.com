@@ -6,7 +6,7 @@ export const link = style({
   fontFamily: vars.fonts.sourceSans3,
   cursor: "pointer",
   textDecoration: "none",
-  color: vars.colors.black,
+  color: vars.colors.eerieBlack,
   display: "inline-flex",
   gap: 6,
   selectors: {

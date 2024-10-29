@@ -9,7 +9,7 @@ export const link = recipe({
         color: vars.colors.white,
       },
       black: {
-        color: vars.colors.black,
+        color: vars.colors.eerieBlack,
       },
     },
   },
