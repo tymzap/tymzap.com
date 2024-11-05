@@ -52,7 +52,7 @@ Let's take a look at the same code after refactoring:
 import { useState, useEffect } from "react";
 
 function UserProfile({ userId }) {
-  const [user, setUser] = useState( null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetchUser(userId).then((data) => setUser(normalizeUser(data)));
