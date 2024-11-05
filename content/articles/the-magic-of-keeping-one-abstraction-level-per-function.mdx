@@ -1,0 +1,125 @@
+---
+title: The magic of keeping one level of abstraction per function
+publishedAt: 2024-11-05
+coverImage: sparklers.webp
+---
+
+Imagine we're working on an app that shows a user profile page. Our job is to fetch the user data, show a loading state while it's being fetched, and display whether the user is currently active. Here’s an example of what the code might look like:
+
+```jsx
+import { useState, useEffect } from "react";
+
+function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://api.example.com/users/${userId}`)
+      .then(response => response.json())
+      .then(data => {
+        const isActive = data.accountStatus === "active" &&
+          new Date(data.lastLogin) >= new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+        setUser({
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          isActive,
+        });
+      });
+  }, [userId]);
+
+  if (!user) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div>
+      {user.name} is {user.isActive ? "active" : "inactive"}
+    </div>
+  );
+}
+```
+
+This is a quite common type of code seen across React codebases. Not very complicated, rather simple stuff, with some logic sprinkled here and there. It's not pretty, but it's not particularly bad either. It has one issue though: mixed abstraction levels.
+## Controlling abstraction levels
+
+When we write code, mixing different levels of detail within a single function often leads to confusion and makes it harder to follow. For example, if something shifts to a lower level - like combining the user's first and last names into a single string - it disrupts the higher-level purpose of a function like `UserProfile`, which is meant to represent an entire page in our app.
+
+Cleaner approach is to keep each function at a consistent level of abstraction. In practice, this means that **high-level functions should focus on orchestration**, while **details should be abstracted out into smaller functions**.
+
+Let's take a look at the same code after refactoring:
+
+```jsx
+import { useState, useEffect } from "react";
+
+function UserProfile({ userId }) {
+  const [user, setUser] = useState( null);
+
+  useEffect(() => {
+    fetchUser(userId).then((data) => setUser(normalizeUser(data)));
+  }, [userId]);
+
+  if (!user) {
+    return <Loader />;
+  }
+
+  return <UserStatus user={user} />;
+}
+```
+
+Notice how much *easier to read* it is now. Each line flows like a simple sentence in a book, with everything kept at the same level of abstraction. One quick glance at the component, and we immediately understand what it does!
+
+We don't have to worry about the endpoint URL for fetching the user or the data transformation logic in `normalizeUser`. We’re also not concerned with what the `Loader` component displays - we just know it needs to appear while we’re waiting for the data.
+
+The rest of the logic has been broken down into **small, focused functions**.
+
+The `fetchUser` function handles calling the backend endpoint and parsing the response as JSON:
+
+```jsx
+function fetchUser(id) {
+  const url = `https://api.example.com/users/${id}`;
+
+  return fetch(url).then(response => response.json());
+}
+```
+
+Next, `normalizeUser` is a utility function that formats the backend data to match our app's requirement (also known as *transformer* or *mapper* function):
+
+```jsx
+function normalizeUser(data) {
+  const isActive = isUserActive(data);
+
+  return {
+	name: `${data.firstName} ${data.lastName}`,
+	email: data.email,
+    isActive,
+  };
+}
+```
+
+We further extracted the `isUserActive` logic, as - you guessed it - it operates on a different level of abstraction. This keeps the normalization focused solely on shaping the user data for app use, without mixing in logic about determining whether the user is active.
+
+```jsx
+function isUserActive(user) {
+  const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+  const wasLoggedInDuringLastThirtyDays = new Date(user.lastLogin) >= new Date(Date.now() - thirtyDaysInMs);
+
+  return user.accountStatus === "active" && wasLoggedInDuringLastThirtyDays;
+}
+```
+
+Introducing a separate `thirtyDaysInMs` function adds meaning to otherwise mysterious numbers. Why should another developer have to wonder what these numbers represent when we can make it clear from the start?
+
+We won't continue with another components but you get the idea. I'd much rather work with a codebase broken down into compact, specialized functions than one cluttered with large components and mixed abstraction levels.
+
+## Benefits of maintaining single level of abstraction per function
+
+Apart from the obvious advantage of cleaner, more readable code, there are several other benefits:
+
+- **Isolated changes are easier and safer to make**. When you need to update only the logic for determining if a user is active, you can modify the `isUserActive` utility without touching the `UserProfile` component itself. No risk of accidentally breaking the behavior of the latter.
+- **Reusable code out of the box**. By writing modular functions, your code becomes naturally reusable across different parts of the project.
+- **Reduced cognitive load**. Developers can focus on one small piece of code at a time, without need to hold a sprawling 200-line component in their head.
+- **Separation of concerns detector**. Switching abstraction levels is often a red flag that code is taking on additional responsibilities, signaling when a refactor might be due.
+
+The potential downside is that smaller functions can require more jumping around in the codebase. However, I see this as a necessary trade-off; keeping one large component out of convenience tends to lead to much bigger issues down the road.
+
+Hope this post is helpful to you. Good luck!
