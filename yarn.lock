@@ -13382,7 +13382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"polished@npm:^4.2.2":
+"polished@npm:4.3.1, polished@npm:^4.2.2":
   version: 4.3.1
   resolution: "polished@npm:4.3.1"
   dependencies:
@@ -15738,6 +15738,7 @@ __metadata:
     next-plausible: "npm:3.12.2"
     next-plugin-svgr: "npm:1.1.10"
     nextjs-toploader: "npm:3.7.15"
+    polished: "npm:4.3.1"
     prettier: "npm:3.1.0"
     react: "npm:18.3.1"
     react-aria: "npm:3.33.1"
