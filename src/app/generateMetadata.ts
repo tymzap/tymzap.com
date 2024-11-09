@@ -9,6 +9,6 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s • Tymek Zapała",
       default: "Tymek Zapała",
     },
-    description: t("imASoftwareEngineerAndStartupFounder"),
+    description: t("imASoftwareEngineerAndProductMaker"),
   };
 }

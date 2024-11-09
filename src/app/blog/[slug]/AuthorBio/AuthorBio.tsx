@@ -18,7 +18,7 @@ export function AuthorBio() {
       />
       <div className={styles.contentWrapper}>
         <span className={styles.heading}>{t("writtenByTymek")}</span>
-        <Text as={"p"}>{t("imASoftwareEngineerAndStartupFounder")}</Text>
+        <Text as={"p"}>{t("imASoftwareEngineerAndProductMaker")}</Text>
       </div>
     </div>
   );
