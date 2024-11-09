@@ -3,7 +3,7 @@ import { useCheckbox, useFocusRing, mergeProps } from "react-aria";
 import { useToggleState } from "@react-stately/toggle";
 
 import Dash from "~/icons/dash.svg";
-import Checkmark from "~/icons/checkmark.svg";
+import Check from "~/icons/check.svg";
 
 import * as styles from "./Checkbox.css";
 
@@ -33,7 +33,7 @@ export function Checkbox({ label, isIndeterminate = false }: CheckboxProps) {
           withBackground: state.isSelected || isIndeterminate,
         })}
       >
-        {isCheckmarkVisible && <Checkmark />}
+        {isCheckmarkVisible && <Check />}
         {isIndeterminate && <Dash />}
       </div>
       {label}
