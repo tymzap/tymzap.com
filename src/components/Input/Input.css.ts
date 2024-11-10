@@ -6,7 +6,6 @@ export const input = style({
   fontSize: 18,
   color: vars.colors.eerieBlack,
   transition: "box-shadow .2s",
-  boxSizing: "border-box",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

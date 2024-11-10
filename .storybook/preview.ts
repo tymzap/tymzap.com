@@ -1,10 +1,11 @@
 import { Preview } from "@storybook/react";
+import "sanitize.css";
 
-import "~/styles/global.css";
-
-import { ThemeDecorator } from "./ThemeDecorator";
+import "./global.css";
 import { viewports } from "./viewports";
+import { backgrounds } from "./backgrounds";
 import { nextIntlConfig } from "./nextIntlConfig";
+import { ThemeDecorator } from "./ThemeDecorator";
 
 const preview: Preview = {
   tags: ["autodocs"],
@@ -18,6 +19,7 @@ const preview: Preview = {
     viewport: {
       viewports,
     },
+    backgrounds,
     nextIntl: nextIntlConfig,
   },
   decorators: [ThemeDecorator],

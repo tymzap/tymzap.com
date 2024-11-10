@@ -21,7 +21,6 @@ export const checkmarkWrapper = recipe({
     height: 24,
     transition: "box-shadow .2s",
     flexShrink: 0,
-    boxSizing: "border-box",
     border: `3px solid ${vars.colors.eerieBlack}`,
     display: "inline-flex",
     borderRadius: 6,

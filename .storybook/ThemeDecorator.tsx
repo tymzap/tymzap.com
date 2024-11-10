@@ -8,6 +8,7 @@ import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
 export function ThemeDecorator(renderStory: PartialStoryFn<ReactRenderer>) {
   return (
     <div
+      id={"storybook-theme-root"}
       className={cn(
         theme,
         sourceSans3.variable,
