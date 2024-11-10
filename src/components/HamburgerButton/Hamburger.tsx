@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 
-type AnimatedSvgProps = {
+type HamburgerProps = {
   isPressed: boolean;
 };
 
-export function AnimatedSVG({ isPressed }: AnimatedSvgProps) {
+export function Hamburger({ isPressed }: HamburgerProps) {
   const startRef = useRef<SVGAnimateElement>(null);
   const reverseRef = useRef<SVGAnimateElement>(null);
 

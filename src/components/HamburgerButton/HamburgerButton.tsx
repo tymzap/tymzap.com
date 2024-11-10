@@ -3,7 +3,7 @@
 import { useButton } from "react-aria";
 import { useRef } from "react";
 
-import { AnimatedSVG } from "./AnimatedSvg";
+import { Hamburger } from "./Hamburger";
 import * as styles from "./HamburgerButton.css";
 
 type HamburgerButtonProps = {
@@ -25,7 +25,7 @@ export function HamburgerButton({
 
   return (
     <button ref={ref} className={styles.button({ color })} {...buttonProps}>
-      <AnimatedSVG isPressed={isPressed} />
+      <Hamburger isPressed={isPressed} />
     </button>
   );
 }
