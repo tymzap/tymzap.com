@@ -8,6 +8,7 @@ type CheckboxProps = {
   label?: string;
   isIndeterminate?: boolean;
   isSelected?: boolean;
+  value?: string;
   onChange?: (value: boolean) => void;
 };
 
@@ -16,6 +17,7 @@ export function Checkbox({
   isIndeterminate = false,
   isSelected,
   onChange,
+  value,
 }: CheckboxProps) {
   const {
     isCheckmarkVisible,
@@ -23,7 +25,7 @@ export function Checkbox({
     hasCheckmarkWrapperBackground,
     inputProps,
     inputRef,
-  } = useCheckbox({ isIndeterminate, onChange, isSelected, label });
+  } = useCheckbox({ isIndeterminate, onChange, isSelected, label, value });
 
   return (
     <label className={styles.label}>
