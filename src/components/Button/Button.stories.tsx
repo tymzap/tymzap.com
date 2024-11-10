@@ -11,18 +11,28 @@ const meta: Meta<typeof Button> = {
   args: {
     children: faker.lorem.words(3),
     onPress: fn(),
+    isLoading: false,
+    size: "medium",
   },
 };
 
 export default meta;
 
+type ButtonStoryObj = StoryObj<typeof Button>;
+
 export const Default = {};
 
-export const WithIcon: StoryObj<typeof Button> = {
+export const WithIcon: ButtonStoryObj = {
   render: ({ children, ...restProps }) => (
     <Button {...restProps}>
       {children}
       <Button.Icon icon={Plus} />
     </Button>
   ),
+};
+
+export const Loading: ButtonStoryObj = {
+  args: {
+    isLoading: true,
+  },
 };

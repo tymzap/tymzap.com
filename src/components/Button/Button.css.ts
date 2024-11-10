@@ -1,3 +1,4 @@
+import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "~/styles/theme.css";
@@ -12,6 +13,7 @@ export const button = recipe({
     justifyContent: "center",
     alignItems: "center",
     cursor: "pointer",
+    position: "relative",
     fontWeight: 600,
     display: "flex",
     transition: "opacity .2s, box-shadow .3s, transform .2s",
@@ -42,4 +44,34 @@ export const button = recipe({
       },
     },
   },
+});
+
+export const content = recipe({
+  base: {
+    display: "contents",
+  },
+  variants: {
+    hidden: {
+      true: {
+        visibility: "hidden",
+      },
+    },
+  },
+});
+
+const rotateSpinner = keyframes({
+  "0%": { transform: "translate(-50%, -50%) rotate(0deg)" },
+  "100%": { transform: "translate(-50%, -50%) rotate(360deg)" },
+});
+
+const spinnerSize = 26;
+
+export const spinner = style({
+  position: "absolute",
+  width: spinnerSize,
+  height: spinnerSize,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  animation: `${rotateSpinner} 1s linear infinite`,
 });
