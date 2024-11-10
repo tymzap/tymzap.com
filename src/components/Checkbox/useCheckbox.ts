@@ -20,7 +20,9 @@ export function useCheckbox({
   label,
 }: UseCheckboxParams) {
   const state = useToggleState({ isSelected, onChange });
+
   const inputRef = useRef(null);
+
   const { inputProps: baseInputProps } = useBaseCheckbox(
     { children: label },
     state,
