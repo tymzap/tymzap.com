@@ -1,3 +1,5 @@
+"use client";
+
 import { useButton } from "react-aria";
 import { PropsWithChildren, useRef } from "react";
 
