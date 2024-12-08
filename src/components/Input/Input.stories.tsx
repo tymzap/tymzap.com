@@ -29,4 +29,15 @@ export const WithLabelAndError: InputStoryObj = {
   },
 };
 
+export const Black: InputStoryObj = {
+  args: {
+    color: "black",
+  },
+  parameters: {
+    backgrounds: {
+      default: "Eerie black",
+    },
+  },
+};
+
 export default meta;

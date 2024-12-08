@@ -6,9 +6,10 @@ import * as styles from "./Input.css";
 type InputProps = {
   label?: string;
   error?: string;
+  color?: "white" | "black";
 };
 
-export function Input({ label, error }: InputProps) {
+export function Input({ label, error, color = "white" }: InputProps) {
   const ref = useRef(null);
   const { inputProps, labelProps, errorMessageProps } = useTextField(
     { label, errorMessage: error, isInvalid: Boolean(error) },
@@ -16,7 +17,7 @@ export function Input({ label, error }: InputProps) {
   );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper({ color })}>
       {label ? (
         <label {...labelProps} className={styles.label}>
           {label}
