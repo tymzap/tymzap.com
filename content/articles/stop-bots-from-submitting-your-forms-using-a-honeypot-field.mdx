@@ -1,0 +1,431 @@
+---
+title: Stop bots from submitting your forms using a honeypot field
+publishedAt: 2024-12-08
+coverImage: honeypot.webp
+---
+
+Forms are the backbone of user interaction on the web. Unfortunately, this also means that they are the target of spam bots flooding your backend with fake submissions. **Honeypot field** is a simple, low-cost security technique to prevent it - and at the same time, it's transparent for real users (unlike CAPTCHA).
+
+In this article, we'll walk through the process of implementing a honeypot trap, simulate bot behavior to test its effectiveness, and briefly compare it with other strategies to safeguard your forms. Let's dive in.
+
+## Why do we need to prevent bot submissions?
+
+On a small scale, bot submissions might seem like a minor inconvenience, but as they grow in volume, the consequences can become far more damaging:
+
+- Bots can flood your analytics and storage with junk data, leading to higher expenses.
+- Overwhelming bot activity can cause downtime, disrupting your services and frustrating your users.
+- Bot submission can serve as part of an attack vector, spreading malicious links that puts your users at risk.
+## Honeypot field strategy
+
+The idea behind a honeypot field strategy is quite simple: add a hidden input field to your form that real users won't interact with, but bots - programmed to fill every field - will. If the hidden field is filled, it's a sign the submission is coming from a bot and can be safely discarded.
+
+The term "honeypot" couldn't be more fitting - it is a direct parallel to the way honey irresistibly lures bugs in real world, trapping them in its sticky embrace. Similarly, bots can't resist filling every field they encounter, including the hidden honeypot field. Just as the **honey traps the bugs, the honeypot field traps bots**, making it easy to identify and discard their fake submissions.
+
+A major strength of this strategy is that it **doesn't disrupt the user experience**. Unlike CAPTCHAs or other visible bot prevention methods, it doesn't show pop-ups or modals requiring multiple clicks (which can even lead to user abandoning the form submission in frustration). The downside is that more advanced bots, specifically designed to avoid such traps, may still bypass it. However, despite this limitation, it remains a simple way to block a good amount of bot traffic.
+
+Let's implement the trap and stop those nasty bots.
+
+<ViewRepositoryButton repository="tymzap/honeypot-field-example"  />
+## Project setup
+
+We're going to create a simple sign-up form with one honeypot field blocking bot sign-ups. The goal is to show how it works by simulating the bot submission. For this, we'll use Next.js and its [server actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations) to validate the form.
+
+Start by creating fresh Next.js project:
+
+```bash
+$ yarn create next-app
+```
+
+Answer the setup questions from the wizard. Once the project is created, delete the example code and styles so we have a clean starting point. I also added my own global styles to make it easier to design the sign-up form quickly.
+
+```css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+form {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+```
+
+<ViewCommitLink commit="tymzap/honeypot-field-example/commit/1c791aa487c3e904fea1b2c0dec6038428c1b858"  />
+## Implementing components
+
+We need to create reusable basic building blocks to not have our codebase cluttered by repeated HTML syntax.
+
+We can start with a simple `Input` component that also takes a `label` prop for convenience:
+
+```tsx
+import styles from "./Input.module.css";
+
+type InputProps = {
+  label: string;
+  name: string;
+  type?: "text" | "email" | "tel";
+  isRequired?: boolean;
+};
+
+export function Input({
+  name,
+  label,
+  type = "text",
+  isRequired = false,
+}: InputProps) {
+  return (
+    <label className={styles.label}>
+      {label}:{" "}
+      <input
+        type={type}
+        name={name}
+        required={isRequired}
+        className={styles.input}
+      />
+    </label>
+  );
+}
+```
+
+```css
+.label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+```
+
+And `Button` component supporting loading state for better user experience:
+
+```tsx
+import type { PropsWithChildren } from "react";
+
+type ButtonProps = PropsWithChildren<{
+  type?: "button" | "submit";
+  isLoading?: boolean;
+}>;
+
+export function Button({ children, type, isLoading }: ButtonProps) {
+  return (
+    <button type={type} disabled={isLoading} className={styles.button}>
+      {isLoading ? "Loading" : children}
+    </button>
+  );
+}
+```
+
+```css
+.button {
+  background-color: #1b1b1b;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: #383838;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    color: #aaa;
+    cursor: not-allowed;
+    border: 1px solid #ddd;
+  }
+}
+```
+
+For simplicity, in this example we're using CSS Modules to apply styles. However, in a real-world application you might want to consider a more robust solution like Vanilla Extract or Tailwind CSS.
+## Implementing the form
+
+We'll begin this step by creating the server action called `signUp`. This action will handle processing the form data sent from the client and provide the appropriate response - either a success or an error.
+
+Create a folder named `actions`, then add a file called `signUp.ts` and populate it with the following content:
+
+```ts
+"use server";
+
+import { sleep } from "@/lib/sleep";
+
+export async function signUp(
+  previousState: SignUpState,
+  formData: FormData,
+): Promise<SignUpState> {
+  console.log("Signing up in progress...");
+  await sleep(1000);
+
+  return {
+    data: {
+      firstName: formData.get("firstName") as string,
+      lastName: formData.get("lastName") as string,
+    },
+  };
+}
+
+type SignUpState = {
+  error?: string;
+  data?: User;
+};
+
+type User = {
+  firstName: string;
+  lastName: string;
+};
+```
+
+`use server` statement at the beginning on the file tells Next.js that whole logic should be executed on server. While this makes no bigger difference in our simple example, it could allow us, for example, interact directly with a database inside this function. We simulate creating a new user in the database by logging `Signing up in progress...` to the console and using a `sleep` function to introduce a delay.
+
+The server action typically returns an action state, which in our case is `SignUpState`. This state would either represent an error with a message or data containing the new user information, indicating a successful action. For simplicity, we're assuming all submissions are valid and always returning the data. Note that we've skipped data validation entirely to keep things straightforward. However, in any real-world application, robust data validation is a must.
+
+Finally, don't forget to implement the `sleep` utility function:
+
+```ts
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+```
+
+With the server action in place - serving as the "backend" for our app - it's time to create the actual sign-up form. Open the `src/app/page.tsx` file and replace its contents with the following:
+
+```tsx
+"use client";
+
+import { useActionState, useEffect } from "react";
+import { signUp } from "@/actions/signUp";
+import { Input } from "@/components/Input";
+import { Button } from "@/components/Button";
+
+export default function SignUp() {
+  const [{ data }, handleSubmit, isLoading] = useActionState(signUp, {});
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    window.alert(`Sign up completed. Welcome, ${data.firstName}.`);
+  }, [data]);
+
+  return (
+    <form action={handleSubmit} id={"sign-up-form"}>
+      <Input name={"firstName"} label={"First name"} isRequired={true} />
+      <Input name={"lastName"} label={"First name"} isRequired={true} />
+      <Input name={"email"} label={"Email"} />
+      <Input name={"phoneNumber"} type={"tel"} label={"Phone number"} />
+      <Button type="submit" isLoading={isLoading}>
+        Sign up
+      </Button>
+    </form>
+  );
+}
+```
+
+[`useActionState`](https://react.dev/reference/react/useActionState) hook connects our server action to the form through the `handleSubmit` function. You'll notice that we're restructuring the returned value to extract the `data` key as the first element in the array. This represents the part of the action state - `SignUpState` - we discussed earlier.
+
+Upon form submission, if the action is successful, the `data` object will contain the newly created user. We then use this information to display a success message to the user with `window.alert`.
+
+At the top of the file, we included `use client` statement to indicate that we defined a React client component. Form implementation relies on user interactions, which of course can only be handled on the client side, not the server.
+
+The form looks roughly like this:
+
+![Exemplary sign up form to implement a honeypot field](sign-up-form.webp)
+
+To test the form, simply enter some dummy data and click the "Sign up" button to see it in action.
+
+<ViewCommitLink commit="tymzap/honeypot-field-example/commit/5cae55b26ca25f70428bf706a105d906a234dc31"  />
+## Simulating bot submission
+
+To test the effectiveness of our honeypot trap, we first need to implement the exemplary bot behavior. To do, so create new file called `simulateBotSubmission.ts` with this contents:
+
+```ts
+export function simulateBotSubmission(formId: string) {
+  const form = document.getElementById(formId);
+
+  if (!form) {
+    console.error(`Form with id "${formId}" not found.`);
+    return;
+  }
+
+  fillInputs(form, "text", "Lorem ipsum");
+  fillInputs(form, "email", "bot@example.com");
+  fillInputs(form, "tel", "123456789");
+  clickSubmitButton(form);
+}
+
+function fillInputs(form: HTMLElement, type: string, value: string) {
+  const inputs = form.querySelectorAll(
+    `input[type="${type}"]`,
+  ) as NodeListOf<HTMLInputElement>;
+
+  inputs.forEach((input) => {
+    input.value = value;
+  });
+}
+
+function clickSubmitButton(form: HTMLElement) {
+  const button = form.querySelector(
+    'button[type="submit"]',
+  ) as HTMLButtonElement;
+
+  button.click();
+}
+```
+
+As you can see, our simple "bot" will just get all the fields of given form by type, fill them with some dummy data (like lorem ipsum and numbers), and click the submit button.
+
+To make use of the bot, we'll run it directly from the browser's console using dev tools. To make this possible, we need to attach the bot function to the `window` object. Open the `src/app/page.tsx` file and add the following lines to the end:
+
+```ts
+if (process.env.NODE_ENV === "development") {
+  Object.assign(window, { simulateBotSubmission });
+}
+```
+
+Now, when you open your dev tools console, you can execute the command `window.simulateBotSubmission("sign-up-form")` to trigger a bot-like form submission.
+
+By wrapping the code in the` process.env.NODE_ENV === "development"` check, we make sure we do not pollute the `window` object with testing logic in the production environment.
+
+<ViewCommitLink commit="tymzap/honeypot-field-example/commit/a2b7dff17e866bc1a805776b9cb736eacff743db"  />
+## Adding honeypot trap
+
+Let's bring it all together with the implementation of an actual trap that will save our forms from fake submissions!
+
+First, create a new component called `HoneypotInput`:
+
+```tsx
+type HoneypotInputProps = {
+  name: string;
+  type?: string;
+};
+
+export function HoneypotInput({ name, type = "text" }: HoneypotInputProps) {
+  return (
+    <input
+      type={type}
+      name={name}
+      style={{ display: "none" }}
+      tabIndex={-1}
+      autoComplete="off"
+    />
+  );
+}
+```
+
+The honeypot field is a regular input with a few modifications to make it invisible and inaccessible to human users. We've hidden it using the `display: none` style so it won't appear on the form visually. Additionally, we've set its `tabIndex` to -1 to prevent it from being focused accidentally when users navigate between fields with the Tab key. To further minimize unintended interaction, we've disabled the browser's autocomplete feature, ensuring it doesn't get auto-filled.
+
+Go back to `src/app/page.tsx` file and put our new input inside the form:
+
+```tsx
+<HoneypotInput name={"middleName"} />
+```
+
+Notice that we've chosen a realistic name for the field. This is because many bots are programmed to recognize and avoid fields with names like `honeypot` or `trap`. By using a name that looks legitimate, our honeypot becomes far more effective at trapping bot submissions.
+
+Now go to `src/actions/signUp.ts` and add this snippet of code at the top of the action's function body:
+
+```ts
+const honeypotValue = formData.get("middleName");
+
+if (honeypotValue) {
+  return { error: "Bot submission detected" };
+}
+```
+
+This is where the magic happens. We capture every submission where the `middleName` field is filled, as this field is hidden from real users. **If it contains a value, it's a clear sign of bot activity**. For debugging purposes, we still return an error message.
+
+Let's add one last component to display nicely styled error message:
+
+```tsx
+import { PropsWithChildren } from "react";
+import styles from "./ErrorMessage.module.css";
+
+type ErrorMessageProps = PropsWithChildren;
+
+export function ErrorMessage({ children }: ErrorMessageProps) {
+  if (!children) {
+    return null;
+  }
+
+  return <span className={styles.message}>{children}</span>;
+}
+```
+
+```css
+.message {
+  color: red;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  display: block;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  font-size: 14px;
+}
+```
+
+To render the error message, in the `src/app/page.tsx file`, destructure the `error` property from the action state:
+
+```ts
+const [{ data, error }, handleSubmit, isLoading] = useActionState(signUp, {});
+```
+
+Next, place the `ErrorMessage` component inside the form to display any errors:
+
+```tsx
+<ErrorMessage>{error}</ErrorMessage>
+```
+
+Let's verify if our bot trap is functioning correctly! Open the console in the browser dev tools and execute the command: `window.simulateBotSubmission("sign-up-form")`. Instead of the usual success message, you should now see a screen displaying an error.
+
+![Honeypot field blocks bots form submitting the sign up form](sign-up-form-bot-submission-detected.webp "Honeypot field blocks bots form submitting the sign up form")
+
+Even more importantly, you should notice that the message `Signing up in progress...` is not logged in the console. This ensures that bot traffic won't create any entries in our database, keeping it secure.
+
+<ViewCommitLink commit="tymzap/honeypot-field-example/commit/5b1fbf2928bacb59eee913852206c3204d97d040"  />
+## Type of honeypot input
+
+When deciding on the type of honeypot input, you usually have two good options: `text` or `email`. The `text` type is the simplest and works in most cases. However, some bots are trained to skip hidden text fields, which can make this less effective.
+
+Using `email` instead can catch more bots because many of them are programmed to fill any email field they find. But this comes with a trade-off - tools like password managers might mistakenly fill the hidden email field, causing a false positive. Picking between text and email depends on what matters more to you: avoiding accidental blocks for real users or catching as many bots as possible.
+
+## Alternatives to honeypot technique
+
+The honeypot technique does come with limitations. While it effectively blocks basic bot submissions at virtually no cost, it **won't deter advanced bots designed to bypass visually hidden elements**. As always, it's wise to explore alternative techniques or combine them for a more robust approach to securing your forms:
+
+- **CAPTCHA** - interactive visual challenges that are highly effective, but can impact user experience.
+- **Time-based validation** - tracking the time taken to fill out the form. Bots typically submit forms almost instantly, which makes them easy to distinguish from real users.
+- **Rate limiting and IP blocking** - this approach targets abusive behavior without affecting genuine users
+- **Hiding the form behind authentication** - highly effective but not always applicable if you want your website guests to fill the forms.
+## Summary
+
+The honeypot field strategy offers a straightforward and user-friendly way to block basic bot submissions while remaining invisible to real users. It's a **low-cost solution for safeguarding forms against spam**, though **advanced bots may bypass it**. Combining the honeypot with other strategies like CAPTCHA and rate limiting can create a more robust defense.
