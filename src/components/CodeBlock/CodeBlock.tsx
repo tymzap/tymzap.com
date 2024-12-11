@@ -1,5 +1,5 @@
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import gruvboxLight from "react-syntax-highlighter/dist/esm/styles/prism/gruvbox-light";
+import a11yDark from "react-syntax-highlighter/dist/esm/styles/prism/a11y-dark";
 
 import "./registerLanguages";
 import * as styles from "./CodeBlock.css";
@@ -17,7 +17,7 @@ export function CodeBlock({ children, language }: CodeBlockProps) {
         codeTagProps={{
           style: styles.codeTag,
         }}
-        style={gruvboxLight}
+        style={a11yDark}
         customStyle={styles.syntaxHighlighter}
       >
         {children}
