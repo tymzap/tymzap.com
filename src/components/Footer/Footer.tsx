@@ -14,7 +14,7 @@ export function Footer({ contactLinks }: FooterProps) {
     <div className={styles.wrapper}>
       <div className={styles.contentWrapper}>
         <span className={styles.text}>
-          © <span className={styles.name}>Tymek Zapała</span> — 2024.{" "}
+          © <span className={styles.name}>Tymek Zapała</span> — {CURRENT_YEAR}.{" "}
           {t("allRightsReserved")}
         </span>
         <div className={styles.contactLinksWrapper}>{contactLinks}</div>
@@ -22,3 +22,5 @@ export function Footer({ contactLinks }: FooterProps) {
     </div>
   );
 }
+
+const CURRENT_YEAR = new Date().getFullYear();
