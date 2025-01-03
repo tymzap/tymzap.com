@@ -6,29 +6,41 @@ import * as styles from "./Input.css";
 type InputProps = {
   label?: string;
   error?: string;
-  color?: "white" | "black";
+  placeholder?: string;
+  isLabelVisible?: boolean;
 };
 
-export function Input({ label, error, color = "white" }: InputProps) {
+export function Input({
+  label,
+  error,
+  placeholder,
+  isLabelVisible = true,
+}: InputProps) {
   const ref = useRef(null);
   const { inputProps, labelProps, errorMessageProps } = useTextField(
-    { label, errorMessage: error, isInvalid: Boolean(error) },
+    {
+      label,
+      errorMessage: error,
+      isInvalid: Boolean(error),
+      placeholder,
+    },
     ref,
   );
 
   return (
-    <div className={styles.wrapper({ color })}>
+    <div className={styles.wrapper}>
       {label ? (
-        <label {...labelProps} className={styles.label}>
+        <label
+          {...labelProps}
+          className={styles.label({ hidden: !isLabelVisible })}
+        >
           {label}
         </label>
       ) : null}
       <input {...inputProps} className={styles.input} />
-      {error ? (
-        <span {...errorMessageProps} className={styles.errorMessage}>
-          {error}
-        </span>
-      ) : null}
+      <span {...errorMessageProps} className={styles.errorMessage}>
+        {error}
+      </span>
     </div>
   );
 }

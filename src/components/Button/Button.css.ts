@@ -15,6 +15,7 @@ export const button = recipe({
     color: vars.colors.white,
     justifyContent: "center",
     alignItems: "center",
+    whiteSpace: "nowrap",
     cursor: "pointer",
     position: "relative",
     fontWeight: 600,
