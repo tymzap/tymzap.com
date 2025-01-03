@@ -1,13 +1,16 @@
-import { style, keyframes } from "@vanilla-extract/css";
+import { style, keyframes, createVar } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 import { vars } from "~/styles/theme.css";
+
+const backgroundColor = createVar();
+const shadowColor = createVar();
 
 export const button = recipe({
   base: {
     fontFamily: vars.fonts.sourceSans3,
     fontSize: 18,
-    background: vars.colors.eerieBlack,
+    background: backgroundColor,
     border: 0,
     color: vars.colors.white,
     justifyContent: "center",
@@ -21,7 +24,7 @@ export const button = recipe({
       "&:hover": {
         opacity: 0.88,
         transitionTimingFunction: "cubic-bezier(0,0,.2,1)",
-        boxShadow: `${vars.colors.white} 0px 0px 0px 2px, ${vars.colors.eerieBlack} 0px 0px 0px 4px`,
+        boxShadow: `${vars.colors.white} 0px 0px 0px 2px, ${shadowColor} 0px 0px 0px 4px`,
       },
       "&:active": {
         transform: "scale(0.95)",
@@ -29,6 +32,20 @@ export const button = recipe({
     },
   },
   variants: {
+    variant: {
+      primary: {
+        vars: {
+          [backgroundColor]: vars.colors.eerieBlack,
+          [shadowColor]: vars.colors.eerieBlack,
+        },
+      },
+      secondary: {
+        vars: {
+          [backgroundColor]: vars.colors.davysGray,
+          [shadowColor]: vars.colors.davysGray,
+        },
+      },
+    },
     size: {
       medium: {
         height: 50,

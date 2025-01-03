@@ -13,6 +13,7 @@ const meta: Meta<typeof Button> = {
     onPress: fn(),
     isLoading: false,
     size: "medium",
+    variant: "primary",
   },
 };
 
@@ -34,5 +35,11 @@ export const WithIcon: ButtonStoryObj = {
 export const Loading: ButtonStoryObj = {
   args: {
     isLoading: true,
+  },
+};
+
+export const Secondary: ButtonStoryObj = {
+  args: {
+    variant: "secondary",
   },
 };
