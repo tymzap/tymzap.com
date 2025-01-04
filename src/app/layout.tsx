@@ -7,6 +7,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import PlausibleProvider from "next-plausible";
 
 import "~/styles/global.css";
+import "~/config/yupLocale";
 import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
 import { theme } from "~/styles/theme.css";
 import { MenuLink, Navbar } from "~/components/Navbar";

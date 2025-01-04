@@ -1,25 +1,38 @@
 import { useTextField } from "react-aria";
-import { useRef } from "react";
+import { useRef, forwardRef, RefObject } from "react";
 
 import * as styles from "./Input.css";
 
-type InputProps = {
+export type InputProps = {
+  onChange?: (value?: string) => void;
+  value?: string;
   label?: string;
+  onBlur?: () => void;
   error?: string;
   placeholder?: string;
   isLabelVisible?: boolean;
 };
 
-export function Input({
-  label,
-  error,
-  placeholder,
-  isLabelVisible = true,
-}: InputProps) {
-  const ref = useRef(null);
+export const Input = forwardRef(function Input(
+  {
+    label,
+    error,
+    placeholder,
+    isLabelVisible = true,
+    value,
+    onBlur,
+    onChange,
+  }: InputProps,
+  forwardedRef,
+) {
+  const innerRef = useRef(null);
+  const ref = (forwardedRef ?? innerRef) as RefObject<HTMLInputElement>;
   const { inputProps, labelProps, errorMessageProps } = useTextField(
     {
       label,
+      value,
+      onChange,
+      onBlur,
       errorMessage: error,
       isInvalid: Boolean(error),
       placeholder,
@@ -43,4 +56,4 @@ export function Input({
       </span>
     </div>
   );
-}
+});

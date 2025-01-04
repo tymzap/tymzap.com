@@ -17,5 +17,7 @@
   "imASoftwareEngineerAndProductMaker": "I’m a software engineer and product maker based in Cracow, Poland. My mission is to create useful products by writing high-quality code and sharing my knowledge throughout the journey.",
   "close": "Close",
   "email": "Email",
-  "signUp": "Sign up"
+  "signUp": "Sign up",
+  "thisFieldIsRequired": "This field is required",
+  "enterAValidEmailAddress": "Enter a valid email address"
 }

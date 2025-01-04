@@ -13,6 +13,7 @@ type ButtonProps = PropsWithChildren<{
   size?: "medium" | "big";
   isLoading?: boolean;
   variant?: "primary" | "secondary";
+  type?: "submit" | "button";
 }>;
 
 export function Button({
@@ -21,9 +22,10 @@ export function Button({
   onPress,
   isLoading = false,
   variant = "primary",
+  type = "button",
 }: ButtonProps) {
   const ref = useRef(null);
-  const { buttonProps } = useButton({ onPress }, ref);
+  const { buttonProps } = useButton({ onPress, type }, ref);
 
   return (
     <button {...buttonProps} className={styles.button({ size, variant })}>
