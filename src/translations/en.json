@@ -19,5 +19,8 @@
   "email": "Email",
   "signUp": "Sign up",
   "thisFieldIsRequired": "This field is required",
-  "enterAValidEmailAddress": "Enter a valid email address"
+  "enterAValidEmailAddress": "Enter a valid email address",
+  "hungryForMoreReactTips": "Hungry for more React tips?",
+  "joinTheFreeCleanReactForgeNewsletter": "Join the free Clean React Forge newsletter. Build maintainable, scalable React apps with detailed, actionable tips every 3 days.",
+  "almostDoneConfirmationEmailWasSentToYourInbox": "Almost done! Confirmation email was sent to your inbox."
 }

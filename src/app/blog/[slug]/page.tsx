@@ -6,6 +6,7 @@ import { BlogArticleHeader } from "./BlogArticleHeader";
 import { CoverImage } from "./CoverImage";
 import { AuthorBio } from "./AuthorBio";
 import { MoreArticles } from "./MoreArticles";
+import { NewsletterSignUp } from "./NewsletterSignUp";
 
 export { generateStaticParams } from "./generateStaticParams";
 
@@ -37,6 +38,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
         <CoverImage imageSrc={coverImageSrc} />
         {content}
         <AuthorBio />
+        <NewsletterSignUp isVisible={metadata.hasNewsletterSignUp} />
       </LongContentWrapper>
       <MoreArticles currentArticleSlug={params.slug} />
     </>

@@ -7,6 +7,7 @@ export function normalizeArticleMetadata(source: any) {
   return {
     title: source.title,
     coverImage: source.coverImage,
+    hasNewsletterSignUp: source.hasNewsletterSignUp ?? false,
     publishedAt,
   };
 }
