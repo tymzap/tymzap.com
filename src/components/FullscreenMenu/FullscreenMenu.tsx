@@ -34,6 +34,9 @@ export function FullscreenMenu({
   }
 
   return (
+    // todo remove the @ts-ignore after React 19 support is added in react-spring
+    // Issue: https://github.com/pmndrs/react-spring/issues/2341
+    //@ts-ignore
     <animated.div className={styles.wrapper} style={spring}>
       <div className={styles.linksWrapper}>
         <div className={styles.menuLinksWrapper}>{menuLinks}</div>

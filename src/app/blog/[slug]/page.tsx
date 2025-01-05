@@ -15,13 +15,15 @@ export { generateMetadata } from "./generateMetadata";
 export const dynamicParams = false;
 
 type BlogArticleProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export default async function BlogArticle({ params }: BlogArticleProps) {
-  const { fileContent, metadata, readTime } = loadArticleFromSlug(params.slug);
+  const { slug } = await params;
+
+  const { fileContent, metadata, readTime } = loadArticleFromSlug(slug);
   const content = await renderArticle(fileContent);
 
   const coverImageSrc = `/blog/${metadata.coverImage}`;
@@ -40,7 +42,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
         <AuthorBio />
         <NewsletterSignUp isVisible={metadata.hasNewsletterSignUp} />
       </LongContentWrapper>
-      <MoreArticles currentArticleSlug={params.slug} />
+      <MoreArticles currentArticleSlug={slug} />
     </>
   );
 }

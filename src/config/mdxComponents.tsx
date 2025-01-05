@@ -1,5 +1,5 @@
 import { MDXComponents } from "mdx/types.js";
-import { PropsWithChildren } from "react";
+import { ReactNode } from "react";
 
 import { CodeBlock } from "~/components/CodeBlock";
 import { Code } from "~/components/Code";
@@ -44,7 +44,7 @@ export const MDX_COMPONENTS: MDXComponents = {
     const content = getCodeBlockContentFromProps(props);
     const language = getCodeBlockLanguageFromProps(props);
 
-    return <CodeBlock language={language}>{content}</CodeBlock>;
+    return <CodeBlock language={language ?? undefined}>{content}</CodeBlock>;
   },
   code: Code,
   blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
@@ -79,20 +79,20 @@ function getBlogImageSrc(initialSrc?: string) {
   return `/blog/${initialSrc}`;
 }
 
-function getCodeBlockContentFromProps(props: PropsWithChildren) {
+function getCodeBlockContentFromProps(props: PropsWithChildrenAndClassName) {
   const { children } = props;
 
   if (
     !(children && typeof children === "object" && "props" in children) ||
     !(typeof children.props.children === "string")
   ) {
-    return null;
+    return "";
   }
 
-  return children.props.children;
+  return children.props.children ?? "";
 }
 
-function getCodeBlockLanguageFromProps(props: PropsWithChildren) {
+function getCodeBlockLanguageFromProps(props: PropsWithChildrenAndClassName) {
   const { children } = props;
 
   const LANGUAGE_PREFIX = "language-";
@@ -107,3 +107,9 @@ function getCodeBlockLanguageFromProps(props: PropsWithChildren) {
 
   return children.props.className.replace(LANGUAGE_PREFIX, "");
 }
+
+type PropsWithChildrenAndClassName = {
+  children?: ReactNode & {
+    props: { className?: string; children?: ReactNode };
+  };
+};

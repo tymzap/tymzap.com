@@ -4,17 +4,19 @@ import { getApiToken } from "~/lib/getApiToken";
 import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
 
 type GenerateMetadataParams = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export async function generateMetadata({
   params,
 }: GenerateMetadataParams): Promise<Metadata> {
+  const { slug } = await params;
+
   const {
     metadata: { title },
-  } = loadArticleFromSlug(params.slug);
+  } = loadArticleFromSlug(slug);
 
   const token = getApiToken({ title });
 

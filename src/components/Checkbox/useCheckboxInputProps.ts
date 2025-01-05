@@ -10,7 +10,7 @@ import { useCheckboxGroupState } from "@react-stately/checkbox";
 import { useCheckboxGroupContext } from "./CheckboxGroup";
 
 type UseCheckboxInputParams = {
-  inputRef: RefObject<HTMLInputElement>;
+  inputRef: RefObject<HTMLInputElement | null>;
   value?: string;
   label?: string;
   toggleState: ToggleState;
