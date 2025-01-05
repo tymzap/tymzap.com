@@ -11,5 +11,8 @@ export const link = style({
     "&:hover": {
       opacity: 0.65,
     },
+    "&[aria-current=page]": {
+      fontWeight: 700,
+    },
   },
 });
