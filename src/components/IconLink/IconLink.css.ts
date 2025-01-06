@@ -1,16 +1,7 @@
-import { recipe } from "@vanilla-extract/recipes";
+import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
-export const link = recipe({
-  variants: {
-    color: {
-      white: {
-        color: vars.colors.white,
-      },
-      black: {
-        color: vars.colors.eerieBlack,
-      },
-    },
-  },
+export const link = style({
+  color: vars.colors.text,
 });

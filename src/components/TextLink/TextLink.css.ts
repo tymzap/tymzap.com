@@ -1,12 +1,12 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
 export const link = style({
-  fontFamily: vars.fonts.sourceSans3,
+  fontFamily: vars.fonts.body,
   cursor: "pointer",
   textDecoration: "none",
-  color: vars.colors.eerieBlack,
+  color: vars.colors.interactiveText,
   display: "inline-flex",
   gap: 6,
   selectors: {

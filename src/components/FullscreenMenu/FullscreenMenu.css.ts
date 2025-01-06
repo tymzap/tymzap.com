@@ -1,10 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 import { zIndex } from "~/styles/zIndex";
 
 export const wrapper = style({
-  background: vars.colors.eerieBlack,
+  background: vars.colors.background,
   position: "fixed",
   inset: 0,
   zIndex: zIndex.fullscreenMenu,

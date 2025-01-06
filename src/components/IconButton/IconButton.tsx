@@ -8,7 +8,6 @@ type IconButtonProps = {
   onPress?: () => void;
   label?: string;
   size?: number;
-  color?: "black" | "white";
 };
 
 export function IconButton({
@@ -16,13 +15,12 @@ export function IconButton({
   onPress,
   label,
   size = DEFAULT_SIZE,
-  color = "black",
 }: IconButtonProps) {
   const ref = useRef(null);
   const { buttonProps } = useButton({ onPress, "aria-label": label }, ref);
 
   return (
-    <button ref={ref} {...buttonProps} className={styles.button({ color })}>
+    <button ref={ref} {...buttonProps} className={styles.button}>
       <Icon width={size} height={size} />
     </button>
   );

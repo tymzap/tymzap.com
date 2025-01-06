@@ -1,12 +1,13 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
 export const wrapper = style({
-  fontFamily: vars.fonts.sourceSans3,
+  fontFamily: vars.fonts.body,
   fontWeight: 400,
   fontSize: 18,
   margin: 0,
+  color: vars.colors.text,
 });
 
 export const withMargin = style({

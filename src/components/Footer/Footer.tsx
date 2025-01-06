@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
+import { ThemeOverride } from "~/lib/ThemeOverride";
+import { dark } from "~/styles/themes/dark.css";
+
 import * as styles from "./Footer.css";
 
 type FooterProps = {
@@ -11,15 +14,17 @@ export function Footer({ contactLinks }: FooterProps) {
   const t = useTranslations();
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.contentWrapper}>
-        <span className={styles.text}>
-          © <span className={styles.name}>Tymek Zapała</span> — {CURRENT_YEAR}.{" "}
-          {t("allRightsReserved")}
-        </span>
-        <div className={styles.contactLinksWrapper}>{contactLinks}</div>
+    <ThemeOverride theme={dark}>
+      <div className={styles.wrapper}>
+        <div className={styles.contentWrapper}>
+          <span className={styles.text}>
+            © <span className={styles.name}>Tymek Zapała</span> —{" "}
+            {CURRENT_YEAR}. {t("allRightsReserved")}
+          </span>
+          <div className={styles.contactLinksWrapper}>{contactLinks}</div>
+        </div>
       </div>
-    </div>
+    </ThemeOverride>
   );
 }
 

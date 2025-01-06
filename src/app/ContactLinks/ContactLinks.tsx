@@ -16,7 +16,6 @@ export function ContactLinks({ iconSize }: ContactLinksProps) {
     <div className={styles.wrapper}>
       {LINKS.map(({ href, icon, label }) => (
         <IconLink
-          color={"white"}
           size={iconSize}
           href={href}
           icon={icon}

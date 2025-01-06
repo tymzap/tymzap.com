@@ -1,11 +1,11 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 import { mediaQueries } from "~/styles/mediaQueries";
 
 export const wrapper = style({
-  background: vars.colors.eerieBlack,
-  color: vars.colors.white,
+  background: vars.colors.background,
+  color: vars.colors.text,
   padding: 30,
   display: "flex",
   flexDirection: "column",

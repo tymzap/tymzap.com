@@ -2,13 +2,13 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { hideVisually } from "polished";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
 export const wrapper = style({
   display: "flex",
   flexDirection: "column",
   gap: 4,
-  fontFamily: vars.fonts.sourceSans3,
+  fontFamily: vars.fonts.body,
 });
 
 export const input = style({
@@ -20,22 +20,22 @@ export const input = style({
   transitionTimingFunction: "cubic-bezier(0,0,.2,1)",
   borderStyle: "solid",
   borderWidth: "1px",
-  borderColor: vars.colors.lightGray,
+  borderColor: vars.colors.inputBorder,
   paddingInlineStart: 14,
   paddingInlineEnd: 14,
   height: 50,
-  fontFamily: vars.fonts.sourceSans3,
+  fontFamily: vars.fonts.body,
   borderRadius: 12,
   outline: 0,
-  color: vars.colors.eerieBlack,
-  backgroundColor: vars.colors.white,
+  color: vars.colors.inputText,
+  backgroundColor: vars.colors.inputBackground,
   selectors: {
     "&[aria-invalid]": {
-      color: vars.colors.rustyRed,
+      color: vars.colors.errorText,
     },
     "&:focus": {
-      borderColor: vars.colors.gray,
-      boxShadow: `0px 0px 0px 3px ${vars.colors.lightGray}`,
+      borderColor: vars.colors.inputBorderFocused,
+      boxShadow: vars.shadows.inputFocused,
     },
   },
 });
@@ -43,7 +43,7 @@ export const input = style({
 export const label = recipe({
   base: {
     fontSize: 16,
-    color: vars.colors.eerieBlack,
+    color: vars.colors.text,
   },
   variants: {
     hidden: {
@@ -54,7 +54,7 @@ export const label = recipe({
 
 export const errorMessage = style({
   fontSize: 16,
-  color: vars.colors.rustyRed,
+  color: vars.colors.errorText,
   padding: "2px 0",
   height: 20,
   fontWeight: 500,

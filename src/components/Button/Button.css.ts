@@ -1,22 +1,22 @@
 import { style, keyframes, createVar } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
 const backgroundColor = createVar();
-const shadowColor = createVar();
 
 export const button = recipe({
   base: {
-    fontFamily: vars.fonts.sourceSans3,
+    fontFamily: vars.fonts.body,
     fontSize: 18,
     background: backgroundColor,
     border: 0,
-    color: vars.colors.white,
+    color: vars.colors.interactiveSurfaceText,
     justifyContent: "center",
     alignItems: "center",
     whiteSpace: "nowrap",
     cursor: "pointer",
+    outline: "none",
     position: "relative",
     fontWeight: 600,
     display: "flex",
@@ -25,7 +25,7 @@ export const button = recipe({
       "&:hover": {
         opacity: 0.88,
         transitionTimingFunction: "cubic-bezier(0,0,.2,1)",
-        boxShadow: `${vars.colors.white} 0px 0px 0px 2px, ${shadowColor} 0px 0px 0px 4px`,
+        boxShadow: `${vars.colors.background} 0px 0px 0px 2px, ${backgroundColor} 0px 0px 0px 4px`,
       },
       "&:active": {
         transform: "scale(0.95)",
@@ -36,14 +36,12 @@ export const button = recipe({
     variant: {
       primary: {
         vars: {
-          [backgroundColor]: vars.colors.eerieBlack,
-          [shadowColor]: vars.colors.eerieBlack,
+          [backgroundColor]: vars.colors.interactiveSurfaceBackground,
         },
       },
       secondary: {
         vars: {
-          [backgroundColor]: vars.colors.davysGray,
-          [shadowColor]: vars.colors.davysGray,
+          [backgroundColor]: vars.colors.mutedInteractiveSurfaceBackground,
         },
       },
     },

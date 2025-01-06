@@ -1,14 +1,13 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
 export const wrapper = style({
   margin: 0,
   paddingLeft: 32,
   display: "flow-root",
-  borderLeft: `10px solid ${vars.colors.lightGray}`,
-  fontFamily: vars.fonts.sourceSans3,
-  backgroundColor: vars.colors.gallery,
+  borderLeft: `7px solid ${vars.colors.text}`,
+  fontFamily: vars.fonts.body,
 });
 
 export const content = style({

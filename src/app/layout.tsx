@@ -9,10 +9,10 @@ import PlausibleProvider from "next-plausible";
 import "~/styles/global.css";
 import "~/config/yupLocale";
 import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
-import { theme } from "~/styles/theme.css";
 import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
+import { light } from "~/styles/themes/light.css";
 
 import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
@@ -37,7 +37,7 @@ export default async function Layout({ children }: LayoutProps) {
       </head>
       <body
         className={cn(
-          theme,
+          light,
           sourceSans3.variable,
           firaMono.variable,
           openSans.variable,

@@ -1,6 +1,8 @@
 import { Logo } from "~/components/Logo";
 import { HamburgerButton } from "~/components/HamburgerButton";
 import { NavbarLink } from "~/components/Navbar/NavbarLink";
+import { dark } from "~/styles/themes/dark.css";
+import { ThemeOverride } from "~/lib/ThemeOverride";
 
 import { MenuLink } from "../MenuLink";
 import * as styles from "./NavbarContent.css";
@@ -16,27 +18,28 @@ export function NavbarContent({
   onPressHamburgerButton,
   isHamburgerButtonPressed,
 }: NavbarContentProps) {
-  const textColor = isHamburgerButtonPressed ? "white" : "black";
+  const theme = isHamburgerButtonPressed ? dark : undefined;
 
   return (
-    <div className={styles.wrapper}>
-      <Logo color={textColor} />
-      <div className={styles.hamburgerButtonWrapper}>
-        <HamburgerButton
-          onPress={onPressHamburgerButton}
-          isPressed={isHamburgerButtonPressed}
-          color={textColor}
-        />
+    <ThemeOverride theme={theme}>
+      <div className={styles.wrapper}>
+        <Logo />
+        <div className={styles.hamburgerButtonWrapper}>
+          <HamburgerButton
+            onPress={onPressHamburgerButton}
+            isPressed={isHamburgerButtonPressed}
+          />
+        </div>
+        <div className={styles.linksWrapper}>
+          <>
+            {menuLinks.map(({ label, href }) => (
+              <NavbarLink href={href} key={href}>
+                {label}
+              </NavbarLink>
+            ))}
+          </>
+        </div>
       </div>
-      <div className={styles.linksWrapper}>
-        <>
-          {menuLinks.map(({ label, href }) => (
-            <NavbarLink href={href} key={href}>
-              {label}
-            </NavbarLink>
-          ))}
-        </>
-      </div>
-    </div>
+    </ThemeOverride>
   );
 }

@@ -1,12 +1,12 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 import { sizes } from "~/styles/sizes";
 import { mediaQueries } from "~/styles/mediaQueries";
 
 export const wrapper = style({
-  background: vars.colors.eerieBlack,
-  color: vars.colors.white,
+  background: vars.colors.background,
+  color: vars.colors.text,
   marginTop: 50,
   height: sizes.footerHeight,
   position: "absolute",
@@ -45,7 +45,7 @@ export const text = style({
 });
 
 export const name = style({
-  fontFamily: vars.fonts.openSans,
+  fontFamily: vars.fonts.logo,
   fontWeight: 700,
   fontSize: 17,
 });

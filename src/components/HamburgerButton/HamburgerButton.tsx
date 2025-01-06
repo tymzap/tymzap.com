@@ -9,14 +9,9 @@ import * as styles from "./HamburgerButton.css";
 type HamburgerButtonProps = {
   onPress: () => void;
   isPressed: boolean;
-  color?: "black" | "white";
 };
 
-export function HamburgerButton({
-  onPress,
-  isPressed,
-  color = "black",
-}: HamburgerButtonProps) {
+export function HamburgerButton({ onPress, isPressed }: HamburgerButtonProps) {
   const ref = useRef(null);
   const { buttonProps } = useButton(
     { onPress, "aria-pressed": isPressed },
@@ -24,7 +19,7 @@ export function HamburgerButton({
   );
 
   return (
-    <button ref={ref} className={styles.button({ color })} {...buttonProps}>
+    <button ref={ref} className={styles.button} {...buttonProps}>
       <Hamburger isPressed={isPressed} />
     </button>
   );

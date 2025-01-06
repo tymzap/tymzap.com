@@ -1,10 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
 import { mediaQueries } from "~/styles/mediaQueries";
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 
 export const wrapper = style({
-  fontFamily: vars.fonts.sourceSans3,
+  fontFamily: vars.fonts.body,
   display: "flex",
   flexDirection: "column",
   gap: 18,
@@ -27,6 +27,7 @@ export const image = style({
 export const details = style({
   display: "flex",
   gap: 10,
+  color: vars.colors.text,
 });
 
 export const detailsItem = style({
@@ -34,6 +35,7 @@ export const detailsItem = style({
 });
 
 export const title = style({
+  color: vars.colors.interactiveText,
   fontWeight: 700,
   fontSize: 22,
   selectors: {

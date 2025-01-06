@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
+import { vars } from "~/styles/themes/vars.css";
 import { zIndex } from "~/styles/zIndex";
 
 export const wrapper = style({
@@ -10,8 +10,8 @@ export const wrapper = style({
   transform: "translate(-50%, -50%)",
   padding: 20,
   borderRadius: 12,
-  backgroundColor: vars.colors.cultured,
-  boxShadow: `0px 0px 14px -7px ${vars.colors.eerieBlack}`,
+  backgroundColor: vars.colors.background,
+  boxShadow: vars.shadows.elevation,
   zIndex: zIndex.dialog,
 });
 

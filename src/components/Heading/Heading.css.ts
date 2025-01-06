@@ -1,11 +1,12 @@
 import { styleVariants, style } from "@vanilla-extract/css";
 
-import { vars } from "~/styles/theme.css";
 import { mediaQueries } from "~/styles/mediaQueries";
+import { vars } from "~/styles/themes/vars.css";
 
 const baseHeading = style({
-  fontFamily: vars.fonts.sourceSans3,
+  fontFamily: vars.fonts.body,
   fontWeight: 700,
+  color: vars.colors.text,
 });
 
 export const heading = styleVariants({
