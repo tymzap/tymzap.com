@@ -1,0 +1,202 @@
+---
+title: Bloated React code? Try component hooks
+publishedAt: 2025-01-10
+coverImage: hand-holding-cube-wood-block.webp
+---
+
+React components often start small and elegant, like this simple example:
+
+```jsx
+function ProductCard({ name, price }) {
+  return (
+    <div>
+      <h2>{name}</h2>
+      <p>${price}</p>
+    </div>
+  );
+}
+```
+
+Straightforward cases like this is what makes React components delightful and easy to work with.
+
+But it rarely lasts.
+## When components feel too heavy... again
+
+Imagine we are to ship V2 of the product, and now we have to support features like currency formatting, quantity input, and an "Add to cart" button:
+
+```jsx
+function ProductCard({ name, price, currency, onAddToCart }) {
+  const [quantity, setQuantity] = useState(1);
+
+  const handleChange = (event) => {
+	const newQuantity = Number(event.target.value);
+
+    setQuantity(newQuantity);
+  };
+
+  const formattedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(price * quantity);
+
+  return (
+    <div>
+      <h2>{name}</h2>
+      <p>{formattedPrice}</p>
+      <input
+        type="number"
+        value={quantity}
+        onChange={handleChange}
+        min="1"
+      />
+      <button onClick={() => onAddToCart(quantity)}>Add to Cart</button>
+    </div>
+  );
+}
+
+```
+
+A lot more complicated but still not bad.
+
+Oh, we almost forgot - what if someone enters a quantity larger than what's available in stock? We'll need to validate that and show an error message. And as if that wasn't enough, the product manager just informed us that we should display a "Free shipping" message whenever the quantity exceeds 10.
+
+```jsx
+function ProductCard({ name, price, currency, stock, onAddToCart }) {
+  const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState('');
+
+  const handleChange = (event) => {
+    const newQuantity = Number(event.target.value);
+
+    if (newQuantity > stock) {
+      setError(`Only ${stock} items available.`);
+    } else {
+      setError('');
+      setQuantity(newQuantity);
+    }
+  };
+
+  const formattedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(price * quantity);
+
+  const isFreeShipping = quantity > 10;
+
+  return (
+    <div>
+      <h2>{name}</h2>
+      <p>{formattedPrice}</p>
+      {isFreeShipping && <p style={{ color: 'green' }}>Free shipping!</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <input
+        type="number"
+        value={quantity}
+        onChange={handleChange}
+        min="1"
+      />
+      <button
+        onClick={() => onAddToCart(quantity)}
+        disabled={!!error || quantity < 1}
+      >
+        Add to Cart
+      </button>
+    </div>
+  );
+}
+```
+
+Okay, let's get realistic. I don't know about you, but reading this code makes me uncomfortable. There's a lot happening at once: input validation, checking for free shipping, formatting the price. These are tasks that could quickly spiral into complex, branching logic in any real-world e-commerce app dealing with multiple countries, currencies, and product types. I won't even get into how this breaks the [one level of abstraction per function rule](https://www.tymzap.com/blog/the-magic-of-keeping-one-abstraction-level-per-function) - we'll skip that for now.
+
+But the most glaring issue here is a lack of **separation of concerns.** Specifically, the **UI and application logic are tightly coupled**. The component is trying to handle two big tasks at once:
+
+- It handles input validation and determines when free shipping should apply - the **logic** of `ProductCard`
+- It applies styles to error/success messages and decides what DOM elements to render - the **presentation** of `ProductCard`
+
+This lack of clear boundaries between responsibilities makes the code overwhelming.
+## Separate logic from presentation
+
+The biggest win here is to **separate what the component does (logic) from how it looks (presentation)**. By extracting the logic into a **component hook**, we can keep the component focused purely on rendering. Let's see how we can refactor the `ProductCard` by introducing a new function: `useProductCard`.
+
+```jsx
+function useProductCard({ price, currency, stock }) {
+  const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState('');
+
+  const handleChange = (event) => {
+    const newQuantity = Number(event.target.value);
+
+    if (newQuantity > stock) {
+      setError(`Only ${stock} items available.`);
+    } else {
+      setError('');
+      setQuantity(newQuantity);
+    }
+  };
+
+  const formattedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+  }).format(price * quantity);
+
+  const isFreeShipping = quantity > 10;
+
+  return {
+    quantity,
+    error,
+    formattedPrice,
+    isFreeShipping,
+    handleChange
+  };
+}
+```
+
+The hook takes in properties like price, currency, and stock, and it returns everything the UI component needs: state, derived values, and event handlers. It doesn't care about how the UI looks or what elements are rendered. That is the sole job of the component now:
+
+```jsx
+function ProductCard({ name, price, currency, stock, onAddToCart }) {
+  const {
+    quantity,
+    error,
+    formattedPrice,
+    isFreeShipping,
+    handleChange
+  } = useProductCard({ price, currency, stock });
+
+  return (
+    <div>
+      <h2>{name}</h2>
+      <p>{formattedPrice}</p>
+      {isFreeShipping && <p style={{ color: 'green' }}>Free shipping!</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <input
+        type="number"
+        value={quantity}
+        onChange={handleChange}
+        min="1"
+      />
+      <button
+        onClick={() => onAddToCart(quantity)}
+        disabled={!!error || quantity < 1}
+      >
+        Add to Cart
+      </button>
+    </div>
+  );
+}
+```
+
+Note that we omitted TypeScript usage in these examples, as type safety is not the focus of this article.
+
+You might already know this pattern as a *custom hook* - a reusable hook that encapsulates specific functionality. Here, we call it a *component hook* because it's designed to work exclusively with a single component.
+
+Now, the component's job is clear: **render the UI based on the values provided by the hook**. The logic for managing state, validation, and price calculations is safely abstracted away in `useProductCard`.
+
+Why this is better:
+- Smaller cognitive load - code is shorter and much easier to read and understand
+- You can test UI in isolation by mocking the hook
+- Adjusting the logic can happen without changing the presentation and vice versa
+- Components and hooks designed this way need way less adjustments to become reusable
+## TL;DR
+
+ By separating logic and UI, you can clean up your components, reduce complexity, and improve testability. **Extracting component's logic into hook** - like we did with `ProductCard` and `useProductCard` - simplifies your codebase and keeps components focused purely on rendering.
