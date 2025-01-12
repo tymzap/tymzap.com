@@ -6,6 +6,7 @@ import { viewports } from "./viewports";
 import { nextIntlConfig } from "./nextIntlConfig";
 import { ThemeDecorator } from "./ThemeDecorator";
 import "../src/config/yupLocale";
+import { theme } from "./globalTypes/theme";
 
 const preview: Preview = {
   tags: ["autodocs"],
@@ -25,6 +26,9 @@ const preview: Preview = {
     },
   },
   decorators: [ThemeDecorator],
+  globalTypes: {
+    theme,
+  },
 };
 
 export default preview;
