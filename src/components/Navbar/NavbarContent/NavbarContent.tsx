@@ -34,15 +34,15 @@ export function NavbarContent({
             isPressed={isHamburgerButtonPressed}
           />
         </div>
-        <div className={styles.linksWrapper}>
+        <div className={styles.themeButtonAndLinksWrapper}>
           <ThemeButton theme={theme} onPress={onThemeButtonPress} />
-          <>
+          <div className={styles.linksWrapper}>
             {menuLinks.map(({ label, href }) => (
               <NavbarLink href={href} key={href}>
                 {label}
               </NavbarLink>
             ))}
-          </>
+          </div>
         </div>
       </div>
     </ThemeOverride>

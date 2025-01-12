@@ -10,7 +10,7 @@ export const button = style({
   fontSize: 14,
   border: 0,
   cursor: "pointer",
-  padding: 13,
+  padding: 12,
   width: buttonSize,
   height: buttonSize,
   background: "transparent",

@@ -31,13 +31,19 @@ export const buttonsWrapper = style({
   },
 });
 
-export const linksWrapper = style({
+export const themeButtonAndLinksWrapper = style({
   display: "flex",
   alignItems: "center",
-  gap: 40,
+  gap: 30,
   "@media": {
     [mediaQueries.smallerThanLaptop]: {
       display: "none",
     },
   },
+});
+
+export const linksWrapper = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 40,
 });
