@@ -14,7 +14,7 @@ export function AuthorBio() {
         src={"/profile.png"}
         width={120}
         height={120}
-        alt={"Tymek Zapała"}
+        alt={t("photoOfTymekZapała")}
       />
       <div className={styles.contentWrapper}>
         <span className={styles.heading}>{t("writtenByTymek")}</span>
