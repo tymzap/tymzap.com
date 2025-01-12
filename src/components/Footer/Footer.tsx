@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
-import { ThemeOverride } from "~/lib/ThemeOverride";
-import { dark } from "~/styles/themes/dark.css";
+import { ThemeOverride } from "~/theme/ThemeOverride";
 
 import * as styles from "./Footer.css";
 
@@ -14,7 +13,7 @@ export function Footer({ contactLinks }: FooterProps) {
   const t = useTranslations();
 
   return (
-    <ThemeOverride theme={dark}>
+    <ThemeOverride theme={"dark"}>
       <div className={styles.wrapper}>
         <div className={styles.contentWrapper}>
           <span className={styles.text}>

@@ -5,9 +5,12 @@ import { Blockquote } from "./Blockquote";
 
 const meta: Meta<typeof Blockquote> = {
   component: Blockquote,
+  args: {
+    children: faker.lorem.paragraph(),
+  },
   render: (props) => (
     <Blockquote>
-      <Blockquote.Content>{faker.lorem.paragraph()}</Blockquote.Content>
+      <Blockquote.Content>{props.children}</Blockquote.Content>
     </Blockquote>
   ),
 };

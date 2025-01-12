@@ -22,5 +22,7 @@
   "enterAValidEmailAddress": "Enter a valid email address",
   "hungryForMoreReactTips": "Hungry for more React tips?",
   "joinTheFreeCleanReactForgeNewsletter": "Join the free Clean React Forge newsletter. Build maintainable, scalable React apps with detailed, actionable tips every 3 days.",
-  "almostDoneConfirmationEmailWasSentToYourInbox": "Almost done! Confirmation email was sent to your inbox."
+  "almostDoneConfirmationEmailWasSentToYourInbox": "Almost done! Confirmation email was sent to your inbox.",
+  "switchToLightMode": "Switch to light mode",
+  "switchToDarkMode": "Switch to dark mode"
 }

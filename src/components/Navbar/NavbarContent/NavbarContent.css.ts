@@ -18,7 +18,11 @@ export const wrapper = style({
   },
 });
 
-export const hamburgerButtonWrapper = style({
+export const buttonsWrapper = style({
+  display: "flex",
+  gap: 10,
+  alignItems: "center",
+  marginLeft: 20,
   marginTop: 2,
   "@media": {
     [mediaQueries.laptopOrBigger]: {
@@ -29,6 +33,7 @@ export const hamburgerButtonWrapper = style({
 
 export const linksWrapper = style({
   display: "flex",
+  alignItems: "center",
   gap: 40,
   "@media": {
     [mediaQueries.smallerThanLaptop]: {

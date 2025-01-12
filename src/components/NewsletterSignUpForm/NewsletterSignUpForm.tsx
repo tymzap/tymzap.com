@@ -3,13 +3,12 @@
 import * as yup from "yup";
 import { useTranslations } from "next-intl";
 
-import { ThemeOverride } from "~/lib/ThemeOverride";
+import { ThemeOverride } from "~/theme/ThemeOverride";
 import { Form } from "~/components/Form";
 import { FormInput } from "~/components/Input";
 import { Button } from "~/components/Button";
 import { Heading } from "~/components/Heading";
 import { Text } from "~/components/Text";
-import { dark } from "~/styles/themes/dark.css";
 
 import { NewsletterSignUpFormValues } from "./NewsletterSignUpFormValues";
 import * as styles from "./NewsletterSignUpForm.css";
@@ -28,7 +27,7 @@ export function NewsletterSignUpForm({
   const t = useTranslations();
 
   return (
-    <ThemeOverride theme={dark}>
+    <ThemeOverride flip={true}>
       <div className={styles.wrapper}>
         <div className={styles.content}>
           <Heading level={2}>{title}</Heading>

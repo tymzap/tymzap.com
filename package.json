@@ -18,6 +18,7 @@
     "@vanilla-extract/css-utils": "0.1.4",
     "@vanilla-extract/recipes": "0.5.5",
     "classnames": "2.5.1",
+    "cookies-next": "5.0.2",
     "date-fns": "4.1.0",
     "gray-matter": "4.0.3",
     "next": "15.1.3",
