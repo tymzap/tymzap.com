@@ -8,6 +8,9 @@ export const vars = createThemeContract({
     interactiveSurfaceText: null,
     interactiveSurfaceBackground: null,
     mutedInteractiveSurfaceBackground: null,
+    subtleInteractiveSurfaceBackground: null,
+    subtleInteractiveSurfaceBackgroundHovered: null,
+    subtleBorder: null,
     errorText: null,
     inputText: null,
     inputBackground: null,
@@ -15,6 +18,7 @@ export const vars = createThemeContract({
     inputBorderFocused: null,
     codeText: null,
     codeBackground: null,
+    focusRing: null,
   },
   fonts: {
     body: null,

@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import { useFullscreenMenuAnimation } from "./useFullscreenMenuAnimation";
 
 export function useFullscreenMenu(isVisible: boolean) {
-  const [isAnimatingOut, setIsAnimatingOut] = useState(!isVisible);
+  const { wrapperStyle, isAnimatingOut, setIsAnimatingOut } =
+    useFullscreenMenuAnimation(isVisible);
 
   useEffect(() => {
     if (isVisible) {
@@ -14,11 +17,12 @@ export function useFullscreenMenu(isVisible: boolean) {
     return () => {
       enableBodyScroll();
     };
-  }, [isVisible]);
+  }, [isVisible, setIsAnimatingOut]);
 
   return {
     isAnimatingOut,
     setIsAnimatingOut,
+    wrapperStyle,
   };
 }
 

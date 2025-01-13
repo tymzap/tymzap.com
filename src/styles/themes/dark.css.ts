@@ -13,6 +13,9 @@ export const dark = createTheme(vars, {
     interactiveSurfaceText: colors.eerieBlack,
     interactiveSurfaceBackground: colors.white,
     mutedInteractiveSurfaceBackground: colors.davysGray,
+    subtleInteractiveSurfaceBackground: colors.eerieBlack,
+    subtleInteractiveSurfaceBackgroundHovered: rgba(colors.white, 0.05),
+    subtleBorder: rgba(colors.gray, 0.4),
     errorText: colors.rustyRed,
     inputText: colors.white,
     inputBackground: colors.eerieBlack,
@@ -20,6 +23,7 @@ export const dark = createTheme(vars, {
     inputBorderFocused: colors.gray,
     codeBackground: rgba(colors.white, 0.1),
     codeText: colors.white,
+    focusRing: colors.white,
   },
   fonts: {
     body: "var(--source-sans-3)",
