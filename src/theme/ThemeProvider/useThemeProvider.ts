@@ -1,20 +1,28 @@
-import { useEffect, useState } from "react";
-import { getCookie, setCookie } from "cookies-next/client";
+"use client";
 
-import { COOKIE_KEYS } from "~/constants/cookieKeys";
+import { useEffect } from "react";
+import { useLocalStorage } from "react-use";
+
 import { getOppositeTheme } from "~/theme/getOppositeTheme";
 import { Theme } from "~/theme/Theme";
-import { getThemeClassName } from "~/theme/getThemeClassName";
+import { getThemeClassName } from "~/theme/themeClassNames";
 import { normalizeTheme } from "~/theme/normalizeTheme";
 import { DEFAULT_THEME } from "~/theme/defaultTheme";
+import { LOCAL_STORAGE_KEYS } from "~/constants/localStorageKeys";
 
 export function useThemeProvider() {
-  const themeFromCookie = normalizeTheme(getCookie(COOKIE_KEYS.THEME), false);
-  const [theme, setThemeState] = useState(themeFromCookie);
+  const [theme, setTheme] = useLocalStorage<Theme>(
+    LOCAL_STORAGE_KEYS.THEME,
+    DEFAULT_THEME,
+    {
+      serializer: JSON.stringify,
+      deserializer: (value) => normalizeTheme(JSON.parse(value)),
+      raw: false,
+    },
+  );
 
-  const setTheme = (theme: Theme) => {
-    setCookie(COOKIE_KEYS.THEME, theme);
-    setThemeState(theme);
+  const toggleTheme = () => {
+    setTheme(getOppositeTheme(theme ?? DEFAULT_THEME));
   };
 
   useEffect(() => {
@@ -24,10 +32,6 @@ export function useThemeProvider() {
 
     syncThemeClassName(theme);
   }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(getOppositeTheme(theme ?? DEFAULT_THEME));
-  };
 
   return {
     theme,
@@ -39,6 +43,6 @@ export function useThemeProvider() {
 function syncThemeClassName(theme: Theme) {
   const themeToRemove = getOppositeTheme(theme);
 
-  document.body.classList.add(getThemeClassName(theme));
-  document.body.classList.remove(getThemeClassName(themeToRemove));
+  document.documentElement.classList.add(getThemeClassName(theme));
+  document.documentElement.classList.remove(getThemeClassName(themeToRemove));
 }

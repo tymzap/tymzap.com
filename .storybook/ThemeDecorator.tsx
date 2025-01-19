@@ -2,7 +2,7 @@ import { ReactRenderer, StoryContext } from "@storybook/react";
 import { PartialStoryFn } from "@storybook/csf";
 import { useEffect } from "react";
 
-import { getThemeClassName } from "~/theme/getThemeClassName";
+import { getThemeClassName } from "~/theme/themeClassNames";
 import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
 import { Theme } from "~/theme/Theme";
 import { getOppositeTheme } from "~/theme/getOppositeTheme";

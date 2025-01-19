@@ -1,17 +1,14 @@
 "use client";
 
-import { Theme } from "~/theme/Theme";
-
 import * as styles from "./ThemeButton.css";
 import { useThemeButton } from "./useThemeButton";
 
 type ThemeButtonProps = {
-  theme: Theme | undefined;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
-export function ThemeButton({ onPress, theme }: ThemeButtonProps) {
-  const { buttonProps, Icon } = useThemeButton({ onPress, theme });
+export function ThemeButton({ onPress }: ThemeButtonProps) {
+  const { buttonProps, Icon } = useThemeButton({ onPress });
 
   return (
     <button {...buttonProps} className={styles.button}>

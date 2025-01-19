@@ -4,6 +4,7 @@ import { PropsWithChildren } from "react";
 
 import { ThemeContext } from "./ThemeContext";
 import { useThemeProvider } from "./useThemeProvider";
+import { ThemeScript } from "../ThemeScript";
 
 type ThemeProviderProps = PropsWithChildren;
 
@@ -12,6 +13,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+      <ThemeScript />
       {children}
     </ThemeContext.Provider>
   );

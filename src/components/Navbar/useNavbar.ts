@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { useTheme } from "~/theme/ThemeProvider";
 import { breakpoints } from "~/styles/breakpoints";
 
 export function useNavbar() {
   const pathname = usePathname();
 
-  const { theme, toggleTheme } = useTheme();
-
   const [isFullscreenMenuVisible, setIsFullscreenMenuVisible] = useState(false);
 
-  const toggleIsFullscreenMenuVisible = () => {
+  const toggleFullscreenMenu = () => {
     setIsFullscreenMenuVisible((previousState) => !previousState);
+  };
+
+  const closeFullscreenMenu = () => {
+    setIsFullscreenMenuVisible(false);
   };
 
   useEffect(() => {
@@ -33,16 +34,9 @@ export function useNavbar() {
     };
   }, []);
 
-  const handleThemeButtonPress = () => {
-    setIsFullscreenMenuVisible(false);
-
-    toggleTheme();
-  };
-
   return {
     isFullscreenMenuVisible,
-    toggleIsFullscreenMenuVisible,
-    handleThemeButtonPress,
-    theme,
+    toggleFullscreenMenu,
+    closeFullscreenMenu,
   };
 }

@@ -1,7 +1,6 @@
 import { Logo } from "~/components/Logo";
 import { HamburgerButton } from "~/components/HamburgerButton";
 import { ThemeButton } from "~/theme/ThemeButton";
-import { Theme } from "~/theme/Theme";
 import { ThemeOverride } from "~/theme/ThemeOverride";
 
 import { NavbarLink } from "../NavbarLink";
@@ -11,7 +10,6 @@ import * as styles from "./NavbarContent.css";
 type NavbarContentProps = {
   menuLinks: MenuLink[];
   isHamburgerButtonPressed: boolean;
-  theme: Theme | undefined;
   onHamburgerButtonPress: () => void;
   onThemeButtonPress: () => void;
 };
@@ -19,7 +17,6 @@ type NavbarContentProps = {
 export function NavbarContent({
   menuLinks,
   onHamburgerButtonPress,
-  theme,
   isHamburgerButtonPressed,
   onThemeButtonPress,
 }: NavbarContentProps) {
@@ -28,14 +25,14 @@ export function NavbarContent({
       <div className={styles.wrapper}>
         <Logo />
         <div className={styles.buttonsWrapper}>
-          <ThemeButton theme={theme} onPress={onThemeButtonPress} />
+          <ThemeButton onPress={onThemeButtonPress} />
           <HamburgerButton
             onPress={onHamburgerButtonPress}
             isPressed={isHamburgerButtonPressed}
           />
         </div>
         <div className={styles.themeButtonAndLinksWrapper}>
-          <ThemeButton theme={theme} onPress={onThemeButtonPress} />
+          <ThemeButton onPress={onThemeButtonPress} />
           <div className={styles.linksWrapper}>
             {menuLinks.map(({ label, href }) => (
               <NavbarLink href={href} key={href}>

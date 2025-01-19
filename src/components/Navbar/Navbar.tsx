@@ -15,21 +15,16 @@ type NavbarProps = {
 };
 
 export function Navbar({ menuLinks, contactLinks }: NavbarProps) {
-  const {
-    isFullscreenMenuVisible,
-    toggleIsFullscreenMenuVisible,
-    theme,
-    handleThemeButtonPress,
-  } = useNavbar();
+  const { isFullscreenMenuVisible, toggleFullscreenMenu, closeFullscreenMenu } =
+    useNavbar();
 
   return (
     <div className={styles.wrapper}>
       <NavbarContent
-        theme={theme}
         menuLinks={menuLinks}
         isHamburgerButtonPressed={isFullscreenMenuVisible}
-        onHamburgerButtonPress={toggleIsFullscreenMenuVisible}
-        onThemeButtonPress={handleThemeButtonPress}
+        onHamburgerButtonPress={toggleFullscreenMenu}
+        onThemeButtonPress={closeFullscreenMenu}
       />
       <FullscreenMenu
         isVisible={isFullscreenMenuVisible}

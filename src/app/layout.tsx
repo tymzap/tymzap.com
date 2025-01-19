@@ -1,6 +1,5 @@
 import "sanitize.css";
 import { PropsWithChildren } from "react";
-import { Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import PlausibleProvider from "next-plausible";
@@ -13,18 +12,11 @@ import { MenuLink, Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
 import { firaMono, openSans, sourceSans3 } from "~/styles/fonts";
-import { getThemeClassName } from "~/theme/getThemeClassName";
-import { getServerTheme } from "~/theme/getServerTheme";
 
 import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
 
 export { generateMetadata } from "./generateMetadata";
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-};
 
 type LayoutProps = PropsWithChildren;
 
@@ -33,14 +25,13 @@ export default async function Layout({ children }: LayoutProps) {
   const translations = await getMessages();
 
   const fonts = cn(sourceSans3.variable, firaMono.variable, openSans.variable);
-  const theme = await getServerTheme();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={fonts} suppressHydrationWarning={true}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={cn(fonts, getThemeClassName(theme))}>
+      <body>
         <ThemeProvider>
           <PlausibleProvider domain={DOMAIN}>
             <TopLoader />

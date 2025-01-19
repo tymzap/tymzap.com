@@ -1,7 +1,7 @@
 import { Theme } from "~/theme/Theme";
 import { getOppositeTheme } from "~/theme/getOppositeTheme";
 import { useTheme } from "~/theme/ThemeProvider";
-import { getThemeClassName } from "~/theme/getThemeClassName";
+import { getThemeClassName } from "~/theme/themeClassNames";
 
 type UseThemeOverrideParams = {
   theme?: Theme;
@@ -15,6 +15,7 @@ export function useThemeOverride({
   const { theme: globalTheme } = useTheme();
 
   const theme = getTheme(globalTheme, themeProp, flip);
+
   const themeClassName = theme ? getThemeClassName(theme) : undefined;
 
   return {
@@ -27,5 +28,5 @@ function getTheme(globalTheme?: Theme, themeProp?: Theme, flip?: boolean) {
     return getOppositeTheme(globalTheme);
   }
 
-  return themeProp ?? globalTheme;
+  return themeProp;
 }
