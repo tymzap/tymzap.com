@@ -8,11 +8,12 @@ import cn from "classnames";
 import { ThemeProvider } from "~/theme/ThemeProvider";
 import "~/styles/global.css";
 import "~/config/yupLocale";
-import { MenuLink, Navbar } from "~/components/Navbar";
+import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
 import { firaMono, openSans, sourceSans3 } from "~/styles/fonts";
 
+import { getMenuLinks } from "./getMenuLinks";
 import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
 
@@ -23,6 +24,8 @@ type LayoutProps = PropsWithChildren;
 export default async function Layout({ children }: LayoutProps) {
   const locale = await getLocale();
   const translations = await getMessages();
+
+  const menuLinks = await getMenuLinks();
 
   const fonts = cn(sourceSans3.variable, firaMono.variable, openSans.variable);
 
@@ -37,7 +40,7 @@ export default async function Layout({ children }: LayoutProps) {
             <TopLoader />
             <NextIntlClientProvider locale={locale} messages={translations}>
               <Navbar
-                menuLinks={MENU_LINKS}
+                menuLinks={menuLinks}
                 contactLinks={
                   <ContactLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
                 }
@@ -55,14 +58,3 @@ export default async function Layout({ children }: LayoutProps) {
 const DOMAIN = "tymzap.com";
 
 const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
-
-const MENU_LINKS: MenuLink[] = [
-  {
-    href: "/",
-    label: "Home",
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-  },
-];
