@@ -1,4 +1,4 @@
-import { ArticleCard } from "~/components/ArticleCard";
+import { ArticleCard } from "~/article/ArticleCard";
 
 import { getMoreArticles } from "./getMoreArticles";
 import { MoreArticlesHeader } from "./MoreArticlesHeader";

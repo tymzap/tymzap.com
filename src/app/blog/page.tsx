@@ -1,4 +1,4 @@
-import { loadArticles } from "~/lib/loadArticles";
+import { loadArticles } from "~/article/loadArticles";
 
 import { BlogHeader } from "./BlogHeader";
 import { ArticlesList } from "./ArticlesList";

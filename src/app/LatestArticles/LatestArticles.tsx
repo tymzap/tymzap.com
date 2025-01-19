@@ -1,4 +1,4 @@
-import { ArticleCard } from "~/components/ArticleCard";
+import { ArticleCard } from "~/article/ArticleCard";
 
 import { LatestArticlesHeader } from "./LatestArticlesHeader";
 import { getLatestArticles } from "./getLatestArticles";

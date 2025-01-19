@@ -1,7 +1,7 @@
 import path from "node:path";
 import fs from "node:fs";
 
-import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
+import { loadArticleFromSlug } from "~/article/loadArticleFromSlug";
 
 export function loadArticles() {
   const articlesDirectory = path.resolve("./content/articles");

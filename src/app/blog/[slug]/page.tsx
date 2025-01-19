@@ -1,6 +1,6 @@
 import { LongContentWrapper } from "~/components/LongContentWrapper";
-import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
-import { renderArticle } from "~/lib/renderArticle";
+import { loadArticleFromSlug } from "~/article/loadArticleFromSlug";
+import { renderArticle } from "~/article/renderArticle";
 
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { CoverImage } from "./CoverImage";

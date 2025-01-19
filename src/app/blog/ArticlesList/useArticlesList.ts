@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { loadArticles } from "~/lib/loadArticles";
+import { loadArticles } from "~/article/loadArticles";
 
 export function useArticlesList(articles: ReturnType<typeof loadArticles>) {
   const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE_COUNT);

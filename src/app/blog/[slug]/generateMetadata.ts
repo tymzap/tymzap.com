@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 import { getApiToken } from "~/lib/getApiToken";
-import { loadArticleFromSlug } from "~/lib/loadArticleFromSlug";
+import { loadArticleFromSlug } from "~/article/loadArticleFromSlug";
 
 type GenerateMetadataParams = {
   params: Promise<{

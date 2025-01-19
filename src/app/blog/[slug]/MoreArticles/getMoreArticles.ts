@@ -1,4 +1,4 @@
-import { loadArticles } from "~/lib/loadArticles";
+import { loadArticles } from "~/article/loadArticles";
 import { getRandomArrayItems } from "~/lib/getRandomArrayItems";
 
 export function getMoreArticles(articleSlugToExclude: string) {

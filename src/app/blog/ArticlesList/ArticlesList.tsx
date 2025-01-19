@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 
-import { loadArticles } from "~/lib/loadArticles";
-import { ArticleCard } from "~/components/ArticleCard";
+import { loadArticles } from "~/article/loadArticles";
+import { ArticleCard } from "~/article/ArticleCard";
 import { Button } from "~/components/Button";
 import Plus from "~/icons/plus.svg";
 

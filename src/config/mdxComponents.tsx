@@ -11,11 +11,8 @@ import { Heading } from "~/components/Heading";
 import {
   ViewRepositoryButton,
   ViewRepositoryButtonProps,
-} from "~/components/ViewRepositoryButton";
-import {
-  ViewCommitLink,
-  ViewCommitLinkProps,
-} from "~/components/ViewCommitLink";
+} from "~/article/ViewRepositoryButton";
+import { ViewCommitLink, ViewCommitLinkProps } from "~/article/ViewCommitLink";
 
 export const MDX_COMPONENTS: MDXComponents = {
   ViewRepositoryButton: (props: ViewRepositoryButtonProps) => (

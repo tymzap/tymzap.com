@@ -3,7 +3,7 @@ import path from "node:path";
 import grayMatter from "gray-matter";
 import readingTime from "reading-time";
 
-import { normalizeArticleMetadata } from "~/lib/normalizeArticleMetadata";
+import { normalizeArticleMetadata } from "~/article/normalizeArticleMetadata";
 
 export function loadArticleFromSlug(slug: string) {
   const articleFile = fs.readFileSync(
