@@ -1,22 +1,31 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { themeClassNames } from "~/theme/themeClassNames";
 import { DEFAULT_THEME } from "~/theme/defaultTheme";
 import { LOCAL_STORAGE_KEYS } from "~/constants/localStorageKeys";
+import { getThemeOverrideForPathname } from "~/theme/pathnameThemeOverrides";
 
-import { addThemeClassName } from "./addThemeClassName";
+import {
+  addThemeClassName,
+  AddThemeClassNameParams,
+} from "./addThemeClassName";
 
 export function ThemeScript() {
-  const serializedArguments = serializeArguments([
-    LOCAL_STORAGE_KEYS.THEME,
-    themeClassNames,
-    DEFAULT_THEME,
-  ]);
-  const serializedScript = `(${addThemeClassName.toString()})(${serializedArguments})`;
+  const pathname = usePathname();
+  const themeOverride = getThemeOverrideForPathname(pathname);
+
+  const scriptParams: AddThemeClassNameParams = {
+    localStorageKey: LOCAL_STORAGE_KEYS.THEME,
+    classNames: themeClassNames,
+    defaultTheme: DEFAULT_THEME,
+    themeOverride,
+  };
+
+  const serializedScript = `(${addThemeClassName.toString()})(${JSON.stringify(
+    scriptParams,
+  )})`;
 
   return <script suppressHydrationWarning={true}>{serializedScript}</script>;
-}
-
-function serializeArguments(values: Parameters<typeof addThemeClassName>) {
-  return JSON.stringify(values).slice(1, -1);
 }

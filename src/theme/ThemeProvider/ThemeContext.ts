@@ -8,6 +8,7 @@ type ThemeContextValue = {
   theme: Theme | undefined;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  hasThemeOverride: boolean;
 };
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);

@@ -1,14 +1,21 @@
-export function addThemeClassName(
-  localStorageKey: string,
-  classNames: Record<string, string>,
-  defaultTheme: string,
-) {
+export type AddThemeClassNameParams = {
+  localStorageKey: string;
+  classNames: Record<string, string>;
+  defaultTheme: string;
+  themeOverride: string | null;
+};
+
+export function addThemeClassName({
+  classNames,
+  defaultTheme,
+  localStorageKey,
+  themeOverride,
+}: AddThemeClassNameParams) {
   try {
-    const themeFromLocalStorage = JSON.parse(
-      localStorage.getItem(localStorageKey) ?? `""`,
-    );
-    const themeClassName =
-      classNames[themeFromLocalStorage] ?? classNames[defaultTheme];
+    const theme =
+      themeOverride ??
+      JSON.parse(localStorage.getItem(localStorageKey) ?? `""`);
+    const themeClassName = classNames[theme] ?? classNames[defaultTheme];
 
     document.documentElement.classList.add(themeClassName);
   } catch {

@@ -13,7 +13,7 @@ type UseThemeButtonParams = {
 export function useThemeButton({
   onPress: onPressParam,
 }: UseThemeButtonParams) {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, hasThemeOverride } = useTheme();
 
   const t = useTranslations();
 
@@ -29,8 +29,11 @@ export function useThemeButton({
   const ref = useRef(null);
   const { buttonProps } = useButton({ onPress, "aria-label": label }, ref);
 
+  const isVisible = !hasThemeOverride;
+
   return {
     Icon,
     buttonProps,
+    isVisible,
   };
 }

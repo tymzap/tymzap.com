@@ -9,10 +9,12 @@ import { ThemeScript } from "../ThemeScript";
 type ThemeProviderProps = PropsWithChildren;
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const { theme, setTheme, toggleTheme } = useThemeProvider();
+  const { theme, setTheme, toggleTheme, hasThemeOverride } = useThemeProvider();
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme, toggleTheme, hasThemeOverride }}
+    >
       <ThemeScript />
       {children}
     </ThemeContext.Provider>

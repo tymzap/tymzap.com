@@ -8,7 +8,11 @@ type ThemeButtonProps = {
 };
 
 export function ThemeButton({ onPress }: ThemeButtonProps) {
-  const { buttonProps, Icon } = useThemeButton({ onPress });
+  const { buttonProps, Icon, isVisible } = useThemeButton({ onPress });
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <button {...buttonProps} className={styles.button}>

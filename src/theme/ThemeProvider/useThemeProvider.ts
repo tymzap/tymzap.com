@@ -1,8 +1,8 @@
-"use client";
-
 import { useEffect } from "react";
 import { useLocalStorage } from "react-use";
+import { usePathname } from "next/navigation";
 
+import { getThemeOverrideForPathname } from "~/theme/pathnameThemeOverrides";
 import { getOppositeTheme } from "~/theme/getOppositeTheme";
 import { Theme } from "~/theme/Theme";
 import { getThemeClassName } from "~/theme/themeClassNames";
@@ -11,6 +11,8 @@ import { DEFAULT_THEME } from "~/theme/defaultTheme";
 import { LOCAL_STORAGE_KEYS } from "~/constants/localStorageKeys";
 
 export function useThemeProvider() {
+  const pathname = usePathname();
+
   const [theme, setTheme] = useLocalStorage<Theme>(
     LOCAL_STORAGE_KEYS.THEME,
     DEFAULT_THEME,
@@ -21,6 +23,8 @@ export function useThemeProvider() {
     },
   );
 
+  const themeOverride = getThemeOverrideForPathname(pathname);
+
   const toggleTheme = () => {
     setTheme(getOppositeTheme(theme ?? DEFAULT_THEME));
   };
@@ -30,13 +34,14 @@ export function useThemeProvider() {
       return;
     }
 
-    syncThemeClassName(theme);
-  }, [theme]);
+    syncThemeClassName(themeOverride ?? theme);
+  }, [theme, themeOverride]);
 
   return {
     theme,
     toggleTheme,
     setTheme,
+    hasThemeOverride: Boolean(themeOverride),
   };
 }
 
