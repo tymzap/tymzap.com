@@ -6,6 +6,7 @@ import { getThemeClassName } from "~/theme/themeClassNames";
 import { sourceSans3, firaMono, openSans } from "~/styles/fonts";
 import { Theme } from "~/theme/Theme";
 import { getOppositeTheme } from "~/theme/getOppositeTheme";
+import { ThemeContext, ThemeContextValue } from "~/theme/ThemeProvider";
 
 export function ThemeDecorator(
   renderStory: PartialStoryFn<ReactRenderer>,
@@ -21,7 +22,18 @@ export function ThemeDecorator(
     syncThemeClassName(theme);
   }, [theme]);
 
-  return <>{renderStory()}</>;
+  const contextValue: ThemeContextValue = {
+    theme,
+    hasThemeOverride: false,
+    toggleTheme: () => void 0,
+    setTheme: () => void 0,
+  };
+
+  return (
+    <ThemeContext.Provider value={contextValue}>
+      {renderStory()}
+    </ThemeContext.Provider>
+  );
 }
 
 function syncThemeClassName(theme: Theme) {

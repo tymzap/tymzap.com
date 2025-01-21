@@ -1,5 +1,4 @@
 import { MDXComponents } from "mdx/types.js";
-import { ReactNode } from "react";
 
 import { CodeBlock } from "~/components/CodeBlock";
 import { Code } from "~/components/Code";
@@ -14,16 +13,21 @@ import {
 } from "~/article/ViewRepositoryButton";
 import { ViewCommitLink, ViewCommitLinkProps } from "~/article/ViewCommitLink";
 
+import { MarginWrapper } from "./MarginWrapper";
+import { getBlogImageSrc } from "./getBlogImageSrc";
+import { getCodeBlockLanguage } from "./getCodeBlockLanguage";
+import { getCodeBlockContent } from "./getCodeBlockContent";
+
 export const MDX_COMPONENTS: MDXComponents = {
   ViewRepositoryButton: (props: ViewRepositoryButtonProps) => (
-    <span style={{ margin: "50px 0", display: "block" }}>
+    <MarginWrapper as={"span"}>
       <ViewRepositoryButton {...props} />
-    </span>
+    </MarginWrapper>
   ),
   ViewCommitLink: (props: ViewCommitLinkProps) => (
-    <span style={{ margin: "50px 0", display: "block" }}>
+    <MarginWrapper as={"span"}>
       <ViewCommitLink {...props} />
-    </span>
+    </MarginWrapper>
   ),
   img: ({ src, alt, title }) => (
     <ImageWithCaption
@@ -38,12 +42,12 @@ export const MDX_COMPONENTS: MDXComponents = {
     </TextLink>
   ),
   pre: (props) => {
-    const content = getCodeBlockContentFromProps(props);
-    const language = getCodeBlockLanguageFromProps(props);
+    const content = getCodeBlockContent(props);
+    const language = getCodeBlockLanguage(props);
 
     return <CodeBlock language={language ?? undefined}>{content}</CodeBlock>;
   },
-  code: Code,
+  code: ({ children }) => <Code>{children}</Code>,
   blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
   ul: ({ children }) => <List isOrdered={false}>{children}</List>,
   ol: ({ children }) => <List isOrdered={true}>{children}</List>,
@@ -63,50 +67,9 @@ export const MDX_COMPONENTS: MDXComponents = {
       {children}
     </Heading>
   ),
-  section: ({ children }) => {
-    return <section style={{ marginTop: 70 }}>{children}</section>;
-  },
-};
-
-function getBlogImageSrc(initialSrc?: string) {
-  if (!initialSrc) {
-    return "";
-  }
-
-  return `/blog/${initialSrc}`;
-}
-
-function getCodeBlockContentFromProps(props: PropsWithChildrenAndClassName) {
-  const { children } = props;
-
-  if (
-    !(children && typeof children === "object" && "props" in children) ||
-    !(typeof children.props.children === "string")
-  ) {
-    return "";
-  }
-
-  return children.props.children ?? "";
-}
-
-function getCodeBlockLanguageFromProps(props: PropsWithChildrenAndClassName) {
-  const { children } = props;
-
-  const LANGUAGE_PREFIX = "language-";
-
-  if (
-    !(children && typeof children === "object" && "props" in children) ||
-    !(typeof children.props.className === "string") ||
-    !typeof children.props.className.includes(LANGUAGE_PREFIX)
-  ) {
-    return null;
-  }
-
-  return children.props.className.replace(LANGUAGE_PREFIX, "");
-}
-
-type PropsWithChildrenAndClassName = {
-  children?: ReactNode & {
-    props: { className?: string; children?: ReactNode };
-  };
+  section: ({ children }) => (
+    <MarginWrapper hasTopMargin={false} as={"section"}>
+      {children}
+    </MarginWrapper>
+  ),
 };

@@ -4,7 +4,7 @@ import { createContext } from "react";
 
 import { Theme } from "~/theme/Theme";
 
-type ThemeContextValue = {
+export type ThemeContextValue = {
   theme: Theme | undefined;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;

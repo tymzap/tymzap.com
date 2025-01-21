@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { NewsletterSignUpFormValues } from "~/components/NewsletterSignUpForm";
+import { NewsletterSignUpFormValues } from "~/newsletter/NewsletterSignUpForm";
 
 export function useNewsletterSignUp() {
   const [isConfirmationDialogOpened, setIsConfirmationDialogOpened] =
