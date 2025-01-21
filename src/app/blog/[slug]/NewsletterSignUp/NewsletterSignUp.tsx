@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { Dialog } from "~/components/Dialog";
-import { NewsletterSignUpForm } from "~/components/NewsletterSignUpForm";
+import { NewsletterSignUpForm } from "~/newsletter/NewsletterSignUpForm";
 
 import { useNewsletterSignUp } from "./useNewsletterSignUp";
 import * as styles from "./NewsletterSignUp.css";

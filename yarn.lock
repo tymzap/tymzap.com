@@ -2066,6 +2066,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@edge-runtime/cookies@npm:^5.0.2":
+  version: 5.0.2
+  resolution: "@edge-runtime/cookies@npm:5.0.2"
+  checksum: 10c0/4db80e80403c7086f1d269afdf8956c035d88b173c70ca9e912d58683b58c300a1df922dee74bb44f964f1fab7e446f8ed8d32fc9715a7c322671e03405a682a
+  languageName: node
+  linkType: hard
+
 "@emnapi/runtime@npm:^1.1.1":
   version: 1.2.0
   resolution: "@emnapi/runtime@npm:1.2.0"
@@ -6233,6 +6240,33 @@ __metadata:
   peerDependencies:
     webpack: ^4.30.0 || ^5.20.2
   checksum: 10c0/5b9c0b2c3c887d38b5f2dc26606ea470a9a333a778465a283cfd6d3bb49990e66f1e9a73619528b8c597322adde61eceb5b0335c738dd97043b16c04c5b08b36
+  languageName: node
+  linkType: hard
+
+"@vercel/flags@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@vercel/flags@npm:3.0.1"
+  dependencies:
+    "@edge-runtime/cookies": "npm:^5.0.2"
+    jose: "npm:^5.2.1"
+  peerDependencies:
+    "@opentelemetry/api": ^1.7.0
+    "@sveltejs/kit": "*"
+    next: "*"
+    react: "*"
+    react-dom: "*"
+  peerDependenciesMeta:
+    "@opentelemetry/api":
+      optional: true
+    "@sveltejs/kit":
+      optional: true
+    next:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/d554ad969fcaf48f4db0477f0ad37ace13a9faaca6c18a2f87319060345a86d2b1373996ba4bec7cdbc99086474c736e7ecd4c87d9e30acfe8ca8aa7dd6fabdb
   languageName: node
   linkType: hard
 
@@ -11319,6 +11353,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^5.2.1":
+  version: 5.9.6
+  resolution: "jose@npm:5.9.6"
+  checksum: 10c0/d6bcd8c7d655b5cda8e182952a76f0c093347f5476d74795405bb91563f7ab676f61540310dd4b1531c60d685335ceb600571a409551d2cbd2ab3e9f9fbf1e4d
+  languageName: node
+  linkType: hard
+
 "js-cookie@npm:^2.2.1":
   version: 2.2.1
   resolution: "js-cookie@npm:2.2.1"
@@ -15845,6 +15886,7 @@ __metadata:
     "@vanilla-extract/next-plugin": "npm:2.4.3"
     "@vanilla-extract/recipes": "npm:0.5.5"
     "@vanilla-extract/webpack-plugin": "npm:2.3.11"
+    "@vercel/flags": "npm:3.0.1"
     classnames: "npm:2.5.1"
     cors-anywhere: "npm:0.4.4"
     date-fns: "npm:4.1.0"
