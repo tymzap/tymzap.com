@@ -1,9 +1,9 @@
 import { createHmac } from "node:crypto";
 
-export function getApiToken(dataToEncode: any): string {
-  const secret = process.env.API_TOKEN_SECRET as string;
+import { SERVER_ENV } from "~/config/env/server";
 
-  const hmac = createHmac("sha256", secret);
+export function getApiToken(dataToEncode: any): string {
+  const hmac = createHmac("sha256", SERVER_ENV.API_TOKEN_SECRET);
 
   hmac.update(JSON.stringify(dataToEncode));
 

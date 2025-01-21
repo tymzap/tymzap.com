@@ -1,10 +1,12 @@
 import { JsonObject } from "type-fest";
 
+import { SERVER_ENV } from "~/config/env/server";
+
 export async function fetchFromMailerLiteApi(
   path: string,
   params: FetchParams = {},
 ) {
-  const url = `${API_URL}/${path}`;
+  const url = `${SERVER_ENV.MAILER_LITE_API_URL}/${path}`;
 
   return fetch(url, prepareRequestInit(params)).then((response) =>
     response.json(),
@@ -31,7 +33,7 @@ function prepareHeaders() {
   return {
     "content-type": "application/json",
     accept: "application/json",
-    authorization: `Bearer ${API_TOKEN}`,
+    authorization: `Bearer ${SERVER_ENV.MAILER_LITE_API_TOKEN}`,
   };
 }
 
@@ -39,7 +41,3 @@ type FetchParams = {
   method?: string;
   body?: JsonObject;
 };
-
-const API_URL = process.env.MAILER_LITE_API_URL as string;
-
-const API_TOKEN = process.env.MAILER_LITE_API_TOKEN as string;

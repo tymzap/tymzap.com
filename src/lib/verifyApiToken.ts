@@ -1,3 +1,5 @@
+import { SERVER_ENV } from "~/config/env/server";
+
 export async function verifyApiToken(encodedData: any) {
   const key = await getKey();
   const data = new TextEncoder().encode(JSON.stringify(encodedData));
@@ -6,7 +8,7 @@ export async function verifyApiToken(encodedData: any) {
 }
 
 async function getKey() {
-  const secret = process.env.API_TOKEN_SECRET as string;
+  const secret = SERVER_ENV.API_TOKEN_SECRET;
   const algorithm = { name: "HMAC", hash: { name: "SHA-256" } };
 
   return crypto.subtle.importKey(
