@@ -14,7 +14,7 @@ export const openSans = Open_Sans({
 
 export const firaMono = Fira_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "700"],
   display: "swap",
   variable: "--fira-mono",
 });

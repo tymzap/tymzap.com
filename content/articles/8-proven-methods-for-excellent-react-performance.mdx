@@ -1,0 +1,187 @@
+---
+title: 8 proven methods for excellent React performance
+publishedAt: 2025-05-29
+coverImage: cheetah-running-in-the-grassland.webp
+---
+
+To get the best performance from your React app, you need to start with proven techniques early. Especially if you plan to scale and handle high volumes of users smoothly. 
+
+Of course, web performance is a complex subject, and approaches among developers vary. In this article, I've gathered widely recognized methods to give you a solid foundation for building a high-performance applications.
+
+## 1. Use compression
+
+Compression reduces the size of the bundle. Gzip and Brotli are two widely-used [lossless compression](https://en.wikipedia.org/wiki/Lossless_compression) algorithms for this purpose. They both work by finding repeating patterns in files and compressing these patterns into smaller datasets, reducing the size of the files before they're sent over the network. Once received, the client's browser decompresses the files.
+
+Gzip, a time-tested compression method, has been around for decades and is supported by every major browser and web server. Brotli, on the other hand, is Google's newer compression algorithm. It often achieves better compression ratios than Gzip, especially for text-based files like JavaScript and CSS.
+
+Setting up these compression methods is simple with modern frontend tooling. By installing Vite's compression plugin, you can preprocess your static assets before deployment with one line of code. With Next.js, compression is even enabled by default.
+
+![Network loading performance comparison for Vite React template with Recharts library bundled](vite-compression-network-performance-comparison.webp "Network loading performance comparison. Vite React template with Recharts library bundled, Fast 4G throttling. No compression (top), Gzip compression (bottom)")
+
+Compression **reduces the size of the transmitted data, leading to faster loading times**. The downside is it increases CPU usage, especially on server side. Still, most modern servers have sufficient processing power to handle compression without significant issues, so compression is usually well worth the trade-offs.
+## 2. Use code splitting
+
+Code splitting is, in essence, breaking your application code into smaller parts. As a result, you reduce the size of the initial bundle, ensuring that users only download what's necessary at any given time.
+
+Types of code splitting:
+
+- **Lazy loading components**: This involves loading a component only when it's first rendered in UI. In React, this can be achieved using `lazy` and `Suspense`. It helps in keeping the initial bundle size small, as components are loaded on demand.
+- **Route-based splitting**: Chunks of code are loaded asynchronously as the user navigates from one route to another. This ensures that each page or route loads only the code it requires. Often supported out of the box by libraries like React Router.
+- **Chunking**: Developer specifies chunks that should be split into separate JS files. Typically, heavy and frequently used vendor libraries are chunked out to reduce duplications across the bundle. Historically, Webpack's [`CommonsChunkPlugin`](https://webpack.js.org/plugins/commons-chunk-plugin/) have been used for this purpose.
+
+The term *code splitting* often gets used interchangeably with *lazy loading*, but they don't mean the same. Code splitting is the general term for breaking your code into smaller chunks. Lazy loading is a specific way to do this, where you load those chunks only when they're needed.
+
+The main advantages of code splitting include reducing the initial bundle size, extracting duplicated code to separate files, and allowing the browser to cache these files for faster subsequent page loads. 
+
+## 3. Optimize image loading
+
+Image optimization is a complex topic that deserves an in-depth discussion of its own. There are numerous techniques and tools available to enhance image performance, each with its own advantages and trade-offs. In this section we will quickly go over four basic methods to improve image handling:
+
+- Opt for **modern formats like WEBP** which offers more efficient compression compared to traditional formats like JPG or PNG.
+- Implement **responsive images using [`picture` and `srcset`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)** to serve the appropriately scaled image based on the display size, avoiding the fetch of unnecessarily large images.
+- Use **[`loading=lazy`](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading#images_and_iframes) to defer offscreen images** until they're needed. This boosts page load speeds by downloading images only when user scrolls near them.
+- Try to **always provide `width` and `height` attributes** in your image tags. This prevents [Cumulative Layout Shift](https://web.dev/articles/cls) by reserving the precise amount of space on the page before loading the image.
+  
+These are simple and effective techniques that make a significant difference with minimal effort. All of them are quick to implement and address most impactful image performance issues, making them a perfect starting point.
+
+![DevTools showing responsive image loading](responsive-images-in-devtools.webp "using picture and srcset to load appropriately scaled images for mobile, tablet, and desktop")
+
+Of course, there are more advanced strategies - such as server-side image transformation, [HTTP client hints](https://web.dev/articles/performance-optimizing-content-efficiency-client-hints), and blur placeholders - but they require more effort to implement and cautious system design. If your system is image-intensive or you're operating at a large scale, using a CDN or image optimization service such as Cloudinary might be a good decision.
+
+Also, consider creating a custom React component which ensures all images in your app adhere to your optimization practices. A great example is the [Image component](https://nextjs.org/docs/app/api-reference/components/image) from Next.js, which takes care of responsive sizing, lazy loading, blur placeholders, and even works with external image optimization services - all through an intuitive API. This makes development faster and ensures best practices are always followed.
+
+## 4. Optimize font loading
+
+Fonts can significantly impact perceived performance, both due to their load times and potential to cause the dreaded layout shift. You can optimize font loading through many strategies, here are some popular ones:
+
+- **Use [`rel=preload`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload)** to  ensure fonts are fetched early in the process.
+- **Leverage the `font-display` CSS property**: 
+	- Use `font-display: optional` when performance is a top priority. If the font isn’t available immediately, the browser will render only the fallback font and never swap in the custom font later.
+	- Use `font-display: swap` if displaying the font correctly is critical. This allows the page to load with a fallback font first and then swap in the custom font once it’s ready.
+	- If `font-display` is not specified, browsers may delay rendering text until the custom font loads, leading to a blank or invisible text state ([Flash of Invisible Text](https://fonts.google.com/knowledge/glossary/foit)), or they may swap fonts unexpectedly, causing layout shifts.
+- Prefer **modern formats like WOFF2**, which offer better compression and smaller file sizes. Keep in mind that WOFF2 files are already compressed, so applying additional gzip compression won't have an effect.
+- **Subset your fonts** to include only the characters needed (for example, a Latin-only subset if you your site won't support non-Latin languages) to reduce font file size.
+
+Also, you can consider **self-hosting fonts**. Having font hosted on the same domain or CDN often results in faster loading times, since it eliminates the need for an additional DNS lookup and connection to another server. You can also apply aggressive [Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) header policies since fonts rarely change. However, this approach requires more setup and maintenance compared to using external font providers like Google Fonts.
+
+
+## 5. Avoid unnecessary rerenders
+
+There's no silver bullet when it comes to rendering optimization. Each project, with its unique component architecture, state management, and data complexity, presents its own set of challenges. However, some performance issues are more common in the React ecosystem than others. I’ve compiled several tips to help you avoid frequent pitfalls in React applications and write more efficient code. 
+
+Thoughtful **component composition** can save you a lot of headache with performance issues. Instead of keeping state at the top level, **move it down to smaller, more focused components**. Large parent components with many children should be avoided since any re-render at the parent level will cause all its children to update, even if their props hasn't changed.
+
+```jsx
+// ❌ ChildComponent is being unnecessarily re-rendered with each state update
+const SlowComponent = () => {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+  
+  return (
+    <>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increase count</button>
+      <ChildComponent />
+    </>
+  )
+);
+
+// ✅ useState and click handler are moved to ButtonWithCount component.
+// Only ButtonWithCount rerenders on button click
+const FastComponent = () => {
+  return (
+    <>
+      <ButtonWithCount />
+      <ChildComponent />
+    </>
+  )
+);
+```
+
+Props structuring can have surprisingly big impact on rerender performance. **Passing primitive values where possible** rather than objects can help React quickly determine if a rerender is needed (based on value versus reference checks).
+
+**Avoiding global contexts loaded with excessive data** can also cut down on superfluous rerenders. It's better to use local contexts (nested deeper in the component tree) or split them into granular parts like a context specific to current theme information. If you feel your app might need more opinionated solution for cross-component state, consider using modern state management libraries such as Recoil (they have smart optimizations built-in). And remember, you can actually achieve great state management just with intelligently used `useState` and `useReducer` hooks if your components are small and specific.
+
+If you still decide to use global contexts, remember to **apply state selectors to avoid re-renders of entire component trees** after simple state changes.
+
+While **`useMemo`, `useCallback`, and `memo`** are tried and true solutions to prevent extra rerenders, they should be used sparingly, not by default. Instead of blindly wrapping every function and computation in these, focus on identifying actual performance bottlenecks. Upcoming React compiler advancements are poised to handle some of these optimizations automatically, taking the burden off developers.
+
+Last but not least, be aware of these simple pitfalls:
+- Do not forget to **include keys in lists** so React knows when to rerender items (or rather, when NOT to do this).
+- Avoid **creating objects or arrays within component's function body**, as their references change on each render, forcing unnecessary re-renders of dependent components.
+- Do not **define components inside other components**. It causes child component to remount every time parent is rerendered.
+
+```jsx
+// ❌ ChildComponent will remount itself every time ParentComponent is rerendered:
+const ParentComponent = () => {
+  const ChildComponent = /* implementation... */;
+  
+  return <ChildComponent />;
+};
+
+// ✅ React will reuse the same instance of ChildComponent across re-renders:
+const ChildComponent = /* implementation... */;
+
+const ParentComponent = () => {
+  return <ChildComponent />;
+};
+```
+
+Ultimately, writing performant React components requires a deep understanding of React's rendering and reconciliation algorithms. These fundamental concepts are the bedrock upon which effective rerenders optimization strategies are built, and no list of pro tips can replace them. 
+
+## 6. Offload data fetching to server components
+
+This one might be a bit controversial (yes, looking at you, Next.js haters). The frontend landscape is going through a transformation. According to some portion of the community, you should use server components to improve loading times by fetching data on the server side. This approach avoids ubiquitous loading spinners, **providing users with ready-to-use pages on the first render** (in an ideal scenario).
+
+There's a reason authors of Next.js framework made components server-side by default. This design choice reflects how most React apps operate - they are mostly static websites with small interactive parts. This is sometimes referred to as the *donut model* - you place the bulk of data fetching and logic in a server-side "outer ring", and only use client components for interactive "hole".
+
+![Diagram of the Next.js donut model showing server components as the outer ring and client components as the hole in the center](donut-model.webp)
+
+Benefits of moving data fetching and rendering to server side include smaller bundles, better SEO, and generally improved loading times (since data fetching is typically closer to its source). It can largely improve scores in [Largest Contentful Paint](https://web.dev/articles/lcp) and [First Contentful Paint](https://web.dev/articles/fcp). Prioritizing server components when building your React frontend is a very viable strategy. 
+
+That being said, server components represent a fairly opinionated architecture, and they don't suit every use case or team structure. Some developers feel they add complexity, limit interactivity, or break the mental model of client-driven apps that React was originally built around.
+
+## 7. Use production builds
+
+A production build is an optimized version of your application designed for faster load times. Usually, it includes **minification**, which shortens code and removes unnecessary characters, and **tree shaking**, which eliminates unused code to reduce bundle size. Additionally, production builds can apply more aggressive caching strategies (for example, Vite ensures that output files have a unique hash based on their content, so browsers cache assets aggressively but fetch new versions when changes occur).
+
+Beyond optimizations, the production build removes development-only features that aren't needed in a live environment. This includes source maps, which help with debugging but add extra overhead, and development tools included in bundle like TanStack Query Devtools, which are useless for end users. React also disables extra runtime checks (like [double rendering](http://react.dev/reference/react/StrictMode#fixing-bugs-found-by-double-rendering-in-development)) in production mode.
+
+Most frameworks and bundlers offer sensible defaults for production builds and include dedicated commands to generate them (like `vite build`). If you want, you can customize the build process by adjusting settings for compression, code splitting, and caching policies to better match your infrastructure needs.
+
+Deploying the development build of your application to the production environment can be impactful mistake. Be cautious and ensure you're using the correct production build.
+
+
+## 8. Test and monitor your performance
+
+All of these tips are not worth much if you don't watch and measure your performance on regular basis. There are many useful benchmarks and audits that'll give you insights into how well your app is doing and where improvements can be made. 
+
+**Core Web Vitals** were introduced by Google in 2020. They are a set of three user-centric performance metrics that focus on the key aspects of the user experience: loading, interactivity, and visual stability. Here is the big trio:
+
+- **Largest Contentful Paint (LCP)**: Measures how quickly the largest visible content element on the page is rendered.
+- **Cumulative Layout Shift (CLS)**: Measures how much the page layout moves around as the page loads.
+- **Interaction to Next Paint (INP)**: It replaced the older **First Input Delay (FID)** metric. FID only measured the delay of the first user interaction. INP tracks all interactions and reports how long it takes from input to the next frame being painted. In other words, it captures the overall responsiveness of your page.
+
+You can collect Core Web Vitals data in the field using [web-vitals library](https://www.npmjs.com/package/web-vitals), and then send these metrics to your analytics service (like Google Analytics) to monitor real-world performance and spot patterns. For example, if INP is consistently poor on mobile, you can prioritize optimizing touch responsiveness on phones.
+
+**Lighthouse** is an open-source tool that audits performance, accessibility, SEO, and more. It provides detailed reports on Core Web Vitals and offers actionable insights to improve load times and interactivity. For example, Lighthouse might suggest minimizing render-blocking resources to improve Interaction to Next Paint (INP). It also checks for mobile responsiveness and accessibility. You can run Lighthouse both from browser and CLI.
+
+**React profiling tools** are useful to pinpoint exact components with performance issues. Profiler from [React Developer Tools](https://react.dev/learn/react-developer-tools) is one of the most widely used tools. It allows you to see which components are taking longer to render by analysing detailed flame charts. [React Scan](https://github.com/aidenybai/react-scan), created by Aiden Bai, is a recent tool that highlights which components are being re-rendered and how often. I like it a lot because it gives very clear, easy to understand visual cues.
+
+![React Scan demo](react-scan-demo.webp "React Scan monkey patches React rendering processes to visualize component re-renders")
+
+**Network and CPU throttling** from browser DevTools allow you to simulate how your app behaves under different conditions, like slower network speeds or lower CPU performance. This is handy for identifying performance bottlenecks that might not be visible under normal conditions, especially if you work on your new shiny Mac with perfect Internet access.
+
+Some developers even go a step further and keep throttling always enabled during development, to ensure the app stays usable and responsive under harsh conditions. If you think that sounds extreme, consider this: according to The Markup, [nearly 40 million Americans don't have access to reliable, fast internet](https://themarkup.org/the-breakdown/2020/03/26/how-many-americans-lack-high-speed-internet). This means more than 10% of your users could be in this group if you're targeting the U.S. market.
+
+In addition to the techniques we've just covered, **monitoring and analytics platforms** like Sentry and Datadog help track errors and performance in real time, offering detailed insights to improve user experience. Be wary though that they have steep learning curve and require complicated setup. Interesting recent addition to the community are performance testing libraries like [reassure](https://www.npmjs.com/package/reassure), which provide automated way to measure individual componens performance.
+
+
+## Summary
+
+In this article, we went over commonly used performance techniques and strategies in React. We covered essentials like compression, code splitting, and avoiding unnecessary rerenders, as well as methods such as offloading data fetching to server components and optimizing images, fonts, and production builds. We also discussed the importance of testing and monitoring with tools like Lighthouse, React Profiler, and Core Web Vitals. 
+
+I hope these tips will be helpful to you. Good luck!
