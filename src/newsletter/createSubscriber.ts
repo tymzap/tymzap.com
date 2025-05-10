@@ -1,6 +1,5 @@
 import { SERVER_ENV } from "~/config/env/server";
-
-import { fetchFromMailerLiteApi } from "~/lib/fetchFromMailerLiteApi";
+import { fetchFromMailerLiteApi } from "~/newsletter/fetchFromMailerLiteApi";
 
 export function createSubscriber(email: string) {
   return fetchFromMailerLiteApi("subscribers", {

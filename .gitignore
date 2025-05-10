@@ -30,10 +30,6 @@ lib-cov
 .settings/
 *.sublime-workspace
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
