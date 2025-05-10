@@ -12,7 +12,7 @@ $ yarn install
 $ yarn dev
 
 # run Storybook
-$ yarn storybook
+$ yarn dev:storybook
 
 # run CORS proxy server
 $ yarn cors-proxy
