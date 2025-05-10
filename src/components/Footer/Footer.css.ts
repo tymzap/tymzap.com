@@ -49,3 +49,13 @@ export const name = style({
   fontWeight: 700,
   fontSize: 17,
 });
+
+export const repoLinkWrapper = style({
+  display: "block",
+  marginTop: 32,
+  "@media": {
+    [mediaQueries.smallerThanTablet]: {
+      textAlign: "center",
+    },
+  },
+});

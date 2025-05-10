@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
 import { ThemeOverride } from "~/theme/ThemeOverride";
+import { TextLink } from "~/components/TextLink";
+import Code from "~/icons/code.svg";
 
 import * as styles from "./Footer.css";
 
@@ -21,6 +23,12 @@ export function Footer({ contactLinks }: FooterProps) {
             {CURRENT_YEAR}. {t("allRightsReserved")}
           </span>
           <div className={styles.contactLinksWrapper}>{contactLinks}</div>
+          <div className={styles.repoLinkWrapper}>
+            <TextLink href={REPO_URL}>
+              {t("viewThisWebsiteSourceCode")}
+              <TextLink.Icon icon={Code} hoverAnimation={"rotate"} />
+            </TextLink>
+          </div>
         </div>
       </div>
     </ThemeOverride>
@@ -28,3 +36,5 @@ export function Footer({ contactLinks }: FooterProps) {
 }
 
 const CURRENT_YEAR = new Date().getFullYear();
+
+const REPO_URL = "https://github.com/tymzap/tymzap.com";
