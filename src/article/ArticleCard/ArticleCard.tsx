@@ -19,7 +19,7 @@ export function ArticleCard({
   publishedAt,
   readTime,
 }: ArticleCardProps) {
-  const formattedPublishedAt = formatDate(publishedAt, DATE_FORMAT);
+  const formattedPublishedAt = formatDate(publishedAt, "PPP");
 
   return (
     <div className={styles.wrapper}>
@@ -35,8 +35,6 @@ export function ArticleCard({
     </div>
   );
 }
-
-const DATE_FORMAT = "MMMM dd, yyyy";
 
 ArticleCard.Grid = ArticleCardGrid;
 ArticleCard.Link = ArticleCardLink;

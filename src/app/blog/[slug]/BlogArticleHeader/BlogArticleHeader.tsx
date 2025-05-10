@@ -15,7 +15,7 @@ export function BlogArticleHeader({
   publishedAt,
   readTime,
 }: BlogArticleHeaderProps) {
-  const formattedPublishedAt = formatDate(publishedAt, DATE_FORMAT);
+  const formattedPublishedAt = formatDate(publishedAt, "PPP");
 
   return (
     <div className={styles.wrapper}>
@@ -27,5 +27,3 @@ export function BlogArticleHeader({
     </div>
   );
 }
-
-const DATE_FORMAT = "MMMM dd, yyyy";
