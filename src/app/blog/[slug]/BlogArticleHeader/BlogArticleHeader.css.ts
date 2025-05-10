@@ -16,15 +16,6 @@ export const heading = style({
   },
 });
 
-export const details = style({
-  display: "flex",
-  gap: 10,
-});
-
-export const detailsItem = style({
-  fontSize: 18,
-});
-
 export const wrapper = style({
   display: "flex",
   flexDirection: "column",

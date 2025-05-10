@@ -24,16 +24,6 @@ export const image = style({
   },
 });
 
-export const details = style({
-  display: "flex",
-  gap: 10,
-  color: vars.colors.text,
-});
-
-export const detailsItem = style({
-  fontSize: 18,
-});
-
 export const title = style({
   color: vars.colors.interactiveText,
   fontWeight: 700,

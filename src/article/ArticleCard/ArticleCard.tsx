@@ -1,5 +1,7 @@
 import { format as formatDate } from "date-fns";
 
+import { AttributeList } from "~/components/AttributeList";
+
 import * as styles from "./ArticleCard.css";
 import { ArticleCardGrid } from "./ArticleCardGrid";
 import { ArticleCardLink } from "./ArticleCardLink";
@@ -26,10 +28,10 @@ export function ArticleCard({
         style={{ backgroundImage: `url("${imageSrc}")` }}
       />
       <span className={styles.title}>{title}</span>
-      <div className={styles.details}>
-        <span className={styles.detailsItem}>{formattedPublishedAt}</span>•
-        <span className={styles.detailsItem}>{readTime}</span>
-      </div>
+      <AttributeList>
+        <AttributeList.Item>{formattedPublishedAt}</AttributeList.Item>
+        <AttributeList.Item>{readTime}</AttributeList.Item>
+      </AttributeList>
     </div>
   );
 }
