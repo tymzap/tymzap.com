@@ -1,15 +1,17 @@
+import * as yup from "yup";
+
 import { ArticleMetadata } from "./ArticleMetadata";
 
-export function normalizeArticleMetadata(source: any): ArticleMetadata {
-  const publishedAt: Date =
-    typeof source.publishedAt === "string"
-      ? new Date(source.publishedAt)
-      : source.publishedAt;
-
-  return {
-    title: source.title,
-    coverImage: source.coverImage,
-    hasNewsletterSignUp: source.hasNewsletterSignUp ?? false,
-    publishedAt,
-  };
+export function normalizeArticleMetadata(source: unknown): ArticleMetadata {
+  return SCHEMA.cast(source);
 }
+
+const SCHEMA = yup.object({
+  title: yup.string().required(),
+  coverImage: yup.string().required(),
+  hasNewsletterSignUp: yup.boolean().default(false),
+  publishedAt: yup
+    .date()
+    .transform((value) => (typeof value === "string" ? new Date(value) : value))
+    .required(),
+});
