@@ -27,5 +27,7 @@
   "almostDoneConfirmationEmailWasSentToYourInbox": "Almost done! Confirmation email was sent to your inbox.",
   "switchToLightMode": "Switch to light mode",
   "switchToDarkMode": "Switch to dark mode",
-  "viewThisWebsiteSourceCode": "View this website's source code"
+  "viewThisWebsiteSourceCode": "View this website's source code",
+  "countReaders": "{count} readers",
+  "viewPost": "View post"
 }
