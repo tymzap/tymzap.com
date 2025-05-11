@@ -1,11 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 import { loadArticles } from "~/article/loadArticles";
 import { ArticleCard } from "~/article/ArticleCard";
 import { Button } from "~/components/Button";
 import Plus from "~/icons/plus.svg";
+import { resetAnchor } from "~/styles/utils/reset.css";
 
 import { useArticlesList } from "./useArticlesList";
 import * as styles from "./ArticlesList.css";
@@ -27,14 +29,14 @@ export function ArticlesList({ articles }: ArticlesListProps) {
           const imageSrc = `/blog/${metadata.coverImage}`;
 
           return (
-            <ArticleCard.Link href={href} key={slug}>
+            <Link href={href} key={slug} className={resetAnchor}>
               <ArticleCard
                 imageSrc={imageSrc}
                 title={metadata.title}
                 publishedAt={metadata.publishedAt}
                 readTime={readTime}
               />
-            </ArticleCard.Link>
+            </Link>
           );
         })}
       </ArticleCard.Grid>

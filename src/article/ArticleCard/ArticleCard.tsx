@@ -4,7 +4,6 @@ import { AttributeList } from "~/components/AttributeList";
 
 import * as styles from "./ArticleCard.css";
 import { ArticleCardGrid } from "./ArticleCardGrid";
-import { ArticleCardLink } from "./ArticleCardLink";
 
 type ArticleCardProps = {
   imageSrc: string;
@@ -37,4 +36,3 @@ export function ArticleCard({
 }
 
 ArticleCard.Grid = ArticleCardGrid;
-ArticleCard.Link = ArticleCardLink;

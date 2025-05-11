@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import { ArticleCard } from "~/article/ArticleCard";
+import { resetAnchor } from "~/styles/utils/reset.css";
 
 import { getMoreArticles } from "./getMoreArticles";
 import { MoreArticlesHeader } from "./MoreArticlesHeader";
@@ -20,14 +23,14 @@ export async function MoreArticles({ currentArticleSlug }: MoreArticlesProps) {
           const imageSrc = `/blog/${metadata.coverImage}`;
 
           return (
-            <ArticleCard.Link href={href} key={slug}>
+            <Link href={href} key={slug} className={resetAnchor}>
               <ArticleCard
                 imageSrc={imageSrc}
                 title={metadata.title}
                 publishedAt={metadata.publishedAt}
                 readTime={readTime}
               />
-            </ArticleCard.Link>
+            </Link>
           );
         })}
       </ArticleCard.Grid>

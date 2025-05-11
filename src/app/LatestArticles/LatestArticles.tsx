@@ -1,8 +1,10 @@
+import Link from "next/link";
+
 import { ArticleCard } from "~/article/ArticleCard";
+import { resetAnchor } from "~/styles/utils/reset.css";
 
 import { LatestArticlesHeader } from "./LatestArticlesHeader";
 import { getLatestArticles } from "./getLatestArticles";
-
 export function LatestArticles() {
   const articles = getLatestArticles();
 
@@ -15,14 +17,14 @@ export function LatestArticles() {
           const imageSrc = `/blog/${metadata.coverImage}`;
 
           return (
-            <ArticleCard.Link href={href} key={slug}>
+            <Link href={href} key={slug} className={resetAnchor}>
               <ArticleCard
                 imageSrc={imageSrc}
                 title={metadata.title}
                 publishedAt={metadata.publishedAt}
                 readTime={readTime}
               />
-            </ArticleCard.Link>
+            </Link>
           );
         })}
       </ArticleCard.Grid>
