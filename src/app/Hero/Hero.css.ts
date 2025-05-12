@@ -10,6 +10,7 @@ export const wrapper = style({
   paddingBottom: 50,
   "@media": {
     [mediaQueries.tabletOrBigger]: {
+      paddingTop: 50,
       flexDirection: "row",
       gap: 40,
     },
