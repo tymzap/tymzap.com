@@ -5,6 +5,7 @@ import { renderArticle } from "~/article/renderArticle";
 import { BlogArticleHeader } from "./BlogArticleHeader";
 import { CoverImage } from "./CoverImage";
 import { AuthorBio } from "./AuthorBio";
+import { ShareButtons } from "./ShareButtons";
 import { MoreArticles } from "./MoreArticles";
 import { NewsletterSignUp } from "./NewsletterSignUp";
 
@@ -39,6 +40,7 @@ export default async function BlogArticle({ params }: BlogArticleProps) {
         </BlogArticleHeader>
         <CoverImage imageSrc={coverImageSrc} />
         {content}
+        <ShareButtons />
         <AuthorBio />
         <NewsletterSignUp isVisible={metadata.hasNewsletterSignUp} />
       </LongContentWrapper>

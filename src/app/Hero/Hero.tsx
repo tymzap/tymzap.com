@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 
 import { Heading } from "~/components/Heading";
@@ -6,8 +6,8 @@ import { Text } from "~/components/Text";
 
 import * as styles from "./Hero.css";
 
-export function Hero() {
-  const t = useTranslations();
+export async function Hero() {
+  const t = await getTranslations();
 
   return (
     <div className={styles.wrapper}>

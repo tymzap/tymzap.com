@@ -30,5 +30,9 @@
   "viewThisWebsiteSourceCode": "View this website's source code",
   "countReaders": "{count} readers",
   "viewPost": "View post",
-  "popularPost": "Popular post"
+  "popularPost": "Popular post",
+  "shareThisPost": "Share this post",
+  "checkOutThisBlogPost": "Check out this blog post",
+  "shareOnX": "Share on X",
+  "shareOnLinkedIn": "Share on LinkedIn"
 } 
