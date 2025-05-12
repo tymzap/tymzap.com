@@ -9,6 +9,7 @@ export const dark = createTheme(vars, {
   colors: {
     text: colors.white,
     background: colors.eerieBlack,
+    elevatedSurfaceBackground: rgba(colors.white, 0.05),
     interactiveText: colors.white,
     interactiveSurfaceText: colors.eerieBlack,
     interactiveSurfaceBackground: colors.white,

@@ -29,5 +29,6 @@
   "switchToDarkMode": "Switch to dark mode",
   "viewThisWebsiteSourceCode": "View this website's source code",
   "countReaders": "{count} readers",
-  "viewPost": "View post"
-}
+  "viewPost": "View post",
+  "popularPost": "Popular post"
+} 

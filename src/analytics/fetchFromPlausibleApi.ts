@@ -8,9 +8,16 @@ export async function fetchFromPlausibleApi(
 ) {
   const url = `${SERVER_ENV.PLAUSIBLE_API_URL}/${path}`;
 
-  return fetch(url, prepareRequestInit(params)).then((response) =>
-    response.json(),
-  );
+  const response = await fetch(url, prepareRequestInit(params));
+  const data = await response.json();
+
+  if (!response.ok) {
+    const errorMessage = data.error || response.statusText;
+
+    throw new Error(errorMessage);
+  }
+
+  return data;
 }
 
 function prepareRequestInit({ method, body }: FetchParams = {}) {

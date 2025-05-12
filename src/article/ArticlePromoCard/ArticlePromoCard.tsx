@@ -31,16 +31,18 @@ export function ArticlePromoCard({
     <div className={styles.wrapper}>
       <span className={styles.heading}>{heading}</span>
       <div className={styles.content}>
-        <div
-          className={styles.image}
-          style={{ backgroundImage: `url("${imageSrc}")` }}
-        />
+        <Link href={href} className={styles.imageLink}>
+          <div
+            className={styles.image}
+            style={{ backgroundImage: `url("${imageSrc}")` }}
+          />
+        </Link>
         <div className={styles.textContent}>
           <Link href={href} className={styles.textContentLink}>
             <span className={styles.title}>{title}</span>
             <AttributeList>
               <AttributeList.Item>
-                {t("countReaders", { count: visitorsCount })}
+                {t("countReaders", { count: visitorsCount.toLocaleString() })}
               </AttributeList.Item>
               <AttributeList.Item>{readTime}</AttributeList.Item>
             </AttributeList>

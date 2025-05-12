@@ -4,6 +4,7 @@ export const vars = createThemeContract({
   colors: {
     text: null,
     background: null,
+    elevatedSurfaceBackground: null,
     interactiveText: null,
     interactiveSurfaceText: null,
     interactiveSurfaceBackground: null,

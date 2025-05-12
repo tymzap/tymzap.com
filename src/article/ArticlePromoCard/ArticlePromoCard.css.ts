@@ -20,25 +20,36 @@ export const heading = style({
 
 export const content = style({
   display: "flex",
-  flexDirection: "row-reverse",
-  gap: 32,
+  flexDirection: "column",
+  gap: 18,
   "@media": {
-    [mediaQueries.smallerThanTablet]: {
-      flexDirection: "column",
+    [mediaQueries.tabletOrBigger]: {
+      flexDirection: "row-reverse",
+      gap: 32,
     },
   },
 });
 
+export const imageLink = style([
+  resetAnchor,
+  {
+    width: "100%",
+    "@media": {
+      [mediaQueries.tabletOrBigger]: {
+        width: "50%",
+      },
+    },
+  },
+]);
+
 export const image = style({
-  width: "100%",
   height: 250,
   backgroundPosition: "center",
   borderRadius: 8,
   backgroundSize: "cover",
-  flexShrink: 0,
   "@media": {
     [mediaQueries.tabletOrBigger]: {
-      width: "50%",
+      height: 300,
     },
   },
 });
@@ -47,7 +58,11 @@ export const textContent = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
-  flex: 1,
+  "@media": {
+    [mediaQueries.tabletOrBigger]: {
+      width: "50%",
+    },
+  },
 });
 
 export const textContentLink = style([resetAnchor]);

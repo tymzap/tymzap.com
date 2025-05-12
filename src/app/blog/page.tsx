@@ -2,6 +2,7 @@ import { loadArticles } from "~/article/loadArticles";
 
 import { BlogHeader } from "./BlogHeader";
 import { ArticlesList } from "./ArticlesList";
+import { PopularArticle } from "./PopularArticle";
 
 export { generateMetadata } from "./generateMetadata";
 
@@ -11,6 +12,7 @@ export default async function Blog() {
   return (
     <>
       <BlogHeader />
+      <PopularArticle />
       <ArticlesList articles={articles} />
     </>
   );
