@@ -71,6 +71,8 @@ export const title = style({
   color: vars.colors.interactiveText,
   fontWeight: 700,
   fontSize: 22,
+  display: "block",
+  marginBottom: 18,
   selectors: {
     [`${textContentLink}:hover &`]: {
       opacity: 0.65,
