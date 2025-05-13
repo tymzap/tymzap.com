@@ -4,6 +4,7 @@ import { faker } from "@faker-js/faker";
 import ArrowRight from "~/icons/arrow-right.svg";
 
 import { TextLink } from "./TextLink";
+import { TextLinkIcon } from "./TextLinkIcon";
 
 const meta: Meta<typeof TextLink> = {
   component: TextLink,
@@ -23,7 +24,7 @@ export const WithIcon: TextLinkStoryObj = {
   render: ({ children, ...restProps }) => (
     <TextLink {...restProps}>
       {children}
-      <TextLink.Icon icon={ArrowRight} />
+      <TextLinkIcon icon={ArrowRight} />
     </TextLink>
   ),
 };
@@ -32,7 +33,7 @@ export const WithAnimatedIcon: TextLinkStoryObj = {
   render: ({ children, ...restProps }) => (
     <TextLink {...restProps}>
       {children}
-      <TextLink.Icon icon={ArrowRight} hoverAnimation={"slide-right"} />
+      <TextLinkIcon icon={ArrowRight} hoverAnimation={"slide-right"} />
     </TextLink>
   ),
 };

@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { Text } from "~/components/Text";
-import { List } from "~/components/List";
+import { List, ListItem } from "~/components/List";
 import { Heading } from "~/components/Heading";
 import { TextLink } from "~/components/TextLink";
 
@@ -17,16 +17,16 @@ export function Projects() {
         {t("iEnjoyTurningIdeasIntoUsefulThingsHereAreTheKeyProjects")}
       </Text>
       <List>
-        <List.Item>
+        <ListItem>
           <TextLink href={COLORFUL_BUDGET_URL}>Colorful Budget</TextLink> –{" "}
           {t("completeBudgetingSolutionForBusinessesUsingTrelloEcosystem")}
-        </List.Item>
-        <List.Item>
+        </ListItem>
+        <ListItem>
           <TextLink href={HEROES_III_POLISH_CHAMPIONSHIP_URL}>
             Heroes III Polish Championship
           </TextLink>{" "}
           – {t("communityDrivenPlatformUsedForHostingNationalGamingTournament")}
-        </List.Item>
+        </ListItem>
       </List>
     </div>
   );

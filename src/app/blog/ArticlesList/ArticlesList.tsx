@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { loadArticles } from "~/article/loadArticles";
-import { ArticleCard } from "~/article/ArticleCard";
-import { Button } from "~/components/Button";
+import { ArticleCard, ArticleCardGrid } from "~/article/ArticleCard";
+import { Button, ButtonIcon } from "~/components/Button";
 import Plus from "~/icons/plus.svg";
 import { resetAnchor } from "~/styles/utils/reset.css";
 
@@ -18,12 +18,13 @@ type ArticlesListProps = {
 
 export function ArticlesList({ articles }: ArticlesListProps) {
   const t = useTranslations();
+
   const { visibleArticles, showMoreArticles, isShowMoreButtonVisible } =
     useArticlesList(articles);
 
   return (
     <>
-      <ArticleCard.Grid>
+      <ArticleCardGrid>
         {visibleArticles.map(({ slug, metadata, readTime }) => {
           const href = `/blog/${slug}`;
           const imageSrc = `/blog/${metadata.coverImage}`;
@@ -39,12 +40,12 @@ export function ArticlesList({ articles }: ArticlesListProps) {
             </Link>
           );
         })}
-      </ArticleCard.Grid>
+      </ArticleCardGrid>
       {isShowMoreButtonVisible && (
         <div className={styles.buttonWrapper}>
           <Button onPress={showMoreArticles}>
             {t("moreBlogPosts")}
-            <Button.Icon icon={Plus} />
+            <ButtonIcon icon={Plus} />
           </Button>
         </div>
       )}

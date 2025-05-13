@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { format as formatDate } from "date-fns/format";
 
-import { AttributeList } from "~/components/AttributeList";
+import { AttributeList, AttributeListItem } from "~/components/AttributeList";
 
 import * as styles from "./BlogArticleHeader.css";
 
@@ -21,8 +21,8 @@ export function BlogArticleHeader({
     <div className={styles.wrapper}>
       <h2 className={styles.heading}>{children}</h2>
       <AttributeList>
-        <AttributeList.Item>{formattedPublishedAt}</AttributeList.Item>
-        <AttributeList.Item>{readTime}</AttributeList.Item>
+        <AttributeListItem>{formattedPublishedAt}</AttributeListItem>
+        <AttributeListItem>{readTime}</AttributeListItem>
       </AttributeList>
     </div>
   );

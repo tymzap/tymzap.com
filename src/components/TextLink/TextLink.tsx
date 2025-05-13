@@ -3,7 +3,6 @@ import { PropsWithChildren } from "react";
 import cn from "classnames";
 
 import * as styles from "./TextLink.css";
-import { TextLinkIcon } from "./TextLinkIcon";
 
 type TextLinkProps = PropsWithChildren<{
   href: string;
@@ -24,5 +23,3 @@ export function TextLink({
     </NextLink>
   );
 }
-
-TextLink.Icon = TextLinkIcon;

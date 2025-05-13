@@ -1,7 +1,6 @@
 import Bullet from "~/icons/bullet.svg";
 
 import * as styles from "./Radio.css";
-import { RadioGroup } from "./RadioGroup";
 import { useRadio } from "./useRadio";
 
 type RadioProps = {
@@ -33,5 +32,3 @@ export function Radio({ label, value }: RadioProps) {
     </label>
   );
 }
-
-Radio.Group = RadioGroup;

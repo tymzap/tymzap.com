@@ -7,7 +7,6 @@ import { ThemeOverride } from "~/theme/ThemeOverride";
 
 import * as styles from "./FullscreenMenu.css";
 import { useFullscreenMenu } from "./useFullscreenMenu";
-import { FullscreenMenuLink } from "./FullscreenMenuLink";
 
 type FullscreenMenuProps = {
   isVisible: boolean;
@@ -40,5 +39,3 @@ export function FullscreenMenu({
     </ThemeOverride>
   );
 }
-
-FullscreenMenu.Link = FullscreenMenuLink;

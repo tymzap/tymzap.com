@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 
 import { ThemeOverride } from "~/theme/ThemeOverride";
-import { TextLink } from "~/components/TextLink";
+import { TextLink, TextLinkIcon } from "~/components/TextLink";
 import Code from "~/icons/code.svg";
 
 import * as styles from "./Footer.css";
@@ -26,7 +26,7 @@ export function Footer({ contactLinks }: FooterProps) {
           <div className={styles.repoLinkWrapper}>
             <TextLink href={REPO_URL}>
               {t("viewThisWebsiteSourceCode")}
-              <TextLink.Icon icon={Code} hoverAnimation={"rotate"} />
+              <TextLinkIcon icon={Code} hoverAnimation={"rotate"} />
             </TextLink>
           </div>
         </div>

@@ -1,7 +1,5 @@
 import { PropsWithChildren } from "react";
 
-import { ListItem } from "./ListItem";
-
 type ListProps = PropsWithChildren<{
   isOrdered?: boolean;
 }>;
@@ -11,5 +9,3 @@ export function List({ isOrdered = false, children }: ListProps) {
 
   return <Component>{children}</Component>;
 }
-
-List.Item = ListItem;

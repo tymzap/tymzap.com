@@ -5,6 +5,7 @@ import { fn } from "@storybook/test";
 import Plus from "~/icons/plus.svg";
 
 import { Button } from "./Button";
+import { ButtonIcon } from "./ButtonIcon";
 
 const meta: Meta<typeof Button> = {
   component: Button,
@@ -27,7 +28,7 @@ export const WithIcon: ButtonStoryObj = {
   render: ({ children, ...restProps }) => (
     <Button {...restProps}>
       {children}
-      <Button.Icon icon={Plus} />
+      <ButtonIcon icon={Plus} />
     </Button>
   ),
 };

@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { ComponentProps } from "react";
 
 import { Radio } from "./Radio";
+import { RadioGroup } from "./RadioGroup";
 
 const value = faker.lorem.words(5);
 
@@ -21,8 +22,8 @@ export const Default = {};
 
 function Story(props: ComponentProps<typeof Radio>) {
   return (
-    <Radio.Group>
+    <RadioGroup>
       <Radio {...props} />
-    </Radio.Group>
+    </RadioGroup>
   );
 }

@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-import { AttributeList } from "~/components/AttributeList";
-import { TextLink } from "~/components/TextLink";
+import { AttributeList, AttributeListItem } from "~/components/AttributeList";
+import { TextLink, TextLinkIcon } from "~/components/TextLink";
 import ArrowRight from "~/icons/arrow-right.svg";
 
 import * as styles from "./ArticlePromoCard.css";
@@ -41,16 +41,16 @@ export function ArticlePromoCard({
           <Link href={href} className={styles.textContentLink}>
             <span className={styles.title}>{title}</span>
             <AttributeList>
-              <AttributeList.Item>
+              <AttributeListItem>
                 {t("countReaders", { count: visitorsCount.toLocaleString() })}
-              </AttributeList.Item>
-              <AttributeList.Item>{readTime}</AttributeList.Item>
+              </AttributeListItem>
+              <AttributeListItem>{readTime}</AttributeListItem>
             </AttributeList>
           </Link>
           <div className={styles.viewArticleLinkWrapper}>
             <TextLink href={href} hasUnderline={false}>
               {t("viewPost")}
-              <TextLink.Icon icon={ArrowRight} hoverAnimation="slide-right" />
+              <TextLinkIcon icon={ArrowRight} hoverAnimation="slide-right" />
             </TextLink>
           </div>
         </div>

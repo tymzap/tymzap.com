@@ -6,7 +6,6 @@ import { PropsWithChildren, useRef } from "react";
 import Spinner from "~/icons/spinner.svg";
 
 import * as styles from "./Button.css";
-import { ButtonIcon } from "./ButtonIcon";
 
 type ButtonProps = PropsWithChildren<{
   onPress?: () => void;
@@ -34,5 +33,3 @@ export function Button({
     </button>
   );
 }
-
-Button.Icon = ButtonIcon;

@@ -2,7 +2,7 @@ import { MDXComponents } from "mdx/types.js";
 
 import { CodeBlock } from "~/components/CodeBlock";
 import { Code } from "~/components/Code";
-import { List } from "~/components/List";
+import { List, ListItem } from "~/components/List";
 import { TextLink } from "~/components/TextLink";
 import { Blockquote } from "~/components/Blockquote";
 import { ImageWithCaption } from "~/components/ImageWithCaption";
@@ -51,7 +51,7 @@ export const MDX_COMPONENTS: MDXComponents = {
   blockquote: ({ children }) => <Blockquote>{children}</Blockquote>,
   ul: ({ children }) => <List isOrdered={false}>{children}</List>,
   ol: ({ children }) => <List isOrdered={true}>{children}</List>,
-  li: ({ children }) => <List.Item>{children}</List.Item>,
+  li: ({ children }) => <ListItem>{children}</ListItem>,
   h2: ({ children, id }) => (
     <Heading level={3} id={id} hasExtendedTopMargin={true}>
       {children}

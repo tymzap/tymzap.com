@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-import { TextLink } from "~/components/TextLink";
+import { TextLink, TextLinkIcon } from "~/components/TextLink";
 import Github from "~/icons/github.svg";
 
 export type ViewCommitLinkProps = {
@@ -15,7 +15,7 @@ export function ViewCommitLink({ commit }: ViewCommitLinkProps) {
   return (
     <TextLink href={commitUrl}>
       {t("followAlongWithTheCommit")}
-      <TextLink.Icon icon={Github} hoverAnimation={"rotate"} />
+      <TextLinkIcon icon={Github} hoverAnimation={"rotate"} />
     </TextLink>
   );
 }

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import Github from "~/icons/github.svg";
-import { Button } from "~/components/Button";
+import { Button, ButtonIcon } from "~/components/Button";
 
 export type ViewRepositoryButtonProps = {
   repository: string;
@@ -23,7 +23,7 @@ export function ViewRepositoryButton({
   return (
     <Button onPress={handlePress}>
       {t("seeFullCodeOnGitHub")}
-      <Button.Icon icon={Github} />
+      <ButtonIcon icon={Github} />
     </Button>
   );
 }

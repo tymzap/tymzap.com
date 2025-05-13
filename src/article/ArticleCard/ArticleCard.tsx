@@ -1,9 +1,8 @@
 import { format as formatDate } from "date-fns";
 
-import { AttributeList } from "~/components/AttributeList";
+import { AttributeList, AttributeListItem } from "~/components/AttributeList";
 
 import * as styles from "./ArticleCard.css";
-import { ArticleCardGrid } from "./ArticleCardGrid";
 
 type ArticleCardProps = {
   imageSrc: string;
@@ -28,11 +27,9 @@ export function ArticleCard({
       />
       <span className={styles.title}>{title}</span>
       <AttributeList>
-        <AttributeList.Item>{formattedPublishedAt}</AttributeList.Item>
-        <AttributeList.Item>{readTime}</AttributeList.Item>
+        <AttributeListItem>{formattedPublishedAt}</AttributeListItem>
+        <AttributeListItem>{readTime}</AttributeListItem>
       </AttributeList>
     </div>
   );
 }
-
-ArticleCard.Grid = ArticleCardGrid;

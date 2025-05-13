@@ -2,7 +2,10 @@
 
 import { ReactNode } from "react";
 
-import { FullscreenMenu } from "~/components/FullscreenMenu";
+import {
+  FullscreenMenu,
+  FullscreenMenuLink,
+} from "~/components/FullscreenMenu";
 
 import { MenuLink } from "./MenuLink";
 import { useNavbar } from "./useNavbar";
@@ -31,9 +34,9 @@ export function Navbar({ menuLinks, contactLinks }: NavbarProps) {
         menuLinks={
           <>
             {menuLinks.map(({ label, href }) => (
-              <FullscreenMenu.Link href={href} key={href}>
+              <FullscreenMenuLink href={href} key={href}>
                 {label}
-              </FullscreenMenu.Link>
+              </FullscreenMenuLink>
             ))}
           </>
         }
