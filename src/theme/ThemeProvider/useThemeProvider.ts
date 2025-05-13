@@ -7,15 +7,16 @@ import { getOppositeTheme } from "~/theme/getOppositeTheme";
 import { Theme } from "~/theme/Theme";
 import { getThemeClassName } from "~/theme/themeClassNames";
 import { normalizeTheme } from "~/theme/normalizeTheme";
-import { DEFAULT_THEME } from "~/theme/defaultTheme";
 import { LOCAL_STORAGE_KEYS } from "~/constants/localStorageKeys";
+import { getSystemTheme } from "~/theme/getSystemTheme";
+import { DEFAULT_THEME } from "~/theme/defaultTheme";
 
 export function useThemeProvider() {
   const pathname = usePathname();
 
   const [theme, setTheme] = useLocalStorage<Theme>(
     LOCAL_STORAGE_KEYS.THEME,
-    DEFAULT_THEME,
+    getSystemTheme(),
     {
       serializer: JSON.stringify,
       deserializer: (value) => normalizeTheme(JSON.parse(value)),
