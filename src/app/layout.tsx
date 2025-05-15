@@ -33,8 +33,8 @@ export default async function Layout({ children }: LayoutProps) {
       <body>
         <ThemeProvider>
           <AnalyticsProvider>
-            <TopLoader />
             <NextIntlClientProvider locale={locale} messages={translations}>
+              <TopLoader />
               <Navbar />
               <ContentWrapper>{children}</ContentWrapper>
               <Footer />
