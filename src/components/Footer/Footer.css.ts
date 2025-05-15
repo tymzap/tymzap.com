@@ -35,7 +35,7 @@ export const contactLinksWrapper = style({
   },
 });
 
-export const text = style({
+export const topTextWrapper = style({
   display: "block",
   "@media": {
     [mediaQueries.smallerThanTablet]: {
@@ -44,13 +44,7 @@ export const text = style({
   },
 });
 
-export const name = style({
-  fontFamily: vars.fonts.logo,
-  fontWeight: 700,
-  fontSize: 17,
-});
-
-export const repoLinkWrapper = style({
+export const bottomTextWrapper = style({
   display: "block",
   marginTop: 32,
   "@media": {

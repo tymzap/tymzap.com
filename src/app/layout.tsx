@@ -2,17 +2,17 @@ import "sanitize.css";
 import { PropsWithChildren } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import PlausibleProvider from "next-plausible";
 import cn from "classnames";
 
 import { ThemeProvider } from "~/theme/ThemeProvider";
 import "~/styles/global.css";
 import "~/config/yupLocale";
 import { Navbar } from "~/components/Navbar";
-import { Footer } from "~/components/Footer";
 import { TopLoader } from "~/components/TopLoader";
 import { firaMono, openSans, sourceSans3 } from "~/styles/fonts";
+import { AnalyticsProvider } from "~/analytics/AnalyticsProvider";
 
+import { Footer } from "./Footer";
 import { getMenuLinks } from "./getMenuLinks";
 import { ContactLinks } from "./ContactLinks";
 import { ContentWrapper } from "./ContentWrapper";
@@ -36,7 +36,7 @@ export default async function Layout({ children }: LayoutProps) {
       </head>
       <body>
         <ThemeProvider>
-          <PlausibleProvider domain={DOMAIN}>
+          <AnalyticsProvider>
             <TopLoader />
             <NextIntlClientProvider locale={locale} messages={translations}>
               <Navbar
@@ -46,15 +46,13 @@ export default async function Layout({ children }: LayoutProps) {
                 }
               />
               <ContentWrapper>{children}</ContentWrapper>
-              <Footer contactLinks={<ContactLinks />} />
+              <Footer />
             </NextIntlClientProvider>
-          </PlausibleProvider>
+          </AnalyticsProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
-
-const DOMAIN = "tymzap.com";
 
 const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
