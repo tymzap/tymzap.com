@@ -7,14 +7,12 @@ import cn from "classnames";
 import { ThemeProvider } from "~/theme/ThemeProvider";
 import "~/styles/global.css";
 import "~/config/yupLocale";
-import { Navbar } from "~/components/Navbar";
 import { TopLoader } from "~/components/TopLoader";
 import { firaMono, openSans, sourceSans3 } from "~/styles/fonts";
 import { AnalyticsProvider } from "~/analytics/AnalyticsProvider";
 
 import { Footer } from "./Footer";
-import { getMenuLinks } from "./getMenuLinks";
-import { ContactLinks } from "./ContactLinks";
+import { Navbar } from "./Navbar";
 import { ContentWrapper } from "./ContentWrapper";
 
 export { generateMetadata } from "./generateMetadata";
@@ -24,8 +22,6 @@ type LayoutProps = PropsWithChildren;
 export default async function Layout({ children }: LayoutProps) {
   const locale = await getLocale();
   const translations = await getMessages();
-
-  const menuLinks = await getMenuLinks();
 
   const fonts = cn(sourceSans3.variable, firaMono.variable, openSans.variable);
 
@@ -39,12 +35,7 @@ export default async function Layout({ children }: LayoutProps) {
           <AnalyticsProvider>
             <TopLoader />
             <NextIntlClientProvider locale={locale} messages={translations}>
-              <Navbar
-                menuLinks={menuLinks}
-                contactLinks={
-                  <ContactLinks iconSize={NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE} />
-                }
-              />
+              <Navbar />
               <ContentWrapper>{children}</ContentWrapper>
               <Footer />
             </NextIntlClientProvider>
@@ -54,5 +45,3 @@ export default async function Layout({ children }: LayoutProps) {
     </html>
   );
 }
-
-const NAVBAR_SOCIAL_MEDIA_LINK_ICON_SIZE = 40;
