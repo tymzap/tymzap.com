@@ -18,8 +18,10 @@ export function Projects() {
       </Text>
       <List>
         <ListItem>
-          <TextLink href={COLORFUL_BUDGET_URL}>Colorful Budget</TextLink> –{" "}
-          {t("completeBudgetingSolutionForBusinessesUsingTrelloEcosystem")}
+          <TextLink href={CARDFLOW_URL}>Cardflow</TextLink> –{" "}
+          {t(
+            "suiteOfTrelloExtensionsSimplyfingProjectManagementForSmallTeamsAndSMBs",
+          )}
         </ListItem>
         <ListItem>
           <TextLink href={HEROES_III_POLISH_CHAMPIONSHIP_URL}>
@@ -32,6 +34,6 @@ export function Projects() {
   );
 }
 
-const COLORFUL_BUDGET_URL = "https://colorfulbudget.com";
+const CARDFLOW_URL = "https://www.cardflowhq.com/";
 
 const HEROES_III_POLISH_CHAMPIONSHIP_URL = "https://mistrzostwa.heroes.net.pl";
